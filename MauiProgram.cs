@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using ProjectApp.ViewModel;
+using ProjectApp.View;
 
 namespace ProjectApp;
 
@@ -21,6 +22,8 @@ public static class MauiProgram
 #endif
 		builder.Services.AddSingleton<MainPage>();
 		builder.Services.AddSingleton<MainPageViewModel>();
-		return builder.Build();
+        builder.Services.AddSingleton<Login>();
+        builder.Services.AddSingleton<LoginViewModel>();
+        return builder.Build();
 	}
 }
