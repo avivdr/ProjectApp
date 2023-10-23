@@ -4,7 +4,16 @@
              xmlns:local="clr-namespace:ProjectApp"
              x:Class="ProjectApp.App">
     <Application.Resources>
+       
         <ResourceDictionary>
+            <Color x:Key="BtnClr">#061723</Color>
+            <Color x:Key="LightTextCLr">#d7dadc</Color>
+
+            <Style TargetType="Button">
+                <Setter Property="BackgroundColor" Value="{StaticResource BtnClr}"/>
+                <Setter Property="TextColor" Value="{StaticResource LightTextCLr}"/>
+            </Style>
+            
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
