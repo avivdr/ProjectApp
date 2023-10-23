@@ -5,24 +5,30 @@
              xmlns:ViewModel="clr-namespace:ProjectApp.ViewModel"
              x:DataType="ViewModel:LoginViewModel"
              Title="Login">
-    <VerticalStackLayout>
-        <Label Text="Login" WidthRequest="500" HorizontalOptions="Center"/>
-        <HorizontalStackLayout>
-            <Label Text="Username"/>
+        <Grid RowDefinitions="*,*,*,*" ColumnDefinitions="*,*,*">
+            <Label Text="Login" Grid.Row="0" Grid.Column="1"/>
+        <Label Text="Username" Grid.Row="1" Grid.Column="0" HorizontalOptions="Center"/>
             <Entry 
-                WidthRequest="200"
-                Text="{Binding UserName}"/>
-        </HorizontalStackLayout>
-        <HorizontalStackLayout>
-            <Label Text="Password"/>
+                Text="{Binding UserName}"
+                Grid.Row="1"
+                Grid.Column="1"
+                Grid.ColumnSpan="2"
+                HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
+
+        <Label Text="Password" Grid.Row="2" Grid.Column="0" HorizontalOptions="Center"/>
             <Entry 
-                WidthRequest="200"
                 IsPassword="True"
-                Text="{Binding Password}"/>
-        </HorizontalStackLayout>
+                Text="{Binding Password}"
+                Grid.Row="2"
+                Grid.Column="1"
+                Grid.ColumnSpan="2"
+                Margin="20"/>
+
+
         <Button
             Text="Login"
-            WidthRequest="200"
-            Command="{Binding BtnCommand}"/>
-    </VerticalStackLayout>
+            Command="{Binding BtnCommand}"
+            Grid.Row="3"
+            Grid.Column="1"/>
+    </Grid>
 </ContentPage>
