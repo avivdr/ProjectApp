@@ -5,30 +5,35 @@
              xmlns:ViewModel="clr-namespace:ProjectApp.ViewModel"
              x:DataType="ViewModel:LoginViewModel"
              Title="Login">
-        <Grid RowDefinitions="*,*,*,*" ColumnDefinitions="*,*,*">
-            <Label Text="Login" Grid.Row="0" Grid.Column="1"/>
-        <Label Text="Username" Grid.Row="1" Grid.Column="0" HorizontalOptions="Center"/>
-            <Entry 
-                Text="{Binding UserName}"
-                Grid.Row="1"
-                Grid.Column="1"
-                Grid.ColumnSpan="2"
-                HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
+    <ContentPage.Resources>
+        <Style TargetType="Label" Class="LoginLbl">
+            <Setter Property="TextColor" Value="{StaticResource LightTextCLr}"/>
+        </Style>
+        
+        <Style TargetType="Entry" Class="LoginEntry">
+            <Setter Property="BackgroundColor" Value="{StaticResource LightTextCLr}"/>
+        </Style>
+    </ContentPage.Resources>
 
-        <Label Text="Password" Grid.Row="2" Grid.Column="0" HorizontalOptions="Center"/>
-            <Entry 
-                IsPassword="True"
-                Text="{Binding Password}"
-                Grid.Row="2"
-                Grid.Column="1"
-                Grid.ColumnSpan="2"
-                Margin="20"/>
+    <VerticalStackLayout 
+        Spacing="50"
+        Padding="30"
+        HorizontalOptions="Center"
+        VerticalOptions="Center"
+        BackgroundColor="#D9000000"
+        WidthRequest="500" >
+        <VerticalStackLayout Grid.Column="1" Grid.Row="1" Spacing="10">
+            <Label Text="Username" StyleClass="LoginLbl"/>
+            <Entry Text="{Binding Username}"  StyleClass="LoginEntry"/>
+        </VerticalStackLayout>
 
+        <VerticalStackLayout Grid.Column="1" Grid.Row="2" Spacing="10">
+            <Label Text="Password" StyleClass="LoginLbl"/>
+            <Entry IsPassword="True" Text="{Binding Password}" StyleClass="LoginEntry"/>
+        </VerticalStackLayout>
 
-        <Button
-            Text="Login"
-            Command="{Binding BtnCommand}"
-            Grid.Row="3"
-            Grid.Column="1"/>
-    </Grid>
+        <Label Text="Incorrect username or password" StyleClass="ErrorLbl"  IsVisible="{Binding IsLoginError}"/>
+
+        <Button Text="Login" Grid.Column="1" Grid.Row="3" WidthRequest="100" StyleClass="DarkBtn" Command="{Binding BtnCommand}"/>
+    </VerticalStackLayout>
 </ContentPage>

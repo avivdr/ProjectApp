@@ -11,34 +11,46 @@ namespace ProjectApp.ViewModel
     {
         private string _username;
         private string _password;
-        public string UserName 
+        private bool _isLoginError;
+        public string Username 
         {
-            get { return _username; }
+            get => _username;
             set 
-            { _username= value;
-                OnPropertyChanged(nameof(UserName));
+            { 
+                _username = value;
+                OnPropertyChanged(nameof(Username));
             }
         }
         public string Password
         {
-            get { return _password; }
+            get => _password;
             set
             {
                 _password = value;
                 OnPropertyChanged(nameof(Password));
             }
         }
-
+        public bool IsLoginError
+        {
+            get => _isLoginError;
+            set
+            {
+                _isLoginError = value;
+                OnPropertyChanged(nameof(IsLoginError));
+            }
+        }
+       
         public ICommand BtnCommand { get; protected set; }
 
         public LoginViewModel()
         {
-            UserName = "";
+            Username = "";
             Password = "";
+            IsLoginError = false;
 
             BtnCommand = new Command(async () =>
             {
-                throw new NotImplementedException();
+                IsLoginError = true;
             });
         }
     }
