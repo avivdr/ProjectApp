@@ -12,28 +12,41 @@
         
         <Style TargetType="Entry" Class="LoginEntry">
             <Setter Property="BackgroundColor" Value="{StaticResource LightTextCLr}"/>
+            <Setter Property="FontSize" Value="16"/>
         </Style>
     </ContentPage.Resources>
 
-    <VerticalStackLayout 
-        Spacing="50"
-        Padding="30"
+    <Border 
+        StrokeShape="RoundRectangle 20"
+        HorizontalOptions="Center"
+        VerticalOptions="Center"
+        StrokeThickness="0">
+        <VerticalStackLayout 
+        Spacing="40"
+        Padding="35"
         HorizontalOptions="Center"
         VerticalOptions="Center"
         BackgroundColor="#D9000000"
         WidthRequest="500" >
-        <VerticalStackLayout Grid.Column="1" Grid.Row="1" Spacing="10">
-            <Label Text="Username" StyleClass="LoginLbl"/>
-            <Entry Text="{Binding Username}"  StyleClass="LoginEntry"/>
+            <VerticalStackLayout Grid.Column="1" Grid.Row="1" Spacing="10">
+                <Label Text="Username" StyleClass="LoginLbl"/>
+                <Entry Text="{Binding Username}"  StyleClass="LoginEntry"/>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Column="1" Grid.Row="2" Spacing="10">
+                <Label Text="Password" StyleClass="LoginLbl"/>
+                <Entry IsPassword="True" Text="{Binding Password}" StyleClass="LoginEntry"/>
+            </VerticalStackLayout>
+
+            <Label Text="Incorrect username or password" StyleClass="ErrorLbl"  IsVisible="{Binding IsLoginError}"/>
+
+            <Button 
+                Text="Login"
+                Grid.Column="1"
+                Grid.Row="3"
+                WidthRequest="100"
+                StyleClass="DarkBtn"
+                Command="{Binding BtnCommand}"/>
         </VerticalStackLayout>
-
-        <VerticalStackLayout Grid.Column="1" Grid.Row="2" Spacing="10">
-            <Label Text="Password" StyleClass="LoginLbl"/>
-            <Entry IsPassword="True" Text="{Binding Password}" StyleClass="LoginEntry"/>
-        </VerticalStackLayout>
-
-        <Label Text="Incorrect username or password" StyleClass="ErrorLbl"  IsVisible="{Binding IsLoginError}"/>
-
-        <Button Text="Login" Grid.Column="1" Grid.Row="3" WidthRequest="100" StyleClass="DarkBtn" Command="{Binding BtnCommand}"/>
-    </VerticalStackLayout>
+    </Border>    
 </ContentPage>
