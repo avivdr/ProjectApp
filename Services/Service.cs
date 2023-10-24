@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace ProjectApp.Services
 {
-    public class Services
+    public class Service
     {
-        public Services() { }
-
-        public bool Login(string username, string password)
+        public async Task<bool> Login(string username, string password)
         {
             return true;
         }

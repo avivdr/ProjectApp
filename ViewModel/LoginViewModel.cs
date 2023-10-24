@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ProjectApp.Services;
 
 namespace ProjectApp.ViewModel
 {
@@ -12,11 +13,11 @@ namespace ProjectApp.ViewModel
         private string _username;
         private string _password;
         private bool _isLoginError;
-        public string Username 
+        public string Username
         {
             get => _username;
-            set 
-            { 
+            set
+            {
                 _username = value;
                 OnPropertyChanged(nameof(Username));
             }
@@ -39,7 +40,7 @@ namespace ProjectApp.ViewModel
                 OnPropertyChanged(nameof(IsLoginError));
             }
         }
-       
+
         public ICommand BtnCommand { get; protected set; }
 
         public LoginViewModel()
@@ -50,7 +51,16 @@ namespace ProjectApp.ViewModel
 
             BtnCommand = new Command(async () =>
             {
-                IsLoginError = true;
+                var service = new Service();
+                bool loginSucceeded = await service.Login(Username, Password);
+                if (loginSucceeded)
+                {
+                    IsLoginError = false;
+                }
+                else
+                {
+                    _isLoginError = true;
+                }
             });
         }
     }
