@@ -5,6 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ProjectApp.Services;
+using ProjectApp.Model;
+using System.Text.Json;
+using ProjectApp.View;
 
 namespace ProjectApp.ViewModel
 {
@@ -13,6 +16,7 @@ namespace ProjectApp.ViewModel
         private string _username;
         private string _password;
         private bool _isLoginError;
+        private string _errorMessage;
         public string Username
         {
             get => _username;
@@ -41,27 +45,58 @@ namespace ProjectApp.ViewModel
             }
         }
 
-        public ICommand BtnCommand { get; protected set; }
+        public string ErrorMessage
+        {
+            get => _errorMessage;
+            set
+            {
+                _errorMessage = value;
+                OnPropertyChanged(nameof(ErrorMessage));
+            }
+        }
+
+        public ICommand LoginCommand { get; protected set; }
 
         public LoginViewModel()
         {
             Username = "";
             Password = "";
-            IsLoginError = false;
+            IsLoginError = true;
+            ErrorMessage = "Incorrect username or password";
 
-            BtnCommand = new Command(async () =>
+            LoginCommand = new Command(async () =>
             {
+                if (!validateUser(Username, Password)) 
+                    return;
+
                 var service = new Service();
-                bool loginSucceeded = await service.Login(Username, Password);
-                if (loginSucceeded)
+                try
                 {
-                    IsLoginError = false;
+                    User user = await service.Login(Username, Password);
+                    if (user is null)
+                    {
+                        IsLoginError = true;
+                    }
+                    else
+                    {
+                        IsLoginError = false;
+
+                        await SecureStorage.SetAsync("CurrentUser", JsonSerializer.Serialize(user));
+                        await Shell.Current.DisplayAlert("logged in message", "Logged in!", "OK");
+                    }
                 }
-                else
+                catch (Exception)
                 {
-                    _isLoginError = true;
+                    ErrorMessage = "A server error occurred";
+                    IsLoginError = true;
                 }
+               
             });
+        }
+
+        private bool validateUser(string username, string password)
+        {
+            return !string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password) && username.Length > 3 && password.Length > 3;
         }
     }
 }

@@ -38,7 +38,7 @@
                 <Entry IsPassword="True" Text="{Binding Password}" StyleClass="LoginEntry"/>
             </VerticalStackLayout>
 
-            <Label Text="Incorrect username or password" StyleClass="ErrorLbl"  IsVisible="{Binding IsLoginError}"/>
+            <Label Text="{Binding ErrorMessage}" StyleClass="ErrorLbl"  IsVisible="{Binding IsLoginError}"/>
 
             <Button 
                 Text="Login"
@@ -46,7 +46,7 @@
                 Grid.Row="3"
                 WidthRequest="100"
                 StyleClass="DarkBtn"
-                Command="{Binding BtnCommand}"/>
+                Command="{Binding LoginCommand}"/>
         </VerticalStackLayout>
     </Border>    
 </ContentPage>
