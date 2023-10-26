@@ -9,9 +9,15 @@ namespace ProjectApp.Services
 {
     public class Service
     {
+        private List<User> _users = new()
+        {
+            new() { Username = "vulu123", Password = "12345", Email = "vulu@gmail.com" },
+            new() { Username = "bubu123", Password = "baba123", Email = "bubu@gmail.com" }
+        };
+
         public async Task<User> Login(string username, string password)
         {
-            return new User() { Username = username, Password = password };
+            return _users.FirstOrDefault(x => x.Username == username && x.Password == password);
         }
     }
 }

@@ -13,6 +13,9 @@ namespace ProjectApp.ViewModel
 {
     public class LoginViewModel : ViewModel
     {
+        const string INCORRECT = "Incorrect username or password";
+        const string SERVER_ERROR = "A server error occurred";
+
         private string _username;
         private string _password;
         private bool _isLoginError;
@@ -61,13 +64,19 @@ namespace ProjectApp.ViewModel
         {
             Username = "";
             Password = "";
-            IsLoginError = true;
-            ErrorMessage = "Incorrect username or password";
+            IsLoginError = false;
+            ErrorMessage = INCORRECT;
 
             LoginCommand = new Command(async () =>
             {
-                if (!validateUser(Username, Password)) 
+                IsLoginError = false;
+                ErrorMessage = INCORRECT;
+
+                if (!ValidateUser(Username, Password))
+                {
+                    IsLoginError = true;
                     return;
+                }
 
                 var service = new Service();
                 try
@@ -81,20 +90,19 @@ namespace ProjectApp.ViewModel
                     {
                         IsLoginError = false;
 
-                        await SecureStorage.SetAsync("CurrentUser", JsonSerializer.Serialize(user));
+                        await SecureStorage.Default.SetAsync("CurrentUser", JsonSerializer.Serialize(user));
                         await Shell.Current.DisplayAlert("logged in message", "Logged in!", "OK");
                     }
                 }
                 catch (Exception)
                 {
-                    ErrorMessage = "A server error occurred";
+                    ErrorMessage = SERVER_ERROR;
                     IsLoginError = true;
                 }
-               
             });
         }
 
-        private bool validateUser(string username, string password)
+        private static bool ValidateUser(string username, string password)
         {
             return !string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password) && username.Length > 3 && password.Length > 3;
         }
