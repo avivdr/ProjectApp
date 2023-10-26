@@ -89,7 +89,6 @@ namespace ProjectApp.Services
                 if (response.IsSuccessStatusCode)
                 {
                     string content = await response.Content.ReadAsStringAsync();
-
                     var result = JsonSerializer.Deserialize<OmniSearchResult>(content);
                     if (result != null && result.status.success == "true")
                         return result;
