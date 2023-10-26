@@ -8,11 +8,13 @@
     <ContentPage.Resources>
         <Style TargetType="Label" Class="LoginLbl">
             <Setter Property="TextColor" Value="{StaticResource LightTextCLr}"/>
+            <Setter Property="FontSize" Value="16"/>
         </Style>
         
         <Style TargetType="Entry" Class="LoginEntry">
-            <Setter Property="BackgroundColor" Value="{StaticResource LightTextCLr}"/>
+            <Setter Property="BackgroundColor" Value="#444444"/>
             <Setter Property="FontSize" Value="16"/>
+            <Setter Property="TextColor" Value="{StaticResource LightTextCLr}"/>
         </Style>
     </ContentPage.Resources>
 
@@ -35,7 +37,7 @@
 
             <VerticalStackLayout Grid.Column="1" Grid.Row="2" Spacing="10">
                 <Label Text="Password" StyleClass="LoginLbl"/>
-                <Entry IsPassword="True" Text="{Binding Password}" StyleClass="LoginEntry"/>
+                <Entry IsPassword="True" Text="{Binding Password}" StyleClass="LoginEntry" BackgroundColor="#444444"/>
             </VerticalStackLayout>
 
             <Label Text="{Binding ErrorMessage}" StyleClass="ErrorLbl"  IsVisible="{Binding IsLoginError}"/>
