@@ -3,5 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProjectApp.MainPage">
 
-   
+    <VerticalStackLayout>
+        <Button Text="click me" Command="{Binding BtnCommand}"/>
+        <Label Text="{Binding LblText}"/>
+    </VerticalStackLayout>
 </ContentPage>
