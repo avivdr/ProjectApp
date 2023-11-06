@@ -82,7 +82,7 @@ namespace ProjectApp.ViewModel
                 try
                 {
                     User user = await service.Login(Username, Password);
-                    if (user is null)
+                    if (user == null)
                     {
                         IsLoginError = true;
                     }
