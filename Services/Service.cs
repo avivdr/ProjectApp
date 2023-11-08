@@ -13,15 +13,17 @@ namespace ProjectApp.Services
     {
         private HttpClient httpClient;
         const string URL = "https://dz7hpq26-7058.euw.devtunnels.ms/OpusOne";
+        private JsonSerializerOptions options;
         private List<User> _users = new()
         {
-            new() { Username = "vulu123", Password = "12345", Email = "vulu@gmail.com" },
-            new() { Username = "bubu123", Password = "baba123", Email = "bubu@gmail.com" }
+            new() { Username = "vulu123", Pwsd = "12345", Email = "vulu@gmail.com" },
+            new() { Username = "bubu123", Pwsd = "baba123", Email = "bubu@gmail.com" }
         };
 
         public Service()
         {
             httpClient = new HttpClient();
+            options = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
         }   
 
         public async Task<string> GetHello()
@@ -40,19 +42,19 @@ namespace ProjectApp.Services
 
         public async Task<User> Login(string username, string password)
         {
-            User user = new User() { Password = password, Username = username };
+            User user = new User() { Pwsd = password, Username = username, Email = "" };
             try
             {
-                var stringContent = new StringContent(JsonSerializer.Serialize(user), Encoding.UTF8, "application/json");
+                var stringContent = new StringContent(JsonSerializer.Serialize(user, options), Encoding.UTF8, "application/json");
                 var response = await httpClient.PostAsync($"{URL}/Login", stringContent);
 
 
                 switch (response.StatusCode)
                 {
                     case HttpStatusCode.OK:
-                        return JsonSerializer.Deserialize<User>(await response.Content.ReadAsStringAsync());
+                        return JsonSerializer.Deserialize<User>(await response.Content.ReadAsStringAsync(), options);
 
-                    case HttpStatusCode.Forbidden:
+                    case HttpStatusCode.Unauthorized:
                         return null;
 
                     default:

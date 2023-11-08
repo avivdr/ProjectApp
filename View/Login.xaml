@@ -38,7 +38,7 @@
 
             <VerticalStackLayout Grid.Column="1" Grid.Row="2" Spacing="20">
                 <Label Text="Password" StyleClass="LoginLbl"/>
-                <Entry IsPassword="True" Text="{Binding Password}" StyleClass="LoginEntry"/>
+                <Entry IsPassword="True" Text="{Binding Password}" StyleClass="LoginEntry" x:Name="lastEntry"/>
                 <Label Text="{Binding ErrorMessage}" StyleClass="ErrorLbl" IsVisible="{Binding IsLoginError}"/>
             </VerticalStackLayout>
 

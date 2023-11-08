@@ -69,6 +69,11 @@ namespace ProjectApp.ViewModel
 
             LoginCommand = new Command(async () =>
             {
+                //var _service = new Service();
+
+                //string st = await _service.GetHello();
+                //User u = await _service.Login("kiki123", "12345");
+
                 IsLoginError = false;
                 ErrorMessage = INCORRECT;
 
