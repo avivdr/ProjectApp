@@ -1,29 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ProjectApp.View.Login"
-             xmlns:ViewModel="clr-namespace:ProjectApp.ViewModel"
-             x:DataType="ViewModel:LoginViewModel"
-             Title="Login"
-             
-             BackgroundColor="#001a1a1a">
-    <ContentPage.Resources>
-        <Style TargetType="Label" Class="LoginLbl">
-            <Setter Property="TextColor" Value="{StaticResource LightTextCLr}"/>
-            <Setter Property="FontSize" Value="16"/>
-        </Style>
-        
-        <Style TargetType="Entry" Class="LoginEntry">
-            <Setter Property="BackgroundColor" Value="#1a1a1a"/>
-            <Setter Property="FontSize" Value="16"/>
-            <Setter Property="TextColor" Value="{StaticResource LightTextCLr}"/>
-        </Style>
-    </ContentPage.Resources>
-
-    <Border 
+<tk:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+          xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+          x:Class="ProjectApp.View.Login"
+          xmlns:ViewModel="clr-namespace:ProjectApp.ViewModel"
+          x:DataType="ViewModel:LoginViewModel"
+          xmlns:tk="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+          Color="Transparent"
+          CanBeDismissedByTappingOutsideOfPopup="False"
+          Size="500,410">
+    <Border
         StrokeShape="RoundRectangle 20"
-        HorizontalOptions="Center"
-        VerticalOptions="Center"
         StrokeThickness="0">
         
         <VerticalStackLayout
@@ -42,7 +28,6 @@
                 <Label Text="{Binding ErrorMessage}" StyleClass="ErrorLbl" IsVisible="{Binding IsLoginError}"/>
             </VerticalStackLayout>
 
-
             <Button 
                 Text="Login"
                 Grid.Column="1"
@@ -53,4 +38,4 @@
                 Command="{Binding LoginCommand}"/>
         </VerticalStackLayout>
     </Border>    
-</ContentPage>
+</tk:Popup>
