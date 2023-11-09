@@ -6,8 +6,7 @@
           x:DataType="ViewModel:LoginViewModel"
           xmlns:tk="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
           Color="Transparent"
-          CanBeDismissedByTappingOutsideOfPopup="False"
-          Size="500,410">
+          CanBeDismissedByTappingOutsideOfPopup="False">
     <Border
         StrokeShape="RoundRectangle 20"
         StrokeThickness="0">
@@ -16,7 +15,7 @@
             Spacing="40"
             Padding="35"
             BackgroundColor="#030303"
-            WidthRequest="500">
+            WidthRequest="400">
             <VerticalStackLayout Grid.Column="1" Grid.Row="1" Spacing="20">
                 <Label Text="Username" StyleClass="LoginLbl"/>
                 <Entry Text="{Binding Username}" StyleClass="LoginEntry"/>
