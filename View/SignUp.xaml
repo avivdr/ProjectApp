@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ProjectApp.View.SignUp"
+             xmlns:vm="clr-namespace:ProjectApp.ViewModel"
+             Title="SignUp">
+    <VerticalStackLayout
+            Spacing="40"
+            Padding="35"
+            BackgroundColor="#030303">
+        <VerticalStackLayout Spacing="20">
+            <Label Text="Username" StyleClass="FormLbl"/>
+            <Entry StyleClass="FormEntry"/>
+        </VerticalStackLayout>
+
+        <VerticalStackLayout Spacing="20">
+            <Label Text="Email" StyleClass="FormLbl"/>
+            <Entry StyleClass="FormEntry" />
+        </VerticalStackLayout>
+
+        <VerticalStackLayout Spacing="20">
+            <Label Text="Password" StyleClass="FormLbl"/>
+            <Entry IsPassword="True" StyleClass="FormEntry"/>
+            <Label StyleClass="FormEntry"/>
+        </VerticalStackLayout>
+
+        <VerticalStackLayout Spacing="20">
+            <Label Text="Verify Password" StyleClass="FormLbl"/>
+            <Entry IsPassword="True" StyleClass="FormEntry" />
+            <Label StyleClass="ErrorLbl"/>
+        </VerticalStackLayout>
+
+        <Button 
+                Text="Sign Up"
+                WidthRequest="100"
+                StyleClass="BlueBtn"/>
+    </VerticalStackLayout>
+</ContentPage>

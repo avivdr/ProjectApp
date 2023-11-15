@@ -16,24 +16,21 @@
             Spacing="40"
             Padding="35"
             BackgroundColor="#030303">
-            <VerticalStackLayout Grid.Column="1" Grid.Row="1" Spacing="20">
-                <Label Text="Username" StyleClass="LoginLbl"/>
-                <Entry Text="{Binding Username}" StyleClass="LoginEntry"/>
+            <VerticalStackLayout Spacing="20">
+                <Label Text="Username" StyleClass="FormLbl"/>
+                <Entry Text="{Binding Username}" StyleClass="FormEntry"/>
             </VerticalStackLayout>
 
-            <VerticalStackLayout Grid.Column="1" Grid.Row="2" Spacing="20">
-                <Label Text="Password" StyleClass="LoginLbl"/>
-                <Entry IsPassword="True" Text="{Binding Password}" StyleClass="LoginEntry"/>
+            <VerticalStackLayout Spacing="20">
+                <Label Text="Password" StyleClass="FormLbl"/>
+                <Entry IsPassword="True" Text="{Binding Password}" StyleClass="FormEntry"/>
                 <Label Text="{Binding ErrorMessage}" StyleClass="ErrorLbl" IsVisible="{Binding IsLoginError}"/>
             </VerticalStackLayout>
 
             <Button 
                 Text="Login"
-                Grid.Column="1"
-                Grid.Row="3"
                 WidthRequest="100"
-                StyleClass="DarkBtn"
-                BackgroundColor="#001f5c"
+                StyleClass="BlueBtn"
                 Command="{Binding LoginCommand}"/>
         </VerticalStackLayout>
     </Border>    
