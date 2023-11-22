@@ -72,7 +72,7 @@ namespace ProjectApp.ViewModel
                 IsLoginError = false;
                 ErrorMessage = INCORRECT;
 
-                if (!ValidateUser(Username, Password))
+                if (!ValidateUser())
                 {
                     IsLoginError = true;
                     return;
@@ -103,9 +103,9 @@ namespace ProjectApp.ViewModel
             });
         }
 
-        private static bool ValidateUser(string username, string password)
+        private bool ValidateUser()
         {
-            return !string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password) && username.Length > 3 && password.Length > 3;
+            return !string.IsNullOrEmpty(Username) && !string.IsNullOrEmpty(Password) && Username.Length > 3 && Password.Length > 3;
         }
     }
 }

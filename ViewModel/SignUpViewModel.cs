@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace ProjectApp.ViewModel
 {
@@ -12,6 +13,8 @@ namespace ProjectApp.ViewModel
         private string _password1;
         private string _password2;
         private string _email;
+        private bool _isErrorMessage;
+        private string _errorMessage;
         public string Username
         {
             get => _username;
@@ -50,5 +53,37 @@ namespace ProjectApp.ViewModel
                 OnPropertyChanged(nameof(Email));
             }
         }
+        public bool IsErrorMessage
+        {
+            get => _isErrorMessage;
+            set
+            {
+                _isErrorMessage = value;
+                OnPropertyChanged(nameof(IsErrorMessage));
+            }
+        }
+        public string ErrorMessage
+        {
+            get => _errorMessage;
+            set
+            {
+                _errorMessage = value;
+                OnPropertyChanged(nameof(ErrorMessage));
+            }
+        }
+
+        public ICommand SignUpCommand { get; protected set; }
+
+        public SignUpViewModel()
+        {
+            
+        }
+
+        private bool ValidateSignUp()
+        {
+            return !string.IsNullOrEmpty(Username) && !string.IsNullOrEmpty(Password1) && !string.IsNullOrEmpty(Password2) && !string.IsNullOrEmpty(Email) 
+                && Username.Length > 3 && Password1.Length > 3 && Password1 == Password2 && Email.Contains('@');
+        }
     }
 }
+
