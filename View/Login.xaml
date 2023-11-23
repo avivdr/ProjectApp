@@ -32,6 +32,8 @@
                 WidthRequest="100"
                 StyleClass="BlueBtn"
                 Command="{Binding LoginCommand}"/>
+
+            <Label Text="Sign up" TextColor="{StaticResource BlueBtnClr}" HorizontalOptions="Start" Margin="20"/>
         </VerticalStackLayout>
     </Border>    
 </tk:Popup>

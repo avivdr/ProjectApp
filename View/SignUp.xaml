@@ -3,36 +3,38 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProjectApp.View.SignUp"
              xmlns:vm="clr-namespace:ProjectApp.ViewModel"
-             Title="SignUp">
+             Title="SignUp"
+             x:DataType="vm:SignUpViewModel">
     <VerticalStackLayout
             Spacing="40"
             Padding="35"
             BackgroundColor="#030303">
         <VerticalStackLayout Spacing="20">
             <Label Text="Username" StyleClass="FormLbl"/>
-            <Entry StyleClass="FormEntry"/>
+            <Entry StyleClass="FormEntry" Text="{Binding Username}"/>
         </VerticalStackLayout>
 
         <VerticalStackLayout Spacing="20">
             <Label Text="Email" StyleClass="FormLbl"/>
-            <Entry StyleClass="FormEntry" />
+            <Entry StyleClass="FormEntry" Text="{Binding Email}"/>
         </VerticalStackLayout>
 
         <VerticalStackLayout Spacing="20">
             <Label Text="Password" StyleClass="FormLbl"/>
-            <Entry IsPassword="True" StyleClass="FormEntry"/>
+            <Entry IsPassword="True" StyleClass="FormEntry" Text="{Binding Password1}"/>
             <Label StyleClass="FormEntry"/>
         </VerticalStackLayout>
 
         <VerticalStackLayout Spacing="20">
             <Label Text="Verify Password" StyleClass="FormLbl"/>
-            <Entry IsPassword="True" StyleClass="FormEntry" />
-            <Label StyleClass="ErrorLbl"/>
+            <Entry IsPassword="True" StyleClass="FormEntry" Text="{Binding Password2}"/>
+            <Label StyleClass="ErrorLbl" Text="{Binding ErrorMessage}" IsVisible="{Binding IsErrorMessage}"/>
         </VerticalStackLayout>
 
         <Button 
                 Text="Sign Up"
                 WidthRequest="100"
-                StyleClass="BlueBtn"/>
+                StyleClass="BlueBtn"
+            Command="{Binding SignUpCommand}"/>
     </VerticalStackLayout>
 </ContentPage>

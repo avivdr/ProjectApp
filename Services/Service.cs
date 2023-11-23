@@ -43,9 +43,9 @@ namespace ProjectApp.Services
         public async Task<User> Login(string username, string password)
         {
             User user = new User() { Pwsd = password, Username = username, Email = "" };
+            var stringContent = new StringContent(JsonSerializer.Serialize(user, options), Encoding.UTF8, "application/json");
             try
             {
-                var stringContent = new StringContent(JsonSerializer.Serialize(user, options), Encoding.UTF8, "application/json");
                 var response = await httpClient.PostAsync($"{URL}/Login", stringContent);
 
 
@@ -62,6 +62,21 @@ namespace ProjectApp.Services
                 }
             }
             catch (Exception)
+            {
+                throw new Exception();
+            }
+        }
+
+        public async Task<HttpStatusCode> Register(User user)
+        {
+            var stringContent = new StringContent(JsonSerializer.Serialize(user, options), Encoding.UTF8, "application/json");
+            try
+            {
+                var response = await httpClient.PostAsync($"{URL}/Register", stringContent);
+
+                return response.StatusCode;
+            }
+            catch(Exception)
             {
                 throw new Exception();
             }

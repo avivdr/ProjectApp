@@ -5,16 +5,16 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:ProjectApp"
     xmlns:view="clr-namespace:ProjectApp.View"
-    Shell.FlyoutBehavior="Disabled">
+    Shell.FlyoutBehavior="Disabled" >
+
+    <ShellContent
+        Title="Home"
+        ContentTemplate="{DataTemplate local:MainPage}"
+        Route="MainPage" />
 
     <ShellContent
         Title="Sign Up"
         ContentTemplate="{DataTemplate view:SignUp}"
         Route="SignUp"/>
-
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage"/>
 
 </Shell>

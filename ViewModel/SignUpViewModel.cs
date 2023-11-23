@@ -1,14 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ProjectApp.Model;
+using ProjectApp.Services;
 
 namespace ProjectApp.ViewModel
 {
     public class SignUpViewModel : ViewModel
     {
+        const string SERVER_ERROR = "A server error occurred";
+        const string CONFLICT = "Username already exists";
+        const string INVALID = "Invalid fields";
+
         private string _username;
         private string _password1;
         private string _password2;
@@ -76,7 +84,53 @@ namespace ProjectApp.ViewModel
 
         public SignUpViewModel()
         {
-            
+            Username = "";
+            Email = "";
+            Password1 = "";
+            Password2 = "";
+            ErrorMessage = INVALID;
+            IsErrorMessage = false;
+
+            SignUpCommand = new Command(async () =>
+            {
+                ErrorMessage = INVALID;
+                if (!ValidateSignUp())
+                {
+                    IsErrorMessage = true;
+                    return;
+                }
+
+                User user = new User() { Username = Username, Email = Email, Pwsd = Password1 };
+                var service = new Service();
+                try
+                {
+                    HttpStatusCode statuscode = await service.Register(user);
+                    switch (statuscode)
+                    {
+                        case HttpStatusCode.OK:
+                            IsErrorMessage = false;
+                            await SecureStorage.Default.SetAsync("CurrentUser", JsonSerializer.Serialize(user));
+                            await Shell.Current.DisplayAlert("sign up success", "sign succeeded", "ok");
+                            await Shell.Current.GoToAsync("MainPage");
+                            break;
+
+                        case HttpStatusCode.Conflict:
+                            ErrorMessage = CONFLICT;
+                            IsErrorMessage = true;
+                            break;
+
+                        default:
+                            ErrorMessage = SERVER_ERROR;
+                            IsErrorMessage = true;
+                            break;
+                    }
+                }
+                catch(Exception)
+                {
+                    ErrorMessage = SERVER_ERROR;
+                    IsErrorMessage = true;
+                }
+            });
         }
 
         private bool ValidateSignUp()
