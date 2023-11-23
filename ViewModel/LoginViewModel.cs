@@ -59,6 +59,7 @@ namespace ProjectApp.ViewModel
         }
 
         public ICommand LoginCommand { get; protected set; }
+        public ICommand SignUpBtnCommand { get; protected set; }    
 
         public LoginViewModel()
         {
@@ -66,6 +67,12 @@ namespace ProjectApp.ViewModel
             Password = "";
             IsLoginError = false;
             ErrorMessage = INCORRECT;
+
+            SignUpBtnCommand = new Command(async () =>
+            {
+                await Shell.Current.GoToAsync("//SignUp");
+                await Login.CloseInstanceAsync();
+            });
 
             LoginCommand = new Command(async () =>
             {

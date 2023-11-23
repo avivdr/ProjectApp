@@ -27,13 +27,19 @@
                 <Label Text="{Binding ErrorMessage}" StyleClass="ErrorLbl" IsVisible="{Binding IsLoginError}"/>
             </VerticalStackLayout>
 
-            <Button 
-                Text="Login"
-                WidthRequest="100"
-                StyleClass="BlueBtn"
-                Command="{Binding LoginCommand}"/>
+            <VerticalStackLayout Spacing="15">
+                <Button 
+                    Text="Login"
+                    WidthRequest="100"
+                    StyleClass="BlueBtn"
+                    Command="{Binding LoginCommand}"/>
 
-            <Label Text="Sign up" TextColor="{StaticResource BlueBtnClr}" HorizontalOptions="Start" Margin="20"/>
+                <Label Text="Sign up" TextColor="{StaticResource BlueLblClr}">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SignUpBtnCommand}"/>
+                    </Label.GestureRecognizers>
+                </Label>
+            </VerticalStackLayout>            
         </VerticalStackLayout>
     </Border>    
 </tk:Popup>

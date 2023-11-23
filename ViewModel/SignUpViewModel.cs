@@ -17,12 +17,15 @@ namespace ProjectApp.ViewModel
         const string CONFLICT = "Username already exists";
         const string INVALID = "Invalid fields";
 
+        #region fields
         private string _username;
         private string _password1;
         private string _password2;
         private string _email;
         private bool _isErrorMessage;
         private string _errorMessage;
+        #endregion
+
         public string Username
         {
             get => _username;
