@@ -54,10 +54,16 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="View\MYPopup.xaml.cs">
+	    <DependentUpon>MYPopup.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
 	  <MauiXaml Update="View\Login.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="View\SignUp.xaml">
+	  <MauiXaml Update="View\MYPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
