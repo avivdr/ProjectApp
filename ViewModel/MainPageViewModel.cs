@@ -19,6 +19,9 @@ namespace ProjectApp.ViewModel
         public ICommand BtnCommand { get; set; }
         public ICommand Btn2Command { get; set; }
         private string _password;
+        private string _username;
+        private string _email;
+
         public string Password
         {
             get => _password;
@@ -28,7 +31,6 @@ namespace ProjectApp.ViewModel
                 OnPropertyChanged(nameof(Password));
             }
         }
-        private string _username;
         public string Username
         {
             get => _username;
@@ -38,7 +40,6 @@ namespace ProjectApp.ViewModel
                 OnPropertyChanged(nameof(Username));
             }
         }
-        private string _email;
         public string Email
         {
             get => _email;

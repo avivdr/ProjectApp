@@ -29,7 +29,7 @@ public static class MauiProgram
         builder.Services.AddTransientPopup<Login, LoginViewModel>();
         builder.Services.AddSingleton<Debounce>();
         builder.Services.AddSingleton<DebounceViewModel>();
-
+		
         return builder.Build();
 	}
 }
