@@ -16,6 +16,8 @@ namespace ProjectApp.ViewModel
         const string INCORRECT = "Incorrect username or password";
         const string SERVER_ERROR = "A server error occurred";
 
+        private Service service;
+
         private string _username;
         private string _password;
         private bool _isLoginError;
@@ -61,12 +63,13 @@ namespace ProjectApp.ViewModel
         public ICommand LoginCommand { get; protected set; }
         public ICommand SignUpBtnCommand { get; protected set; }    
 
-        public LoginViewModel()
+        public LoginViewModel(Service _service)
         {
             Username = "";
             Password = "";
             IsLoginError = false;
             ErrorMessage = INCORRECT;
+            service = _service;
 
             SignUpBtnCommand = new Command(async () =>
             {

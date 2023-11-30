@@ -18,6 +18,8 @@ namespace ProjectApp.ViewModel
         private readonly IPopupService popupService;
         public ICommand BtnCommand { get; set; }
         public ICommand Btn2Command { get; set; }
+        public ICommand Btn3Command { get; set; }
+
         private string _password;
         private string _username;
         private string _email;
@@ -61,7 +63,25 @@ namespace ProjectApp.ViewModel
                 Password = u.Pwsd;
                 Email = u.Email;
             });
-            
+
+            Btn3Command = new Command(async () =>
+            {
+                var service = new Service();
+                
+                MainThread.BeginInvokeOnMainThread(async () => 
+                {
+                    FileResult fr = await MediaPicker.Default.PickPhotoAsync();
+                    Post post = new Post()
+                    {
+                        Content = "posadpoaod",
+                        CreatorId = 1,
+                        Title = "post",
+                        UploadDateTime = DateTime.Now,
+                    };
+                    await service.Post(post, fr);
+                });                
+                
+            });
         }
     }
 }

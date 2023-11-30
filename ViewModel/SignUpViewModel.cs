@@ -16,6 +16,7 @@ namespace ProjectApp.ViewModel
         const string SERVER_ERROR = "A server error occurred";
         const string CONFLICT = "Username already exists";
         const string INVALID = "Invalid fields";
+        private Service service;
 
         #region fields
         private string _username;
@@ -85,7 +86,7 @@ namespace ProjectApp.ViewModel
 
         public ICommand SignUpCommand { get; protected set; }
 
-        public SignUpViewModel()
+        public SignUpViewModel(Service _service)
         {
             Username = "";
             Email = "";
@@ -93,6 +94,8 @@ namespace ProjectApp.ViewModel
             Password2 = "";
             ErrorMessage = INVALID;
             IsErrorMessage = false;
+
+            service = _service;
 
             SignUpCommand = new Command(async () =>
             {
@@ -128,7 +131,7 @@ namespace ProjectApp.ViewModel
                             break;
                     }
                 }
-                catch(Exception)
+                catch (Exception)
                 {
                     ErrorMessage = SERVER_ERROR;
                     IsErrorMessage = true;

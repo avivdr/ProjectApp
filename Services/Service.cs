@@ -40,8 +40,43 @@ namespace ProjectApp.Services
             return "error";
         }
 
-        public async Task<User> Login(string username, string password)
+        public async Task<HttpStatusCode> Post(Post post, FileResult file = null)
         {
+            try
+            {
+                var multipartFormContent = new MultipartFormDataContent();    
+                
+                if(file != null)
+                {
+                    byte[] bytes;
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        var stream = await file.OpenReadAsync();
+                        stream.CopyTo(ms);
+                        bytes = ms.ToArray();
+                    }
+
+                    var content = new ByteArrayContent(bytes);
+                    multipartFormContent.Add(content, "file", "fileName");
+                }
+                
+
+                var stringContent = new StringContent(JsonSerializer.Serialize(post, options), Encoding.UTF8, "applicaiton/json");
+                multipartFormContent.Add(stringContent, "post");
+
+                var response = await httpClient.PostAsync($"{URL}/UploadPost", multipartFormContent);
+                return response.StatusCode;
+
+            }
+            catch (Exception)
+            {
+                return HttpStatusCode.BadRequest;
+            }
+
+        }
+
+        public async Task<User> Login(string username, string password)
+        { 
             User user = new User() { Pwsd = password, Username = username, Email = "" };
             var stringContent = new StringContent(JsonSerializer.Serialize(user, options), Encoding.UTF8, "application/json");
             try

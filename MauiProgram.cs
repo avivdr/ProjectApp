@@ -2,6 +2,7 @@
 using ProjectApp.ViewModel;
 using ProjectApp.View;
 using CommunityToolkit.Maui;
+using ProjectApp.Services;
 
 namespace ProjectApp;
 
@@ -29,6 +30,8 @@ public static class MauiProgram
         builder.Services.AddTransientPopup<Login, LoginViewModel>();
         builder.Services.AddSingleton<Debounce>();
         builder.Services.AddSingleton<DebounceViewModel>();
+
+		builder.Services.AddSingleton<Service>();
 		
         return builder.Build();
 	}
