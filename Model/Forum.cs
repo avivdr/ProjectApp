@@ -6,22 +6,16 @@ using System.Threading.Tasks;
 
 namespace ProjectApp.Model
 {
-    public class Post
+    public class Forum
     {
         public int Id { get; set; }
-
-        public int CreatorId { get; set; }
-
         public string Title { get; set; }
-
-        public string? Content { get; set; }
-
-        public DateTime UploadDateTime { get; set; }
-
+        public string ForumDescription { get; set; }
+        public int CreatorId { get; set; }
+        public DateTime CreatedDadeTime { get; set; }
         public int? Work { get; set; }
-
         public int? Composer { get; set; }
-
         public User Creator { get; set; }
+        public List<ForumComment> ForumComments { get; set; }
     }
 }

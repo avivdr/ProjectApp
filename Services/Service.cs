@@ -44,9 +44,9 @@ namespace ProjectApp.Services
         {
             try
             {
-                var multipartFormContent = new MultipartFormDataContent();    
-                
-                if(file != null)
+                var multipartFormContent = new MultipartFormDataContent();
+
+                if (file != null)
                 {
                     byte[] bytes;
                     using (MemoryStream ms = new MemoryStream())
@@ -58,10 +58,9 @@ namespace ProjectApp.Services
 
                     var content = new ByteArrayContent(bytes);
                     multipartFormContent.Add(content, "file", "fileName");
-                }
-                
+                }                
 
-                var stringContent = new StringContent(JsonSerializer.Serialize(post, options), Encoding.UTF8, "applicaiton/json");
+                var stringContent = new StringContent(JsonSerializer.Serialize(post, options), Encoding.UTF8, "application/json");
                 multipartFormContent.Add(stringContent, "post");
 
                 var response = await httpClient.PostAsync($"{URL}/UploadPost", multipartFormContent);
@@ -72,7 +71,6 @@ namespace ProjectApp.Services
             {
                 return HttpStatusCode.BadRequest;
             }
-
         }
 
         public async Task<User> Login(string username, string password)
