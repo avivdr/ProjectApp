@@ -26,7 +26,7 @@ namespace ProjectApp.Model
             Pwsd = "";
             Email = "";
             Comments = new();
-            ForumComments= new();
+            ForumComments = new();
             Forums= new();
             Posts = new();
             WorksUsers = new();

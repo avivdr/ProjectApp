@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using ProjectApp.Model;
 
@@ -23,7 +24,7 @@ namespace ProjectApp.Services
         public Service()
         {
             httpClient = new HttpClient();
-            options = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
+            options = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true, ReferenceHandler = ReferenceHandler.Preserve };
         }   
 
         public async Task<string> GetHello()
@@ -86,7 +87,7 @@ namespace ProjectApp.Services
                 {
                     case HttpStatusCode.OK:
                             string st = await response.Content.ReadAsStringAsync();
-                            return JsonSerializer.Deserialize<User>(await response.Content.ReadAsStringAsync(), options);                        
+                            return JsonSerializer.Deserialize<User>(st, options);                        
 
                     case HttpStatusCode.Unauthorized:
                         return null;

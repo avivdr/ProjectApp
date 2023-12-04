@@ -22,6 +22,8 @@ namespace ProjectApp.Model
 
         public int? Composer { get; set; }
 
+        public List<Comment> Comments { get; set; }
+
         public User Creator { get; set; }
     }
 }
