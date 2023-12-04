@@ -6,9 +6,9 @@
              x:DataType="viewModel:MainPageViewModel">
 
     <VerticalStackLayout>
-        <Button Text="click me" Command="{Binding BtnCommand}"/>
-        <Button Text="click me 2" Command="{Binding Btn2Command}"/>
-        <Button Text="click me 3" Command="{Binding Btn3Command}"/>
+        <Button Text="Login" Command="{Binding BtnCommand}"/>
+        <Button Text="Show user" Command="{Binding Btn2Command}"/>
+        <Button Text="post" Command="{Binding Btn3Command}"/>
 
         <Label Text="{Binding Username}"/>
         <Label Text="{Binding Password}"/>

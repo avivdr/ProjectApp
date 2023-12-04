@@ -17,5 +17,19 @@ namespace ProjectApp.Model
         public List<ForumComment> ForumComments { get; set; }
         public List<Forum> Forums { get; set; }
         public List<Post> Posts { get; set; }
+        public List<WorksUser> WorksUsers { get; set; }
+
+        public User()
+        {
+            Id = 0;
+            Username = "";
+            Pwsd = "";
+            Email = "";
+            Comments = new();
+            ForumComments= new();
+            Forums= new();
+            Posts = new();
+            WorksUsers = new();
+        }
     }
 }

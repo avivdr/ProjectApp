@@ -14,7 +14,7 @@ namespace ProjectApp.Model
 
         public string Title { get; set; }
 
-        public string? Content { get; set; }
+        public string Content { get; set; }
 
         public DateTime UploadDateTime { get; set; }
 

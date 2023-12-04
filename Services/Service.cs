@@ -75,7 +75,7 @@ namespace ProjectApp.Services
 
         public async Task<User> Login(string username, string password)
         { 
-            User user = new User() { Pwsd = password, Username = username, Email = "" };
+            User user = new() { Pwsd = password, Username = username };
             var stringContent = new StringContent(JsonSerializer.Serialize(user, options), Encoding.UTF8, "application/json");
             try
             {
@@ -85,7 +85,8 @@ namespace ProjectApp.Services
                 switch (response.StatusCode)
                 {
                     case HttpStatusCode.OK:
-                        return JsonSerializer.Deserialize<User>(await response.Content.ReadAsStringAsync(), options);
+                            string st = await response.Content.ReadAsStringAsync();
+                            return JsonSerializer.Deserialize<User>(await response.Content.ReadAsStringAsync(), options);                        
 
                     case HttpStatusCode.Unauthorized:
                         return null;
@@ -105,7 +106,7 @@ namespace ProjectApp.Services
             var stringContent = new StringContent(JsonSerializer.Serialize(user, options), Encoding.UTF8, "application/json");
             try
             {
-                var response = await httpClient.PostAsync($"{URL}/Register", stringContent);
+                var response = await httpClient.PostAsync($@"{URL}/Register", stringContent);
 
                 return response.StatusCode;
             }
