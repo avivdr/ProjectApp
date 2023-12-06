@@ -11,19 +11,20 @@ namespace ProjectApp.Model
     {
         public int Id { get; set; }
         public string Username { get; set; }
-        public string Pwsd { get; set; }
+        public string Password { get; set; }
         public string Email { get; set; }
         public List<Comment> Comments { get; set; }
         public List<ForumComment> ForumComments { get; set; }
         public List<Forum> Forums { get; set; }
         public List<Post> Posts { get; set; }
-        public List<WorksUser> WorksUsers { get; set; }
+        private List<WorksUser> WorksUsers { get; set; }
+        public List<int> Works { get => WorksUsers.Select(x => x.WorkId).ToList(); }
 
         public User()
         {
             Id = 0;
             Username = "";
-            Pwsd = "";
+            Password = "";
             Email = "";
             Comments = new();
             ForumComments = new();

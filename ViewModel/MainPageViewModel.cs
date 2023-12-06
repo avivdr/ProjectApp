@@ -60,7 +60,7 @@ namespace ProjectApp.ViewModel
             {
                 User u = JsonSerializer.Deserialize<User>(await SecureStorage.Default.GetAsync("CurrentUser"));
                 Username = u.Username;
-                Password = u.Pwsd;
+                Password = u.Password;
                 Email = u.Email;
             });
 

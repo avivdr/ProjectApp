@@ -15,11 +15,6 @@ namespace ProjectApp.Services
         private HttpClient httpClient;
         const string URL = "https://dz7hpq26-7058.euw.devtunnels.ms/OpusOne";
         private JsonSerializerOptions options;
-        private List<User> _users = new()
-        {
-            new() { Username = "vulu123", Pwsd = "12345", Email = "vulu@gmail.com" },
-            new() { Username = "bubu123", Pwsd = "baba123", Email = "bubu@gmail.com" }
-        };
 
         public Service()
         {
@@ -76,7 +71,7 @@ namespace ProjectApp.Services
 
         public async Task<User> Login(string username, string password)
         { 
-            User user = new() { Pwsd = password, Username = username };
+            User user = new() { Password = password, Username = username };
             var stringContent = new StringContent(JsonSerializer.Serialize(user, options), Encoding.UTF8, "application/json");
             try
             {
@@ -93,7 +88,7 @@ namespace ProjectApp.Services
                         return null;
 
                     default:
-                        throw new Exception();
+                        throw new Exception(response.StatusCode.ToString());
                 }
             }
             catch (Exception)

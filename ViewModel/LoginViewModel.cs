@@ -88,7 +88,6 @@ namespace ProjectApp.ViewModel
                     return;
                 }
 
-                var service = new Service();
                 try
                 {
                     User user = await service.Login(Username, Password);

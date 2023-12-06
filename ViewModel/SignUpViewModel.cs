@@ -106,8 +106,7 @@ namespace ProjectApp.ViewModel
                     return;
                 }
 
-                User user = new User() { Username = Username, Email = Email, Pwsd = Password1 };
-                var service = new Service();
+                User user = new() { Username = Username, Email = Email, Password = Password1 };
                 try
                 {
                     HttpStatusCode statuscode = await service.Register(user);
