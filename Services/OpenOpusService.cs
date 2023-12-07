@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using ProjectApp.Model;
 
@@ -33,16 +34,19 @@ namespace ProjectApp.Services
 
     public class OpenOpusService
     {
-        private HttpClient client;
+        readonly HttpClient client;
         const string URL = @"https://api.openopus.org";
-        public static JsonSerializerOptions options = new JsonSerializerOptions()
-        {
-            WriteIndented = true
-        };
+        public readonly JsonSerializerOptions options;
 
         public OpenOpusService()
         {
             client = new HttpClient();
+            options = new JsonSerializerOptions()
+            {
+                WriteIndented = true,
+                PropertyNameCaseInsensitive = true,
+                ReferenceHandler = ReferenceHandler.Preserve
+            };
         }
 
         public List<string> Periods = new List<string>()
@@ -69,13 +73,13 @@ namespace ProjectApp.Services
         };
         public static List<Work> FilterThing(List<Work> list)
         {
-            return list.Where(work => work.genre != "Keyboard" &&
-            (work.title.ToLower().Contains("piano") || work.title.ToLower().Contains("keyboard"))).ToList();
+            return list.Where(work => work.Genre != "Keyboard" &&
+            (work.Title.ToLower().Contains("piano") || work.Title.ToLower().Contains("keyboard"))).ToList();
         }
 
         public static List<Work> FilterKeyboard(List<Work> list)
         {
-            return list.Where(work => work.genre == "Keyboard").ToList();
+            return list.Where(work => work.Genre == "Keyboard").ToList();
         }
 
         //useful functions
@@ -90,7 +94,7 @@ namespace ProjectApp.Services
                 {
                     string content = await response.Content.ReadAsStringAsync();
                     var result = JsonSerializer.Deserialize<OmniSearchResult>(content);
-                    if (result != null && result.status.success == "true")
+                    if (result != null && result.Status.Success == "true")
                         return result;
                 }
             }
@@ -102,12 +106,12 @@ namespace ProjectApp.Services
         {
             try
             {
-                var response = await client.GetAsync($"{URL}/work/list/composer/{composerID}/genre/all.json");
+                var response = await client.GetAsync($"{URL}/work/list/composer/{composerID}/Genre/all.json");
                 if (response.IsSuccessStatusCode)
                 {
                     string content = await response.Content.ReadAsStringAsync();
                     var result = JsonSerializer.Deserialize<WorkResult>(content);
-                    if (result != null && result.status.success == "true")
+                    if (result != null && result.Status.Success == "true")
                         return result;
                 }
             }

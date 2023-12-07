@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace ProjectApp.Model
@@ -18,6 +19,8 @@ namespace ProjectApp.Model
         public List<Forum> Forums { get; set; }
         public List<Post> Posts { get; set; }
         private List<WorksUser> WorksUsers { get; set; }
+
+        [JsonIgnore]
         public List<int> Works { get => WorksUsers.Select(x => x.WorkId).ToList(); }
 
         public User()

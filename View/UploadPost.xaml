@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ProjectApp.View.UploadPost"
+             Title="UploadPost"
+             xmlns:ViewModel="clr-namespace:ProjectApp.ViewModel"
+             x:DataType="ViewModel:UploadPostViewModel">
+    <VerticalStackLayout>
+        <Label Text="Title"/>
+        <Entry Text="{Binding Title}"/>
+
+        <Label Text="Content"/>
+        <Editor Text="{Binding Content}" />
+
+        <Button Text="Pick File" Command="{Binding PickFileCommand}"/>
+
+        <Label Text="{Binding ErrorMessage}" IsVisible="{Binding IsErrorMessage}"/>
+        
+        <Button Text="Post" Command="{Binding PostCommand}"/>
+    </VerticalStackLayout>
+</ContentPage>

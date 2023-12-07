@@ -30,6 +30,8 @@ public static class MauiProgram
         builder.Services.AddTransientPopup<Login, LoginViewModel>();
         builder.Services.AddSingleton<Debounce>();
         builder.Services.AddSingleton<DebounceViewModel>();
+		builder.Services.AddSingleton<UploadPost>();
+		builder.Services.AddSingleton<UploadPostViewModel>();
 
 		builder.Services.AddSingleton<Service>();
 		

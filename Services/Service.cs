@@ -14,12 +14,17 @@ namespace ProjectApp.Services
     {
         private HttpClient httpClient;
         const string URL = "https://dz7hpq26-7058.euw.devtunnels.ms/OpusOne";
-        private JsonSerializerOptions options;
+        readonly JsonSerializerOptions options;
 
         public Service()
         {
             httpClient = new HttpClient();
-            options = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true, ReferenceHandler = ReferenceHandler.Preserve };
+            options = new JsonSerializerOptions()
+            {
+                PropertyNameCaseInsensitive = true,
+                ReferenceHandler = ReferenceHandler.Preserve,
+                WriteIndented = true
+            };
         }   
 
         public async Task<string> GetHello()

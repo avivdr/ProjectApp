@@ -10,119 +10,84 @@ namespace ProjectApp.Model
 {
     public class Request
     {
-        public string type { get; set; }
-        public string item { get; set; }
-        public string search { get; set; }
-        public string offset { get; set; }
-        public override string ToString()
-        {
-            return JsonSerializer.Serialize(this, OpenOpusService.options);
-        }
+        public string Type { get; set; }
+        public string Item { get; set; }
+        public string Search { get; set; }
+        public string Offset { get; set; }
     }
     public class Status
     {
-        public string version { get; set; }
-        public string success { get; set; }
-        public string source { get; set; }
-        public int rows { get; set; }
-        public float processingtime { get; set; }
-        public string api { get; set; }
-        public override string ToString()
-        {
-            return JsonSerializer.Serialize(this, OpenOpusService.options);
-        }
+        public string Version { get; set; }
+        public string Success { get; set; }
+        public string Source { get; set; }
+        public int Rows { get; set; }
+        public float ProcessingTime { get; set; }
+        public string Api { get; set; }
     }
 
     #region Objects
     public class Work
     {
-        public string title { get; set; }
-        public string subtitle { get; set; }
-        public string searchterms { get; set; }
-        public string popular { get; set; }
-        public string recommended { get; set; }
-        public string id { get; set; }
-        public string genre { get; set; }
-        public string searchmode { get; set; }
-        public string catalogue { get; set; }
-        public string catalogue_number { get; set; }
-        public override string ToString()
-        {
-            return JsonSerializer.Serialize(this, OpenOpusService.options);
-        }
+        public string Title { get; set; }
+        public string Subtitle { get; set; }
+        public string Searchterms { get; set; }
+        public string Popular { get; set; }
+        public string Recommended { get; set; }
+        public string Id { get; set; }
+        public string Genre { get; set; }
+        public string SearchMode { get; set; }
+        public string Catalogue { get; set; }
+        public string Catalogue_Number { get; set; }
+        public Composer Composer { get; set; }
 
     }
     public class Composer
     {
-        public string id { get; set; }
-        public string name { get; set; }
-        public string complete_name { get; set; }
-        public string birth { get; set; }
-        public string death { get; set; }
-        public string epoch { get; set; }
-        public string portrait { get; set; }
-        public override string ToString()
-        {
-            return JsonSerializer.Serialize(this, OpenOpusService.options);
-        }
+        public string Id { get; set; }
+        public string Name { get; set; }
+        public string Complete_Name { get; set; }
+        public string Birth { get; set; }
+        public string Death { get; set; }
+        public string Epoch { get; set; }
+        public string Portrait { get; set; }
     }
     #endregion
 
     #region Requests
     public class ComposerResult
     {
-        public Status status { get; set; }
-        public Request request { get; set; }
-        public List<Composer> composers { get; set; }
-        public override string ToString()
-        {
-            return JsonSerializer.Serialize(this, OpenOpusService.options);
-        }
+        public Status Status { get; set; }
+        public Request Request { get; set; }
+        public List<Composer> Composers { get; set; }
     }
 
     public class GenreResult
     {
-        public Status status { get; set; }
-        public Composer composer { get; set; }
-        public List<string> genres { get; set; }
-        public override string ToString()
-        {
-            return JsonSerializer.Serialize(this, OpenOpusService.options);
-        }
+        public Status Status { get; set; }
+        public Composer Composer { get; set; }
+        public List<string> Genres { get; set; }
     }
 
     public class WorkResult
     {
-        public Status status { get; set; }
-        public Request request { get; set; }
-        public Composer composer { get; set; }
-        public List<Work> works { get; set; }
-        public override string ToString()
-        {
-            return JsonSerializer.Serialize(this, OpenOpusService.options);
-        }
+        public Status Status { get; set; }
+        public Request Request { get; set; }
+        public Composer Composer { get; set; }
+        public List<Work> Works { get; set; }
     }
 
     public class OmniSearchResult
     {
-        public Status status { get; set; }
-        public Request request { get; set; }
-        public List<OmniSearchItem> results { get; set; }
-        public int next { get; set; }
-        public override string ToString()
-        {
-            return JsonSerializer.Serialize(this, OpenOpusService.options);
-        }
+        public Status Status { get; set; }
+        public Request Request { get; set; }
+        public List<OmniSearchItem> Results { get; set; }
+        public int Next { get; set; }
     }
 
     public class OmniSearchItem
     {
-        public Composer composer { get; set; }
-        public Work work { get; set; }
-        public override string ToString()
-        {
-            return JsonSerializer.Serialize(this, OpenOpusService.options);
-        }
+        public Composer Composer { get; set; }
+        public Work Work { get; set; }
     }
     #endregion    
 }

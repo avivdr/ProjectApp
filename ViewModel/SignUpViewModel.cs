@@ -125,9 +125,7 @@ namespace ProjectApp.ViewModel
                             break;
 
                         default:
-                            ErrorMessage = SERVER_ERROR;
-                            IsErrorMessage = true;
-                            break;
+                            throw new Exception();
                     }
                 }
                 catch (Exception)

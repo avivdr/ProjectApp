@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace ProjectApp.Model
@@ -25,5 +26,19 @@ namespace ProjectApp.Model
         public List<Comment> Comments { get; set; }
 
         public User Creator { get; set; }
+
+        [JsonIgnore]
+        public FileStream File { get; set; }
+
+        public Post()
+        {
+            Id = 0;
+            CreatorId = 0;
+            Title = "";
+            Content = "";
+            UploadDateTime = DateTime.Now;
+            Comments = new();
+            Creator = new();
+        }
     }
 }
