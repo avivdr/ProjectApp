@@ -22,8 +22,7 @@ namespace ProjectApp.Services
             options = new JsonSerializerOptions()
             {
                 PropertyNameCaseInsensitive = true,
-                ReferenceHandler = ReferenceHandler.Preserve,
-                WriteIndented = true
+                ReferenceHandler = ReferenceHandler.Preserve
             };
         }   
 
