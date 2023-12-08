@@ -12,7 +12,7 @@ namespace ProjectApp.Services
 {
     public class Service
     {
-        private HttpClient httpClient;
+        readonly HttpClient httpClient;
         const string URL = "https://dz7hpq26-7058.euw.devtunnels.ms/OpusOne";
         readonly JsonSerializerOptions options;
 
