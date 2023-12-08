@@ -34,13 +34,13 @@ namespace ProjectApp.Services
 
     public class OpenOpusService
     {
-        readonly HttpClient client;
+        readonly HttpClient httpClient;
         const string URL = @"https://api.openopus.org";
-        public readonly JsonSerializerOptions options;
+        readonly JsonSerializerOptions options;
 
         public OpenOpusService()
         {
-            client = new HttpClient();
+            httpClient = new HttpClient();
             options = new JsonSerializerOptions()
             {
                 WriteIndented = true,
@@ -89,7 +89,7 @@ namespace ProjectApp.Services
         {
             try
             {
-                var response = await client.GetAsync($"{URL}/omnisearch/{query}/0.json");
+                var response = await httpClient.GetAsync($"{URL}/omnisearch/{query}/0.json");
                 if (response.IsSuccessStatusCode)
                 {
                     string content = await response.Content.ReadAsStringAsync();
@@ -102,11 +102,29 @@ namespace ProjectApp.Services
             return null;
         }
 
+        public async Task<List<Composer>> SearchComposerByName(string query)
+        {
+            try
+            {
+                var response = await httpClient.GetAsync($@"{URL}/composer/list/search/{query}.json");
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    var result = JsonSerializer.Deserialize<ComposerResult>(content);
+                    if (result != null && result.Status.Success == "true")
+                        return result.Composers;
+                }
+            }
+            catch (Exception) { }
+
+            return null;
+        }
+
         public async Task<WorkResult> WorksByComposerID(int composerID)
         {
             try
             {
-                var response = await client.GetAsync($"{URL}/work/list/composer/{composerID}/Genre/all.json");
+                var response = await httpClient.GetAsync($"{URL}/work/list/composer/{composerID}/Genre/all.json");
                 if (response.IsSuccessStatusCode)
                 {
                     string content = await response.Content.ReadAsStringAsync();
@@ -123,7 +141,7 @@ namespace ProjectApp.Services
         {
             try
             {
-                var response = await client.GetAsync($"{URL}/composer/list/pop.json");
+                var response = await httpClient.GetAsync($"{URL}/composer/list/pop.json");
                 if (response.IsSuccessStatusCode)
                 {
                     string content = await response.Content.ReadAsStringAsync();
@@ -138,7 +156,7 @@ namespace ProjectApp.Services
         {
             try
             {
-                var response = await client.GetAsync($"{URL}/composer/list/epoch/{Periods[(int)period]}.json");
+                var response = await httpClient.GetAsync($"{URL}/composer/list/epoch/{Periods[(int)period]}.json");
                 if (response.IsSuccessStatusCode)
                 {
                     string content = await response.Content.ReadAsStringAsync();
