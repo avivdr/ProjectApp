@@ -14,6 +14,7 @@ namespace ProjectApp.ViewModel
     public class UploadPostViewModel : ViewModel
     {
         const string SERVER_ERROR = "A server error occurred";
+        const string FILE_PICK_ERROR = "An error occurred when picking file";
         const string INVALID = "Invalid fields";
 
         private Service service;
@@ -67,6 +68,20 @@ namespace ProjectApp.ViewModel
             service = _service;
             IsErrorMessage = false;
             ErrorMessage = SERVER_ERROR;
+
+            PickFileCommand = new Command(async async =>
+            {
+                try
+                {
+                    File = await FilePicker.Default.PickAsync();
+                }
+                catch (Exception)
+                {
+                    File = null;
+                    ErrorMessage = FILE_PICK_ERROR;
+                    IsErrorMessage = true;
+                }
+            });
 
             PostCommand = new Command(async () =>
             {

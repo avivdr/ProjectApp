@@ -13,6 +13,7 @@
         <Editor Text="{Binding Content}" />
 
         <Button Text="Pick File" Command="{Binding PickFileCommand}"/>
+        <Label Text="{Binding File.FileName}"/>
 
         <Label Text="{Binding ErrorMessage}" IsVisible="{Binding IsErrorMessage}"/>
         
