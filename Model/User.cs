@@ -21,7 +21,7 @@ namespace ProjectApp.Model
         private List<WorksUser> WorksUsers { get; set; }
 
         [JsonIgnore]
-        public List<int> Works { get => WorksUsers.Select(x => x.WorkId).ToList(); }
+        public List<Work> Works { get => WorksUsers.Select(x => x.Work).ToList(); }
 
         public User()
         {

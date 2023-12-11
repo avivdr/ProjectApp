@@ -20,13 +20,18 @@ namespace ProjectApp.Model
 
         public DateTime UploadDateTime { get; set; }
 
-        public int? Work { get; set; }
+        public int? WorkId { get; set; }
 
-        public int? Composer { get; set; }
+        public int? ComposerId { get; set; }
 
         public List<Comment> Comments { get; set; }
 
         public User Creator { get; set; }
+
+        public Composer Composer { get; set; }
+
+        public Work Work { get; set; }
+
 
         [JsonIgnore]
         public FileStream File { get; set; }
@@ -39,7 +44,9 @@ namespace ProjectApp.Model
             Content = "";
             UploadDateTime = DateTime.Now;
             Comments = new();
+            Composer = new();
             Creator = new();
+            Work = new();
         }
     }
 }

@@ -15,5 +15,6 @@ namespace ProjectApp.Model
         public int WorkId { get; set; }
 
         public User User { get; set; }
+        public Work Work { get; set; }
     }
 }

@@ -13,9 +13,11 @@ namespace ProjectApp.Model
         public string ForumDescription { get; set; }
         public int CreatorId { get; set; }
         public DateTime CreatedDadeTime { get; set; }
-        public int? Work { get; set; }
-        public int? Composer { get; set; }
+        public int? WorkId { get; set; }
+        public int? ComposerId { get; set; }
+        public Composer Composer { get; set; }
         public User Creator { get; set; }
         public List<ForumComment> ForumComments { get; set; }
+        public Work Work { get; set; }
     }
 }
