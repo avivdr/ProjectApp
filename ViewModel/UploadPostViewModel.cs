@@ -94,7 +94,7 @@ namespace ProjectApp.ViewModel
                         Title = Title,
                         Creator = u
                     };
-                    HttpStatusCode httpStatusCode = await service.Post(post, File);
+                    HttpStatusCode httpStatusCode = await service.UploadPost(post, File);
                     switch (httpStatusCode)
                     {
                         case HttpStatusCode.OK:

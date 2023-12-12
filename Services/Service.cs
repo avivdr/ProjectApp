@@ -40,7 +40,7 @@ namespace ProjectApp.Services
             return "error";
         }
 
-        public async Task<HttpStatusCode> Post(Post post, FileResult file = null)
+        public async Task<HttpStatusCode> UploadPost(Post post, FileResult file = null)
         {
             try
             {
@@ -65,7 +65,6 @@ namespace ProjectApp.Services
 
                 var response = await httpClient.PostAsync($"{URL}/UploadPost", multipartFormContent);
                 return response.StatusCode;
-
             }
             catch (Exception)
             {

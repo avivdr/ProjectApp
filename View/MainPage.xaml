@@ -8,7 +8,7 @@
     <VerticalStackLayout>
         <Button Text="Login" Command="{Binding BtnCommand}"/>
         <Button Text="Show user" Command="{Binding Btn2Command}"/>
-        <Button Text="post" Command="{Binding Btn3Command}"/>
+        <Button Text="debounce" Command="{Binding Btn3Command}"/>
 
         <Label Text="{Binding Username}"/>
         <Label Text="{Binding Password}"/>

@@ -4,11 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DebounceThrottle;
 
 namespace ProjectApp.ViewModel
 {
     public class DebounceViewModel : ViewModel
     {
+        readonly DebounceDispatcher _dispatcher;
+
         private string _entryText;
         private string _lblText;
         public string EntryText 
@@ -18,8 +21,7 @@ namespace ProjectApp.ViewModel
             {
                 _entryText = value;
                 OnPropertyChanged(nameof(EntryText));
-                Action a = () => LblText = _entryText;
-                a.Debounce()();
+                _dispatcher.Debounce(() => LblText = _entryText);
             }
         }
         public string LblText
@@ -30,6 +32,11 @@ namespace ProjectApp.ViewModel
                 _lblText = value;
                 OnPropertyChanged(nameof(LblText));
             }
+        }
+
+        public DebounceViewModel()
+        {
+            _dispatcher = new DebounceDispatcher(1000);
         }
     }
 }

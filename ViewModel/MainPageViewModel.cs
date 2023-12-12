@@ -63,25 +63,7 @@ namespace ProjectApp.ViewModel
                 Password = u.Password;
                 Email = u.Email;
             });
-
-            Btn3Command = new Command(async () =>
-            {
-                var service = new Service();
-                
-                MainThread.BeginInvokeOnMainThread(async () => 
-                {
-                    FileResult fr = await MediaPicker.Default.PickPhotoAsync();
-                    Post post = new Post()
-                    {
-                        Content = "posadpoaod",
-                        CreatorId = 1,
-                        Title = "post",
-                        UploadDateTime = DateTime.Now,
-                    };
-                    await service.Post(post, fr);
-                });                
-                
-            });
+            Btn3Command = new Command(async () => await Shell.Current.GoToAsync("//Debounce"));
         }
     }
 }
