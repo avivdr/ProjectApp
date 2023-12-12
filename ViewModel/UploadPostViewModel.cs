@@ -23,6 +23,8 @@ namespace ProjectApp.ViewModel
         private string _content;
         private string _errorMessage;
         private bool _isErrorMessage;
+        private string _query;
+        private List<Composer> _composerResults;
 
         public string Title
         {
@@ -60,28 +62,33 @@ namespace ProjectApp.ViewModel
                 OnPropertyChanged(nameof(IsErrorMessage));
             }
         }
+        public string Query
+        {
+            get => _query;
+            set
+            {
+                _query = value;
+                OnPropertyChanged(nameof(Query));
+            }
+        }
+        public List<Composer> ComposerResults
+        {
+            get => _composerResults;
+            set
+            {
+                _composerResults = value;
+                OnPropertyChanged(nameof(ComposerResults));
+            }
+        }
         public ICommand PostCommand { get; protected set; }
         public ICommand PickFileCommand { get; protected set; }
+        public ICommand SearchCommand { get; protected set; }
         public FileResult File { get; protected set; }
         public UploadPostViewModel(Service _service)
         {
             service = _service;
             IsErrorMessage = false;
             ErrorMessage = SERVER_ERROR;
-
-            PickFileCommand = new Command(async async =>
-            {
-                try
-                {
-                    File = await FilePicker.Default.PickAsync();
-                }
-                catch (Exception)
-                {
-                    File = null;
-                    ErrorMessage = FILE_PICK_ERROR;
-                    IsErrorMessage = true;
-                }
-            });
 
             PostCommand = new Command(async () =>
             {
@@ -114,6 +121,26 @@ namespace ProjectApp.ViewModel
                     IsErrorMessage = true;
                 }
             });
+
+            PickFileCommand = new Command(async () =>
+            {
+                try
+                {
+                    File = await FilePicker.Default.PickAsync();
+                }
+                catch (Exception)
+                {
+                    File = null;
+                    ErrorMessage = FILE_PICK_ERROR;
+                    IsErrorMessage = true;
+                }
+            });
+
+            SearchCommand = new Command(async () =>
+            {
+
+            });
+
         }
     }
 }

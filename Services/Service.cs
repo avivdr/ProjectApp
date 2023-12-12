@@ -40,6 +40,24 @@ namespace ProjectApp.Services
             return "error";
         }
 
+        public async Task<List<Composer>> SearchComposersByName(string query)
+        {
+            if (query.Length < 4) return null;
+
+            try
+            {
+                var response = await httpClient.GetAsync($@"{URL}/SearchComposerByName/{query}");
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    string content = await response.Content.ReadAsStringAsync();
+                    return JsonSerializer.Deserialize<List<Composer>>(content);
+                }
+            }
+            catch (Exception) { }
+
+            return null;
+        }
+
         public async Task<HttpStatusCode> UploadPost(Post post, FileResult file = null)
         {
             try
