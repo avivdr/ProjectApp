@@ -28,15 +28,15 @@ namespace ProjectApp.Model
             ComposerId = 0;
             Title = "";
             Genre = 0;
-            Composer = new();
-            Works = new();
             Subtitle = "";
-            SearchTerms = new();
             Popular = "";
             Recommended = "";
             SearchMode = "";
             Catalogue = "";
             Catalogue_Number = "";
+
+            if (Composer != null)
+                ComposerId = Composer.Id;
         }
     }
 }

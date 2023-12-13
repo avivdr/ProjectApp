@@ -16,5 +16,18 @@ namespace ProjectApp.Model
 
         public User User { get; set; }
         public Work Work { get; set; }
+
+        public WorksUser()
+        {
+            Id = 0;
+            UserId = 0;
+            WorkId = 0;
+
+            if (User != null)
+                UserId = User.Id;
+
+            if (Work != null)
+                WorkId = Work.Id;
+        }
     }
 }

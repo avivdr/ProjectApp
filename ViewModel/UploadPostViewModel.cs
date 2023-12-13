@@ -18,8 +18,9 @@ namespace ProjectApp.ViewModel
         const string SERVER_ERROR = "A server error occurred";
         const string FILE_PICK_ERROR = "An error occurred when picking file";
         const string INVALID = "Invalid fields";
+        const string SHORT_QUERY = "Search query must be at least 4 characters";
 
-        private Service service;
+        readonly Service service;
 
         private string _title;
         private string _content;
@@ -27,6 +28,8 @@ namespace ProjectApp.ViewModel
         private bool _isErrorMessage;
         private string _query;
         private List<Composer> _composerResults;
+        private Composer _composer;
+
         readonly DebounceDispatcher dispatcher;
 
         public string Title
@@ -72,7 +75,8 @@ namespace ProjectApp.ViewModel
             {
                 _query = value;
                 OnPropertyChanged(nameof(Query));
-                dispatcher.Debounce(Search);
+
+                dispatcher.Debounce(() => Search(_query));
             }
         }
         public List<Composer> ComposerResults 
@@ -84,16 +88,24 @@ namespace ProjectApp.ViewModel
                 OnPropertyChanged(nameof(ComposerResults));
             }
         }
+        public Composer Composer
+        {
+            get => _composer;
+            set
+            {
+                _composer = value;
+                OnPropertyChanged(nameof(Composer));
+            }
+        }
         public ICommand PostCommand { get; protected set; }
         public ICommand PickFileCommand { get; protected set; }
-        public ICommand SearchCommand { get; protected set; }
         public FileResult File { get; protected set; }
         public UploadPostViewModel(Service _service)
         {
             service = _service;
             IsErrorMessage = false;
             ErrorMessage = SERVER_ERROR;
-            dispatcher = new DebounceDispatcher(150);
+            dispatcher = new DebounceDispatcher(100);
 
             PostCommand = new Command(async () =>
             {
@@ -104,7 +116,8 @@ namespace ProjectApp.ViewModel
                     {
                         Content = Content,
                         Title = Title,
-                        Creator = u
+                        Creator = u,
+                        Composer = Composer,
                     };
                     HttpStatusCode httpStatusCode = await service.UploadPost(post, File);
                     switch (httpStatusCode)
@@ -112,10 +125,12 @@ namespace ProjectApp.ViewModel
                         case HttpStatusCode.OK:
                             await Shell.Current.DisplayAlert("Post uploaded", "post uploaded successfully", "ok");
                             break;
+
                         case HttpStatusCode.BadRequest:
                             ErrorMessage = INVALID;
                             IsErrorMessage = true;
                             break;
+
                         default:
                             throw new Exception();
                     }
@@ -140,13 +155,38 @@ namespace ProjectApp.ViewModel
                     IsErrorMessage = true;
                 }
             });
-
-            SearchCommand = new Command(Search);
         }
 
-        private async void Search()
+        private async void Search(string query)
         {
-            ComposerResults = await service.SearchComposersByName(Query);
+            if (query.Length < 4)
+            {
+                ComposerResults = new List<Composer>();
+                IsErrorMessage = false;
+                return;
+            }
+
+            var results = await service.SearchComposersByName(Query);
+            if (results == null)
+            {
+                ErrorMessage = SERVER_ERROR;
+                IsErrorMessage = true;
+                ComposerResults = new List<Composer>();
+                return;
+            }
+
+            IsErrorMessage = false;
+
+            if (results.Count == 0)
+            {
+                ComposerResults = new()
+                {
+                    new() { CompleteName = "No result found :(" }
+                };
+                return;
+            }
+
+            ComposerResults = results;
         }
     }
 }

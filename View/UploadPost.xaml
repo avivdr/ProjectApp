@@ -22,11 +22,10 @@
             <Label Text="search composer"/>
             <HorizontalStackLayout>
                 <Entry Text="{Binding Query}" WidthRequest="200"/>
-                <Button Text="search" Command="{Binding SearchCommand}"/>
             </HorizontalStackLayout>
         </VerticalStackLayout>
 
-        <ListView ItemsSource="{Binding ComposerResults}">
+        <ListView ItemsSource="{Binding ComposerResults}" SelectedItem="{Binding Composer}">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="Model:Composer">
                     <TextCell Text="{Binding CompleteName}"/>

@@ -15,5 +15,22 @@ namespace ProjectApp.Model
         public DateTime UploadDateTime { get; set; }
         public User Creator { get; set; }
         public Post Post { get; set; }
+
+        public Comment()
+        {
+            Id = 0;
+            PostId = 0;
+            CreatorId = 0;
+            Content = "";
+            UploadDateTime = DateTime.Now;
+            Creator = new();
+            Post = new();
+
+            if (Creator != null)
+                CreatorId = Creator.Id;
+
+            if(Post != null)
+                PostId = Post.Id;
+        }
     }
 }

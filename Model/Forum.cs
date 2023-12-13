@@ -19,5 +19,25 @@ namespace ProjectApp.Model
         public User Creator { get; set; }
         public List<ForumComment> ForumComments { get; set; }
         public Work Work { get; set; }
+
+        public Forum()
+        {
+            Id = 0;
+            Title = "";
+            ForumDescription = "";
+            CreatorId = 0;
+            CreatedDadeTime = DateTime.Now;
+            Creator = new();
+            ForumComments = new();
+
+            if (Creator != null)
+                CreatorId = Creator.Id;
+
+            if (Composer != null)
+                ComposerId = Composer.Id;
+
+            if (Work != null)
+                WorkId = Work.Id;
+        }
     }
 }

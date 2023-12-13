@@ -29,11 +29,6 @@ namespace ProjectApp.Model
             Username = "";
             Password = "";
             Email = "";
-            Comments = new();
-            ForumComments = new();
-            Forums= new();
-            Posts = new();
-            WorksUsers = new();
         }
     }
 }

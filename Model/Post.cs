@@ -44,9 +44,16 @@ namespace ProjectApp.Model
             Content = "";
             UploadDateTime = DateTime.Now;
             Comments = new();
-            Composer = new();
             Creator = new();
-            Work = new();
+
+            if (Creator != null)
+                CreatorId = Creator.Id;
+
+            if (Composer != null)
+                ComposerId = Composer.Id;
+
+            if (Work != null)
+                WorkId = Work.Id;
         }
     }
 }
