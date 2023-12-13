@@ -9,7 +9,6 @@ namespace ProjectApp.Model
     public class Work
     {
         public int Id { get; set; }
-        public int ComposerId { get; set; }
         public string Title { get; set; }
         public byte Genre { get; set; }
         public Composer Composer { get; set; }
@@ -24,19 +23,16 @@ namespace ProjectApp.Model
 
         public Work()
         {
-            Id = 0;
-            ComposerId = 0;
             Title = "";
             Genre = 0;
+            Works = new();
             Subtitle = "";
+            SearchTerms = new();
             Popular = "";
             Recommended = "";
             SearchMode = "";
             Catalogue = "";
             Catalogue_Number = "";
-
-            if (Composer != null)
-                ComposerId = Composer.Id;
         }
     }
 }

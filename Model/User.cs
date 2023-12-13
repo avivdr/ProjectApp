@@ -25,10 +25,14 @@ namespace ProjectApp.Model
 
         public User()
         {
-            Id = 0;
             Username = "";
             Password = "";
             Email = "";
+            Comments = new();
+            ForumComments = new();
+            Forums = new();
+            Posts = new();
+            WorksUsers = new();
         }
     }
 }

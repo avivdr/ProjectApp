@@ -12,17 +12,11 @@ namespace ProjectApp.Model
     {
         public int Id { get; set; }
 
-        public int CreatorId { get; set; }
-
         public string Title { get; set; }
 
         public string Content { get; set; }
 
         public DateTime UploadDateTime { get; set; }
-
-        public int? WorkId { get; set; }
-
-        public int? ComposerId { get; set; }
 
         public List<Comment> Comments { get; set; }
 
@@ -38,22 +32,10 @@ namespace ProjectApp.Model
 
         public Post()
         {
-            Id = 0;
-            CreatorId = 0;
             Title = "";
             Content = "";
             UploadDateTime = DateTime.Now;
             Comments = new();
-            Creator = new();
-
-            if (Creator != null)
-                CreatorId = Creator.Id;
-
-            if (Composer != null)
-                ComposerId = Composer.Id;
-
-            if (Work != null)
-                WorkId = Work.Id;
         }
     }
 }

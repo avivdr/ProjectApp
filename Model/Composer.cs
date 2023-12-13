@@ -22,7 +22,6 @@ namespace ProjectApp.Model
 
         public Composer()
         {
-            Id = 0;
             Name = "";
             CompleteName = "";
             Works = new();

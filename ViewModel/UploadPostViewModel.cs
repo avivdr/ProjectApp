@@ -105,7 +105,7 @@ namespace ProjectApp.ViewModel
             service = _service;
             IsErrorMessage = false;
             ErrorMessage = SERVER_ERROR;
-            dispatcher = new DebounceDispatcher(100);
+            dispatcher = new DebounceDispatcher(200);
 
             PostCommand = new Command(async () =>
             {
