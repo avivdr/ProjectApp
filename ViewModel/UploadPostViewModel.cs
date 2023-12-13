@@ -8,7 +8,8 @@ using ProjectApp.Services;
 using ProjectApp.Model;
 using System.Text.Json;
 using System.Net;
-using System.Collections.ObjectModel;
+using DebounceThrottle;
+using ProjectApp.View;
 
 namespace ProjectApp.ViewModel
 {    
@@ -26,6 +27,7 @@ namespace ProjectApp.ViewModel
         private bool _isErrorMessage;
         private string _query;
         private List<Composer> _composerResults;
+        readonly DebounceDispatcher dispatcher;
 
         public string Title
         {
@@ -70,6 +72,7 @@ namespace ProjectApp.ViewModel
             {
                 _query = value;
                 OnPropertyChanged(nameof(Query));
+                dispatcher.Debounce(Search);
             }
         }
         public List<Composer> ComposerResults 
@@ -90,6 +93,7 @@ namespace ProjectApp.ViewModel
             service = _service;
             IsErrorMessage = false;
             ErrorMessage = SERVER_ERROR;
+            dispatcher = new DebounceDispatcher(150);
 
             PostCommand = new Command(async () =>
             {
@@ -137,10 +141,12 @@ namespace ProjectApp.ViewModel
                 }
             });
 
-            SearchCommand = new Command(async () =>
-            {
-                ComposerResults = await service.SearchComposersByName(Query);
-            });
+            SearchCommand = new Command(Search);
+        }
+
+        private async void Search()
+        {
+            ComposerResults = await service.SearchComposersByName(Query);
         }
     }
 }
