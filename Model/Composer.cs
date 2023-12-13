@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace ProjectApp.Model
@@ -10,6 +11,8 @@ namespace ProjectApp.Model
     {
         public int Id { get; set; }
         public string Name { get; set; }
+
+        [JsonPropertyName("Complete_Name")]
         public string CompleteName { get; set; }
         public List<Work> Works { get; set; } 
         public DateOnly Birth { get; set; }

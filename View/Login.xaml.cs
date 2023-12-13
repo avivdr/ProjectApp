@@ -15,6 +15,8 @@ public partial class Login : Popup
 
 	public static async Task CloseInstanceAsync()
 	{
+		if (Instance == null) return;
+
 		await Instance.CloseAsync();
 		Instance = null;
 	}

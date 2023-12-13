@@ -22,7 +22,7 @@ namespace ProjectApp.Services
             options = new JsonSerializerOptions()
             {
                 PropertyNameCaseInsensitive = true,
-                ReferenceHandler = ReferenceHandler.Preserve
+                ReferenceHandler = ReferenceHandler.Preserve,
             };
         }   
 
@@ -50,7 +50,7 @@ namespace ProjectApp.Services
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
                     string content = await response.Content.ReadAsStringAsync();
-                    return JsonSerializer.Deserialize<List<Composer>>(content);
+                    return JsonSerializer.Deserialize<List<Composer>>(content, options);
                 }
             }
             catch (Exception) { }

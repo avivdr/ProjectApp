@@ -8,6 +8,7 @@ using ProjectApp.Services;
 using ProjectApp.Model;
 using System.Text.Json;
 using System.Net;
+using System.Collections.ObjectModel;
 
 namespace ProjectApp.ViewModel
 {    
@@ -71,7 +72,7 @@ namespace ProjectApp.ViewModel
                 OnPropertyChanged(nameof(Query));
             }
         }
-        public List<Composer> ComposerResults
+        public List<Composer> ComposerResults 
         {
             get => _composerResults;
             set
@@ -138,9 +139,8 @@ namespace ProjectApp.ViewModel
 
             SearchCommand = new Command(async () =>
             {
-
+                ComposerResults = await service.SearchComposersByName(Query);
             });
-
         }
     }
 }

@@ -25,7 +25,7 @@ namespace ProjectApp.Model
         public Work()
         {
             Id = 0;
-            ComposerId=0;
+            ComposerId = 0;
             Title = "";
             Genre = 0;
             Composer = new();
