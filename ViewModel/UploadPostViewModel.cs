@@ -127,7 +127,7 @@ namespace ProjectApp.ViewModel
                             break;
 
                         case HttpStatusCode.BadRequest:
-                            ErrorMessage = INVALID;
+                            ErrorMessage = SERVER_ERROR;
                             IsErrorMessage = true;
                             break;
 
