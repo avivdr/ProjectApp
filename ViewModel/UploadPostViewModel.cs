@@ -76,7 +76,7 @@ namespace ProjectApp.ViewModel
                 _query = value;
                 OnPropertyChanged(nameof(Query));
 
-                dispatcher.Debounce(() => Search(_query));
+                Search(_query);
             }
         }
         public List<Composer> ComposerResults 
