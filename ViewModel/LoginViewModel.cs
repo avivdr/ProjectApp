@@ -99,7 +99,6 @@ namespace ProjectApp.ViewModel
                     {
                         IsLoginError = false;
 
-                        await SecureStorage.Default.SetAsync("CurrentUser", JsonSerializer.Serialize(user));
                         await Shell.Current.DisplayAlert("logged in message", "Logged in!", "OK");
                         await Shell.Current.GoToAsync("//UploadPost");
                         await Login.CloseInstanceAsync();

@@ -103,7 +103,9 @@ namespace ProjectApp.Services
                 {
                     case HttpStatusCode.OK:
                             string st = await response.Content.ReadAsStringAsync();
-                            return JsonSerializer.Deserialize<User>(st, options);                        
+
+                        await SecureStorage.Default.SetAsync("CurrentUser", st);
+                        return JsonSerializer.Deserialize<User>(st, options);                        
 
                     case HttpStatusCode.Unauthorized:
                         return null;
