@@ -116,8 +116,8 @@ namespace ProjectApp.ViewModel
                     {
                         Content = Content,
                         Title = Title,
-                        Creator = u,
-                        Composer = Composer,
+                        CreatorId = u.Id,
+                        ComposerId = Composer.Id,
                     };
                     HttpStatusCode httpStatusCode = await service.UploadPost(post, File);
                     switch (httpStatusCode)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -12,11 +13,17 @@ namespace ProjectApp.Model
     {
         public int Id { get; set; }
 
+        public int CreatorId { get; set; }
+
         public string Title { get; set; }
 
         public string Content { get; set; }
 
         public DateTime UploadDateTime { get; set; }
+
+        public int? ComposerId { get; set; }
+
+        public int? WorkId { get; set; }
 
         public List<Comment> Comments { get; set; }
 

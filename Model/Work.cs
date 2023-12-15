@@ -9,6 +9,7 @@ namespace ProjectApp.Model
     public class Work
     {
         public int Id { get; set; }
+        public int ComposerId { get; set; }
         public string Title { get; set; }
         public byte Genre { get; set; }
         public Composer Composer { get; set; }
