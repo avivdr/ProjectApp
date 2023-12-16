@@ -68,17 +68,6 @@ namespace ProjectApp.ViewModel
                 OnPropertyChanged(nameof(IsErrorMessage));
             }
         }
-        public string Query
-        {
-            get => _query;
-            set
-            {
-                _query = value;
-                OnPropertyChanged(nameof(Query));
-
-                Search(_query);
-            }
-        }
         public List<Composer> ComposerResults 
         {
             get => _composerResults;
@@ -97,6 +86,17 @@ namespace ProjectApp.ViewModel
                 OnPropertyChanged(nameof(Composer));
             }
         }
+        public string Query
+        {
+            get => _query;
+            set
+            {
+                _query = value;
+                OnPropertyChanged(nameof(Query));
+
+                Search(_query);
+            }
+        }
         public ICommand PostCommand { get; protected set; }
         public ICommand PickFileCommand { get; protected set; }
         public FileResult File { get; protected set; }
@@ -111,12 +111,12 @@ namespace ProjectApp.ViewModel
             {
                 try
                 {
-                    User u = JsonSerializer.Deserialize<User>(await SecureStorage.GetAsync("CurrentUser"));
+                    User u = await service.GetCurrentUser();
                     Post post = new()
                     {
                         Content = Content,
                         Title = Title,
-                        CreatorId = u.Id,
+                        Creator = u,
                         Composer = Composer,
                     };
                     HttpStatusCode httpStatusCode = await service.UploadPost(post, File);

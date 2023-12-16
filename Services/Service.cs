@@ -40,6 +40,11 @@ namespace ProjectApp.Services
             return "error";
         }
 
+        public async Task<User> GetCurrentUser()
+        {
+            return JsonSerializer.Deserialize<User>(await SecureStorage.GetAsync("CurrentUser"), options);
+        }
+
         public async Task<List<Composer>> SearchComposersByName(string query)
         {
             if (query.Length < 4) return null;
@@ -75,7 +80,7 @@ namespace ProjectApp.Services
                     }
 
                     var content = new ByteArrayContent(bytes);
-                    multipartFormContent.Add(content, "file", "fileName");
+                    multipartFormContent.Add(content, "file", file.FileName);
                 }                
 
                 var stringContent = new StringContent(JsonSerializer.Serialize(post, options), Encoding.UTF8, "application/json");
@@ -102,7 +107,7 @@ namespace ProjectApp.Services
                 switch (response.StatusCode)
                 {
                     case HttpStatusCode.OK:
-                            string st = await response.Content.ReadAsStringAsync();
+                        string st = await response.Content.ReadAsStringAsync();
 
                         await SecureStorage.Default.SetAsync("CurrentUser", st);
                         return JsonSerializer.Deserialize<User>(st, options);                        
