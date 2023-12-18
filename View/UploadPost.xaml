@@ -25,7 +25,10 @@
             </HorizontalStackLayout>
         </VerticalStackLayout>
 
-        <ListView ItemsSource="{Binding ComposerResults}" SelectedItem="{Binding Composer}">
+        <ListView ItemsSource="{Binding ComposerResults}" 
+                  SelectedItem="{Binding Composer}" 
+                  MaximumWidthRequest="300"
+                  HorizontalOptions="Start">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="Model:Composer">
                     <TextCell Text="{Binding CompleteName}"/>
