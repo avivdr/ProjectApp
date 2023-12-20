@@ -28,7 +28,8 @@ namespace ProjectApp.ViewModel
         private bool _isErrorMessage;
         private string _query;
         private List<Composer> _composerResults;
-        private Composer _composer;
+        private List<Work> _workResults;
+        private dynamic _selection;
 
         readonly DebounceDispatcher dispatcher;
 
@@ -77,13 +78,22 @@ namespace ProjectApp.ViewModel
                 OnPropertyChanged(nameof(ComposerResults));
             }
         }
-        public Composer Composer
+        public List<Work> WorkResults
         {
-            get => _composer;
+            get => _workResults;
             set
             {
-                _composer = value;
-                OnPropertyChanged(nameof(Composer));
+                _workResults = value;
+                OnPropertyChanged(nameof(WorkResults));
+            }
+        }
+        public dynamic Selection
+        {
+            get => _selection;
+            set
+            {
+                _selection = value;
+                OnPropertyChanged(nameof(Selection));
             }
         }
         public string Query
@@ -117,7 +127,7 @@ namespace ProjectApp.ViewModel
                         Content = Content,
                         Title = Title,
                         Creator = u,
-                        Composer = Composer,
+                        Composer = Selection,
                     };
                     HttpStatusCode httpStatusCode = await service.UploadPost(post, File);
                     switch (httpStatusCode)
@@ -161,23 +171,25 @@ namespace ProjectApp.ViewModel
         {
             if (query.Length < 4)
             {
-                ComposerResults = new List<Composer>();
+                ComposerResults = new();
+                WorkResults = new();
                 IsErrorMessage = false;
                 return;
             }
 
-            var results = await service.SearchComposersByName(Query);
+            OmniSearchDTO results = await service.OmniSearch(Query);
             if (results == null)
             {
                 ErrorMessage = SERVER_ERROR;
                 IsErrorMessage = true;
-                ComposerResults = new List<Composer>();
+                ComposerResults = new();
+                WorkResults = new();
                 return;
             }
 
             IsErrorMessage = false;
 
-            if (results.Count == 0)
+            if (results.Composers.Count == 0)
             {
                 ComposerResults = new()
                 {
@@ -186,7 +198,17 @@ namespace ProjectApp.ViewModel
                 return;
             }
 
-            ComposerResults = results;
+            if (results.Works.Count == 0)
+            {
+                WorkResults = new()
+                {
+                    new() { Title = "No result found :(" }
+                };
+                return;
+            }
+
+            ComposerResults = results.Composers;
+            WorkResults = results.Works;
         }
     }
 }

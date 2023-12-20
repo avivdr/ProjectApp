@@ -63,6 +63,25 @@ namespace ProjectApp.Services
             return null;
         }
 
+        public async Task<OmniSearchDTO> OmniSearch(string query)
+        {
+            if (string.IsNullOrEmpty(query) || query.Length < 3)
+                return null;
+
+            try
+            {
+                var response = await httpClient.GetAsync($@"{URL}/OmniSearch/{query}/0");
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    string content = await response.Content.ReadAsStringAsync();
+                    return JsonSerializer.Deserialize<OmniSearchDTO>(content, options);
+                }
+            }
+            catch (Exception) { }
+
+            return null;
+        }
+
         public async Task<HttpStatusCode> UploadPost(Post post, FileResult file = null)
         {
             try

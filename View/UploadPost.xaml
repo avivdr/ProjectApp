@@ -19,22 +19,40 @@
         </VerticalStackLayout>
 
         <VerticalStackLayout>
-            <Label Text="search composer"/>
+            <Label Text="search composer/work"/>
             <HorizontalStackLayout>
                 <Entry Text="{Binding Query}" WidthRequest="200"/>
             </HorizontalStackLayout>
         </VerticalStackLayout>
 
-        <ListView ItemsSource="{Binding ComposerResults}" 
-                  SelectedItem="{Binding Composer}" 
-                  MaximumWidthRequest="300"
-                  HorizontalOptions="Start">
-            <ListView.ItemTemplate>
-                <DataTemplate x:DataType="Model:Composer">
-                    <TextCell Text="{Binding CompleteName}"/>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+        <HorizontalStackLayout>
+            <ListView 
+                ItemsSource="{Binding ComposerResults}" 
+                SelectedItem="{Binding Selection}" 
+                MaximumWidthRequest="300"
+                HorizontalOptions="Start"
+                Header="Composers">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="Model:Composer">
+                        <TextCell Text="{Binding CompleteName}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <ListView 
+                ItemsSource="{Binding WorkResults}" 
+                SelectedItem="{Binding Selection}" 
+                MaximumWidthRequest="300"
+                HorizontalOptions="Start"
+                Header="Works">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="Model:Work">
+                        <TextCell Text="{Binding Title}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </HorizontalStackLayout>
+        
 
         <Label Text="{Binding ErrorMessage}" IsVisible="{Binding IsErrorMessage}"/>
         
