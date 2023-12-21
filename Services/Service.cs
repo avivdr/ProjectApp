@@ -6,7 +6,6 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using Android.SE.Omapi;
 using ProjectApp.Model;
 
 namespace ProjectApp.Services
@@ -73,6 +72,22 @@ namespace ProjectApp.Services
             try
             {
                 var response = await httpClient.GetAsync($@"{URL}/OmniSearch/{query}/0");
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    string content = await response.Content.ReadAsStringAsync();
+                    return JsonSerializer.Deserialize<OmniSearchDTO>(content, options);
+                }
+            }
+            catch (Exception) { }
+
+            return null;
+        }
+
+        public async Task<OmniSearchDTO> NextOmniSearch()
+        {
+            try
+            {
+                var response = await httpClient.GetAsync($@"{URL}/NextOmniSearch");
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
                     string content = await response.Content.ReadAsStringAsync();
