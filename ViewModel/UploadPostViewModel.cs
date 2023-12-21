@@ -121,24 +121,30 @@ namespace ProjectApp.ViewModel
             {
                 try
                 {
-                    User u = await service.GetCurrentUser();
+                    User user = await service.GetCurrentUser();
                     Post post = new()
                     {
                         Content = Content,
                         Title = Title,
-                        Creator = u,
-                        Composer = Selection,
+                        Creator = user,
                     };
+
+                    if (Selection is Work)
+                    {
+                        post.Work = Selection;
+                        post.Composer = null;
+                    }
+                    if (Selection is Composer)
+                    {
+                        post.Composer = Selection;
+                        post.Work = null;
+                    }
+
                     HttpStatusCode httpStatusCode = await service.UploadPost(post, File);
                     switch (httpStatusCode)
                     {
                         case HttpStatusCode.OK:
                             await Shell.Current.DisplayAlert("Post uploaded", "post uploaded successfully", "ok");
-                            break;
-
-                        case HttpStatusCode.BadRequest:
-                            ErrorMessage = SERVER_ERROR;
-                            IsErrorMessage = true;
                             break;
 
                         default:
@@ -195,8 +201,8 @@ namespace ProjectApp.ViewModel
                 {
                     new() { CompleteName = "No result found :(" }
                 };
-                return;
             }
+            else ComposerResults = results.Composers;
 
             if (results.Works.Count == 0)
             {
@@ -204,11 +210,8 @@ namespace ProjectApp.ViewModel
                 {
                     new() { Title = "No result found :(" }
                 };
-                return;
             }
-
-            ComposerResults = results.Composers;
-            WorkResults = results.Works;
+            else WorkResults = results.Works;
         }
     }
 }

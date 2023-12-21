@@ -114,9 +114,8 @@ namespace ProjectApp.ViewModel
                     {
                         case HttpStatusCode.OK:
                             IsErrorMessage = false;
-                            await SecureStorage.Default.SetAsync("CurrentUser", JsonSerializer.Serialize(user));
                             await Shell.Current.DisplayAlert("sign up success", "sign succeeded", "ok");
-                            await Shell.Current.GoToAsync("MainPage");
+                            await Shell.Current.GoToAsync("//MainPage");
                             break;
 
                         case HttpStatusCode.Conflict:

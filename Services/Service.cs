@@ -15,6 +15,7 @@ namespace ProjectApp.Services
         readonly HttpClient httpClient;
         const string URL = "https://dz7hpq26-7058.euw.devtunnels.ms/OpusOne";
         readonly JsonSerializerOptions options;
+        const string CURRENT_USER_KEY = "CurrentUser";
 
         public Service()
         {
@@ -42,7 +43,7 @@ namespace ProjectApp.Services
 
         public async Task<User> GetCurrentUser()
         {
-            return JsonSerializer.Deserialize<User>(await SecureStorage.GetAsync("CurrentUser"), options);
+            return JsonSerializer.Deserialize<User>(await SecureStorage.GetAsync(CURRENT_USER_KEY), options);
         }
 
         public async Task<List<Composer>> SearchComposersByName(string query)
@@ -146,11 +147,15 @@ namespace ProjectApp.Services
 
         public async Task<HttpStatusCode> Register(User user)
         {
-            var stringContent = new StringContent(JsonSerializer.Serialize(user, options), Encoding.UTF8, "application/json");
+            string userJson = JsonSerializer.Serialize(user, options);
+            var stringContent = new StringContent(userJson, Encoding.UTF8, "application/json");
             try
             {
                 var response = await httpClient.PostAsync($@"{URL}/Register", stringContent);
+                string content = await response.Content.ReadAsStringAsync();
 
+                if (response.StatusCode == HttpStatusCode.OK)
+                    await SecureStorage.SetAsync(CURRENT_USER_KEY, content);
                 return response.StatusCode;
             }
             catch(Exception)

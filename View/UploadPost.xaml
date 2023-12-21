@@ -6,56 +6,62 @@
              xmlns:ViewModel="clr-namespace:ProjectApp.ViewModel"
              x:DataType="ViewModel:UploadPostViewModel"
              xmlns:Model="clr-namespace:ProjectApp.Model">
-    <VerticalStackLayout Spacing="20">
-        <Label Text="Title"/>
-        <Entry Text="{Binding Title}"/>
+    <ScrollView>
+        <VerticalStackLayout Spacing="20">
+            <Label Text="Title"/>
+            <Entry Text="{Binding Title}"/>
 
-        <Label Text="Content"/>
-        <Editor Text="{Binding Content}" />
+            <Label Text="Content"/>
+            <Editor Text="{Binding Content}" />
 
-        <VerticalStackLayout>
-            <Button Text="Pick File" Command="{Binding PickFileCommand}"/>
-            <Label Text="{Binding File.FileName}"/>
-        </VerticalStackLayout>
+            <VerticalStackLayout>
+                <Button Text="Pick File" Command="{Binding PickFileCommand}"/>
+                <Label Text="{Binding File.FileName}"/>
+            </VerticalStackLayout>
 
-        <VerticalStackLayout>
-            <Label Text="search composer/work"/>
+            <VerticalStackLayout>
+                <Label Text="search composer/work"/>
+                <HorizontalStackLayout>
+                    <Entry Text="{Binding Query}" WidthRequest="200"/>
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+
             <HorizontalStackLayout>
-                <Entry Text="{Binding Query}" WidthRequest="200"/>
+                <ListView 
+                    Header="Composers"
+                    ItemsSource="{Binding ComposerResults}" 
+                    SelectedItem="{Binding Selection}" 
+                    MaximumWidthRequest="300"
+                    HorizontalOptions="Start"
+                    VerticalScrollBarVisibility="Always"
+                    MaximumHeightRequest="250">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="Model:Composer">
+                            <TextCell Text="{Binding CompleteName}"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <ListView
+                    Header="Works"
+                    ItemsSource="{Binding WorkResults}" 
+                    SelectedItem="{Binding Selection}" 
+                    MaximumWidthRequest="400"
+                    HorizontalOptions="Start"
+                    VerticalScrollBarVisibility="Always"
+                    MaximumHeightRequest="250">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="Model:Work">
+                            <TextCell Text="{Binding TitleWithComposersName}"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
             </HorizontalStackLayout>
+
+
+            <Label Text="{Binding ErrorMessage}" IsVisible="{Binding IsErrorMessage}"/>
+
+            <Button Text="Post" Command="{Binding PostCommand}"/>
         </VerticalStackLayout>
-
-        <HorizontalStackLayout>
-            <ListView 
-                ItemsSource="{Binding ComposerResults}" 
-                SelectedItem="{Binding Selection}" 
-                MaximumWidthRequest="300"
-                HorizontalOptions="Start"
-                Header="Composers">
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="Model:Composer">
-                        <TextCell Text="{Binding CompleteName}"/>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-
-            <ListView 
-                ItemsSource="{Binding WorkResults}" 
-                SelectedItem="{Binding Selection}" 
-                MaximumWidthRequest="300"
-                HorizontalOptions="Start"
-                Header="Works">
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="Model:Work">
-                        <TextCell Text="{Binding Title}"/>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </HorizontalStackLayout>
-        
-
-        <Label Text="{Binding ErrorMessage}" IsVisible="{Binding IsErrorMessage}"/>
-        
-        <Button Text="Post" Command="{Binding PostCommand}"/>
-    </VerticalStackLayout>
+    </ScrollView>    
 </ContentPage>
