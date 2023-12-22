@@ -173,6 +173,18 @@ namespace ProjectApp.ViewModel
             });
         }
 
+        public async void WorksScrolled(object sender, ItemsViewScrolledEventArgs e)
+        {
+            if (WorkResults.Count - e.LastVisibleItemIndex < 10)
+            {
+                OmniSearchDTO results = await service.NextOmniSearch();
+                if (results == null) return;
+
+                ComposerResults.AddRange(results.Composers);
+                WorkResults.AddRange(results.Works);
+            }
+        }
+
         private async void Search(string query)
         {
             if (query.Length < 4)
