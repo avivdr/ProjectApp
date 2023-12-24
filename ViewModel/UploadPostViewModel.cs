@@ -10,9 +10,11 @@ using System.Text.Json;
 using System.Net;
 using DebounceThrottle;
 using ProjectApp.View;
+using System.Collections.ObjectModel;
+using System.Runtime.CompilerServices;
 
 namespace ProjectApp.ViewModel
-{    
+{
     public class UploadPostViewModel : ViewModel
     {
         const string SERVER_ERROR = "A server error occurred";
@@ -69,24 +71,8 @@ namespace ProjectApp.ViewModel
                 OnPropertyChanged(nameof(IsErrorMessage));
             }
         }
-        public List<Composer> ComposerResults 
-        {
-            get => _composerResults;
-            set
-            {
-                _composerResults = value;
-                OnPropertyChanged(nameof(ComposerResults));
-            }
-        }
-        public List<Work> WorkResults
-        {
-            get => _workResults;
-            set
-            {
-                _workResults = value;
-                OnPropertyChanged(nameof(WorkResults));
-            }
-        }
+        public ObservableCollection<Composer> ComposerResults { get; set; }
+        public ObservableCollection<Work> WorkResults { get; set; }
         public dynamic Selection
         {
             get => _selection;
@@ -109,6 +95,7 @@ namespace ProjectApp.ViewModel
         }
         public ICommand PostCommand { get; protected set; }
         public ICommand PickFileCommand { get; protected set; }
+        public ICommand LoadMoreWorks { get; protected set; }
         public FileResult File { get; protected set; }
         public UploadPostViewModel(Service _service)
         {
@@ -116,6 +103,8 @@ namespace ProjectApp.ViewModel
             IsErrorMessage = false;
             ErrorMessage = SERVER_ERROR;
             dispatcher = new DebounceDispatcher(200);
+
+            //make collections new and add instead of assign
 
             PostCommand = new Command(async () =>
             {
@@ -171,18 +160,15 @@ namespace ProjectApp.ViewModel
                     IsErrorMessage = true;
                 }
             });
-        }
 
-        public async void WorksScrolled(object sender, ItemsViewScrolledEventArgs e)
-        {
-            if (WorkResults.Count - e.LastVisibleItemIndex < 10)
+            LoadMoreWorks = new Command(async () =>
             {
                 OmniSearchDTO results = await service.NextOmniSearch();
                 if (results == null) return;
 
                 ComposerResults.AddRange(results.Composers);
                 WorkResults.AddRange(results.Works);
-            }
+            });
         }
 
         private async void Search(string query)
@@ -214,7 +200,7 @@ namespace ProjectApp.ViewModel
                     new() { CompleteName = "No result found :(" }
                 };
             }
-            else ComposerResults = results.Composers;
+            else ComposerResults = new(results.Composers);
 
             if (results.Works.Count == 0)
             {
@@ -223,7 +209,7 @@ namespace ProjectApp.ViewModel
                     new() { Title = "No result found :(" }
                 };
             }
-            else WorkResults = results.Works;
+            else WorkResults = new(results.Works);
         }
     }
 }

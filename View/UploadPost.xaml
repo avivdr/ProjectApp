@@ -27,7 +27,7 @@
             </VerticalStackLayout>
 
             <HorizontalStackLayout>
-                <ListView 
+                <CollectionView 
                     Header="Composers"
                     ItemsSource="{Binding ComposerResults}" 
                     SelectedItem="{Binding Selection}" 
@@ -35,14 +35,14 @@
                     HorizontalOptions="Start"
                     VerticalScrollBarVisibility="Always"
                     MaximumHeightRequest="250">
-                    <ListView.ItemTemplate>
+                    <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="Model:Composer">
-                            <TextCell Text="{Binding CompleteName}"/>
+                            <Label Text="{Binding CompleteName}"/>
                         </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
 
-                <ListView
+                <CollectionView
                     Header="Works"
                     ItemsSource="{Binding WorkResults}" 
                     SelectedItem="{Binding Selection}" 
@@ -50,13 +50,14 @@
                     HorizontalOptions="Start"
                     VerticalScrollBarVisibility="Always"
                     MaximumHeightRequest="250"
-                    Scrolled="WorksScrolled">
-                    <ListView.ItemTemplate>
+                    RemainingItemsThreshold="5"
+                    RemainingItemsThresholdReachedCommand="{Binding LoadMoreWorks}">
+                    <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="Model:Work">
-                            <TextCell Text="{Binding TitleWithComposersName}"/>
+                            <Label Text="{Binding TitleWithComposersName}"/>
                         </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
             </HorizontalStackLayout>
 
 
