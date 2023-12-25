@@ -29,8 +29,8 @@ namespace ProjectApp.ViewModel
         private string _errorMessage;
         private bool _isErrorMessage;
         private string _query;
-        private List<Composer> _composerResults;
-        private List<Work> _workResults;
+        private ObservableCollection<Composer> _composerResults;
+        private ObservableCollection<Work> _workResults;
         private dynamic _selection;
 
         readonly DebounceDispatcher dispatcher;
@@ -71,8 +71,24 @@ namespace ProjectApp.ViewModel
                 OnPropertyChanged(nameof(IsErrorMessage));
             }
         }
-        public ObservableCollection<Composer> ComposerResults { get; set; }
-        public ObservableCollection<Work> WorkResults { get; set; }
+        public ObservableCollection<Composer> ComposerResults
+        {
+            get => _composerResults;
+            set
+            {
+                _composerResults = value;
+                OnPropertyChanged(nameof(ComposerResults));
+            }
+        }
+        public ObservableCollection<Work> WorkResults
+        {
+            get => _workResults;
+            set
+            {
+                _workResults = value;
+                OnPropertyChanged(nameof(WorkResults));
+            }
+        }
         public dynamic Selection
         {
             get => _selection;
@@ -104,8 +120,7 @@ namespace ProjectApp.ViewModel
             ErrorMessage = SERVER_ERROR;
             dispatcher = new DebounceDispatcher(200);
 
-            //make collections new and add instead of assign
-
+            //post command
             PostCommand = new Command(async () =>
             {
                 try
@@ -147,6 +162,7 @@ namespace ProjectApp.ViewModel
                 }
             });
 
+            //pick file
             PickFileCommand = new Command(async () =>
             {
                 try
@@ -161,6 +177,7 @@ namespace ProjectApp.ViewModel
                 }
             });
 
+            //load more works
             LoadMoreWorks = new Command(async () =>
             {
                 OmniSearchDTO results = await service.NextOmniSearch();
@@ -195,21 +212,16 @@ namespace ProjectApp.ViewModel
 
             if (results.Composers.Count == 0)
             {
-                ComposerResults = new()
-                {
-                    new() { CompleteName = "No result found :(" }
-                };
+                ComposerResults = null;
             }
             else ComposerResults = new(results.Composers);
 
             if (results.Works.Count == 0)
             {
-                WorkResults = new()
-                {
-                    new() { Title = "No result found :(" }
-                };
+                WorkResults = null;
             }
-            else WorkResults = new(results.Works);
+            else
+                WorkResults = new(results.Works);
         }
     }
 }
