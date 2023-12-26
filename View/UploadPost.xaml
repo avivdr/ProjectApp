@@ -31,8 +31,7 @@
                     Header="Composers"
                     ItemsSource="{Binding ComposerResults}" 
                     SelectedItem="{Binding Selection}" 
-                    MaximumWidthRequest="300"
-                    HorizontalOptions="Start"
+                    WidthRequest="300"
                     VerticalScrollBarVisibility="Always"
                     MaximumHeightRequest="250">
                     <CollectionView.ItemTemplate>
@@ -46,8 +45,7 @@
                     Header="Works"
                     ItemsSource="{Binding WorkResults}" 
                     SelectedItem="{Binding Selection}" 
-                    MaximumWidthRequest="400"
-                    HorizontalOptions="Start"
+                    WidthRequest="400"
                     VerticalScrollBarVisibility="Always"
                     MaximumHeightRequest="250"
                     RemainingItemsThreshold="5"

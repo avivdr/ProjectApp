@@ -62,17 +62,6 @@ namespace ProjectApp.ViewModel
                 OnPropertyChanged(nameof(ErrorMessage));
             }
         }
-        public bool IsErrorMessage
-        {
-            get => _isErrorMessage;
-            set
-            {
-                _isErrorMessage = value;
-                OnPropertyChanged(nameof(IsErrorMessage));
-            }
-        }
-        public ObservableCollection<Composer> ComposerResults { get; set; }
-        public ObservableCollection<Work> WorkResults { get; set; }
         public dynamic Selection
         {
             get => _selection;
@@ -80,6 +69,15 @@ namespace ProjectApp.ViewModel
             {
                 _selection = value;
                 OnPropertyChanged(nameof(Selection));
+            }
+        }
+        public bool IsErrorMessage
+        {
+            get => _isErrorMessage;
+            set
+            {
+                _isErrorMessage = value;
+                OnPropertyChanged(nameof(IsErrorMessage));
             }
         }
         public string Query
@@ -93,6 +91,8 @@ namespace ProjectApp.ViewModel
                 Search(_query);
             }
         }
+        public ObservableCollection<Composer> ComposerResults { get; set; }
+        public ObservableCollection<Work> WorkResults { get; set; }
         public ICommand PostCommand { get; protected set; }
         public ICommand PickFileCommand { get; protected set; }
         public ICommand LoadMoreWorks { get; protected set; }
