@@ -33,7 +33,8 @@ namespace ProjectApp.ViewModel
         private ObservableCollection<Work> _workResults;
         private dynamic _selection;
 
-        readonly DebounceDispatcher dispatcher;
+        readonly DebounceDispatcher searchDebounce;
+        readonly DebounceDispatcher loadDebounce;
 
         public string Title
         {
@@ -88,7 +89,7 @@ namespace ProjectApp.ViewModel
                 _query = value;
                 OnPropertyChanged(nameof(Query));
 
-                dispatcher.Debounce(() => Search(_query));
+                searchDebounce.Debounce(() => Search(_query));
             }
         }
         public ObservableCollection<Composer> ComposerResults { get; set; }
@@ -101,7 +102,8 @@ namespace ProjectApp.ViewModel
             service = _service;
             IsErrorMessage = false;
             ErrorMessage = SERVER_ERROR;
-            dispatcher = new DebounceDispatcher(300);
+            searchDebounce = new(300);
+            loadDebounce = new(700);
 
             ComposerResults = new();
             WorkResults = new();
@@ -164,12 +166,12 @@ namespace ProjectApp.ViewModel
             });
         }
 
-        public async Task WorksScrolled(object sender, ItemsViewScrolledEventArgs e)
+        public void WorksScrolled(object sender, ItemsViewScrolledEventArgs e)
         {
             if (WorkResults.Count - e.LastVisibleItemIndex > 9)
                 return;
 
-            dispatcher.Debounce(async () =>
+            loadDebounce.Debounce(async () =>
             {
                 //load more works
                 OmniSearchDTO results = await service.NextOmniSearch();
