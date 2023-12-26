@@ -16,5 +16,13 @@ namespace ProjectApp.Model
                 collection.Add(item);
             }
         }
+
+        public static void Empty<T>(this ObservableCollection<T> collection)
+        {
+            for (var i = 0; i < collection.Count; i++)
+            {
+                collection.RemoveAt(i);
+            }
+        }
     }
 }

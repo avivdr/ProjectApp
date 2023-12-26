@@ -88,7 +88,7 @@ namespace ProjectApp.ViewModel
                 _query = value;
                 OnPropertyChanged(nameof(Query));
 
-                Search(_query);
+                dispatcher.Debounce(() => Search(_query));
             }
         }
         public ObservableCollection<Composer> ComposerResults { get; set; }
@@ -195,19 +195,13 @@ namespace ProjectApp.ViewModel
 
             if (results.Composers.Count == 0)
             {
-                ComposerResults = new()
-                {
-                    new() { CompleteName = "No result found :(" }
-                };
+                ComposerResults.Empty();
             }
             else ComposerResults = new(results.Composers);
 
             if (results.Works.Count == 0)
             {
-                WorkResults = new()
-                {
-                    new() { Title = "No result found :(" }
-                };
+                WorkResults.Empty();
             }
             else WorkResults = new(results.Works);
         }
