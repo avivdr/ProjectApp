@@ -95,14 +95,16 @@ namespace ProjectApp.ViewModel
         public ObservableCollection<Work> WorkResults { get; set; }
         public ICommand PostCommand { get; protected set; }
         public ICommand PickFileCommand { get; protected set; }
-        public ICommand LoadMoreWorks { get; protected set; }
         public FileResult File { get; protected set; }
         public UploadPostViewModel(Service _service)
         {
             service = _service;
             IsErrorMessage = false;
             ErrorMessage = SERVER_ERROR;
-            dispatcher = new DebounceDispatcher(200);
+            dispatcher = new DebounceDispatcher(300);
+
+            ComposerResults = new();
+            WorkResults = new();
 
             //post command
             PostCommand = new Command(async () =>
@@ -160,10 +162,16 @@ namespace ProjectApp.ViewModel
                     IsErrorMessage = true;
                 }
             });
+        }
 
-            //load more works
-            LoadMoreWorks = new Command(async () =>
+        public async Task WorksScrolled(object sender, ItemsViewScrolledEventArgs e)
+        {
+            if (WorkResults.Count - e.LastVisibleItemIndex > 9)
+                return;
+
+            dispatcher.Debounce(async () =>
             {
+                //load more works
                 OmniSearchDTO results = await service.NextOmniSearch();
                 if (results == null) return;
 
@@ -176,8 +184,8 @@ namespace ProjectApp.ViewModel
         {
             if (query.Length < 4)
             {
-                ComposerResults = new();
-                WorkResults = new();
+                ComposerResults.Empty();
+                WorkResults.Empty();
                 IsErrorMessage = false;
                 return;
             }
@@ -187,8 +195,8 @@ namespace ProjectApp.ViewModel
             {
                 ErrorMessage = SERVER_ERROR;
                 IsErrorMessage = true;
-                ComposerResults = new();
-                WorkResults = new();
+                ComposerResults.Empty();
+                WorkResults.Empty();
                 return;
             }
 
@@ -198,14 +206,13 @@ namespace ProjectApp.ViewModel
             {
                 ComposerResults.Empty();
             }
-            else ComposerResults = new(results.Composers);
+            else ComposerResults.SetFromList(results.Composers);
 
             if (results.Works.Count == 0)
             {
                 WorkResults.Empty();
             }
-            else
-                WorkResults = new(results.Works);
+            else WorkResults.SetFromList(results.Works);
         }
     }
 }

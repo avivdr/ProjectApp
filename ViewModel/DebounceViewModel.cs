@@ -21,7 +21,7 @@ namespace ProjectApp.ViewModel
             {
                 _entryText = value;
                 OnPropertyChanged(nameof(EntryText));
-                _dispatcher.Debounce(() => LblText = _entryText);
+                _dispatcher.Debounce(() => Change(value));
             }
         }
         public string LblText
@@ -37,6 +37,12 @@ namespace ProjectApp.ViewModel
         public DebounceViewModel()
         {
             _dispatcher = new DebounceDispatcher(1000);
+        }
+
+        private async void Change(string text)
+        {
+            await Task.Delay(1500);
+            LblText = text;
         }
     }
 }

@@ -8,7 +8,7 @@ namespace ProjectApp.Model
 {
     public class OmniSearchDTO
     {
-        public List<Work> Works {  get; set; }
-        public List<Composer> Composers { get; set; }
+        public List<Work> Works {  get; set; } = new List<Work>();
+        public List<Composer> Composers { get; set; } = new List<Composer>();
     }
 }

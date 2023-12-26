@@ -32,9 +32,9 @@
                     <CollectionView
                         ItemsSource="{Binding ComposerResults}" 
                         SelectedItem="{Binding Selection}" 
-                        MaximumWidthRequest="300"
+                        WidthRequest="300"
+                        HeightRequest="250"
                         VerticalScrollBarVisibility="Always"
-                        MaximumHeightRequest="250"
                         EmptyView="No results found :(">
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="Model:Composer">
@@ -49,11 +49,10 @@
                     <CollectionView
                         ItemsSource="{Binding WorkResults}" 
                         SelectedItem="{Binding Selection}" 
-                        MaximumWidthRequest="400"
+                        WidthRequest="400"
+                        HeightRequest="250"
                         VerticalScrollBarVisibility="Always"
-                        MaximumHeightRequest="250"
-                        RemainingItemsThreshold="9"
-                        RemainingItemsThresholdReachedCommand="{Binding LoadMoreWorks}"
+                        Scrolled="CollectionView_Scrolled"
                         EmptyView="No results found :(">
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="Model:Work">

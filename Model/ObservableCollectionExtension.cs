@@ -13,16 +13,24 @@ namespace ProjectApp.Model
         {
             foreach (var item in items)
             {
-                collection.Add(item);
+                if (!collection.Any(x => x.Equals(item)))
+                    collection.Add(item);
             }
         }
 
         public static void Empty<T>(this ObservableCollection<T> collection)
         {
-            for (var i = 0; i < collection.Count; i++)
+            int count = collection.Count;
+            for (var i = 0; i < count; i++)
             {
-                collection.RemoveAt(i);
+                collection.RemoveAt(0);
             }
+        }
+
+        public static void SetFromList<T>(this ObservableCollection<T> collection, List<T> list)
+        {
+            collection.Empty();
+            collection.AddRange(list);
         }
     }
 }
