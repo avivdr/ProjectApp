@@ -26,36 +26,42 @@
                 </HorizontalStackLayout>
             </VerticalStackLayout>
 
-            <HorizontalStackLayout>
-                <CollectionView 
-                    Header="Composers"
-                    ItemsSource="{Binding ComposerResults}" 
-                    SelectedItem="{Binding Selection}" 
-                    WidthRequest="300"
-                    VerticalScrollBarVisibility="Always"
-                    MaximumHeightRequest="250">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="Model:Composer">
-                            <Label Text="{Binding CompleteName}"/>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
+            <HorizontalStackLayout Spacing="40">
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="Composers"/>
+                    <CollectionView
+                        ItemsSource="{Binding ComposerResults}" 
+                        SelectedItem="{Binding Selection}" 
+                        MaximumWidthRequest="300"
+                        VerticalScrollBarVisibility="Always"
+                        MaximumHeightRequest="250"
+                        EmptyView="No results found :(">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="Model:Composer">
+                                <Label Text="{Binding CompleteName}"/>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
 
-                <CollectionView
-                    Header="Works"
-                    ItemsSource="{Binding WorkResults}" 
-                    SelectedItem="{Binding Selection}" 
-                    WidthRequest="400"
-                    VerticalScrollBarVisibility="Always"
-                    MaximumHeightRequest="250"
-                    RemainingItemsThreshold="5"
-                    RemainingItemsThresholdReachedCommand="{Binding LoadMoreWorks}">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="Model:Work">
-                            <Label Text="{Binding TitleWithComposersName}"/>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="Works"/>
+                    <CollectionView
+                        ItemsSource="{Binding WorkResults}" 
+                        SelectedItem="{Binding Selection}" 
+                        MaximumWidthRequest="400"
+                        VerticalScrollBarVisibility="Always"
+                        MaximumHeightRequest="250"
+                        RemainingItemsThreshold="9"
+                        RemainingItemsThresholdReachedCommand="{Binding LoadMoreWorks}"
+                        EmptyView="No results found :(">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="Model:Work">
+                                <Label Text="{Binding TitleWithComposersName}"/>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
             </HorizontalStackLayout>
 
 

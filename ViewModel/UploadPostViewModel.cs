@@ -29,8 +29,8 @@ namespace ProjectApp.ViewModel
         private string _errorMessage;
         private bool _isErrorMessage;
         private string _query;
-        private List<Composer> _composerResults;
-        private List<Work> _workResults;
+        private ObservableCollection<Composer> _composerResults;
+        private ObservableCollection<Work> _workResults;
         private dynamic _selection;
 
         readonly DebounceDispatcher dispatcher;
@@ -104,8 +104,7 @@ namespace ProjectApp.ViewModel
             ErrorMessage = SERVER_ERROR;
             dispatcher = new DebounceDispatcher(200);
 
-            //make collections new and add instead of assign
-
+            //post command
             PostCommand = new Command(async () =>
             {
                 try
@@ -147,6 +146,7 @@ namespace ProjectApp.ViewModel
                 }
             });
 
+            //pick file
             PickFileCommand = new Command(async () =>
             {
                 try
@@ -161,6 +161,7 @@ namespace ProjectApp.ViewModel
                 }
             });
 
+            //load more works
             LoadMoreWorks = new Command(async () =>
             {
                 OmniSearchDTO results = await service.NextOmniSearch();
@@ -203,7 +204,8 @@ namespace ProjectApp.ViewModel
             {
                 WorkResults.Empty();
             }
-            else WorkResults = new(results.Works);
+            else
+                WorkResults = new(results.Works);
         }
     }
 }
