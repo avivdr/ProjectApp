@@ -34,7 +34,7 @@ namespace ProjectApp.ViewModel
         private dynamic _selection;
 
         readonly DebounceDispatcher searchDebounce;
-        readonly DebounceDispatcher loadDebounce;
+        readonly ThrottleDispatcher loadDebounce;
 
         public string Title
         {
@@ -168,10 +168,12 @@ namespace ProjectApp.ViewModel
 
         public void WorksScrolled(object sender, ItemsViewScrolledEventArgs e)
         {
-            if (WorkResults.Count - e.LastVisibleItemIndex > 9)
+            int lastIndex = e.LastVisibleItemIndex;
+
+            if (WorkResults.Count - lastIndex > 9)
                 return;
 
-            loadDebounce.Debounce(async () =>
+            loadDebounce.Throttle(async () =>
             {
                 //load more works
                 OmniSearchDTO results = await service.NextOmniSearch();
@@ -179,6 +181,8 @@ namespace ProjectApp.ViewModel
 
                 ComposerResults.AddRange(results.Composers);
                 WorkResults.AddRange(results.Works);
+
+                (sender as CollectionView).ScrollTo(lastIndex);
             });
         }
 
