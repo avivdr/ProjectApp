@@ -5,68 +5,92 @@
              Title="UploadPost"
              xmlns:ViewModel="clr-namespace:ProjectApp.ViewModel"
              x:DataType="ViewModel:UploadPostViewModel"
-             xmlns:Model="clr-namespace:ProjectApp.Model">
-    <ScrollView>
-        <VerticalStackLayout Spacing="20">
-            <Label Text="Title"/>
-            <Entry Text="{Binding Title}"/>
+             xmlns:Model="clr-namespace:ProjectApp.Model"
+             xmlns:sf="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView">
+    
+    <VerticalStackLayout Spacing="20">
+        <Label Text="Title"/>
+        <Entry Text="{Binding Title}"/>
 
-            <Label Text="Content"/>
-            <Editor Text="{Binding Content}" />
+        <Label Text="Content"/>
+        <Editor Text="{Binding Content}" />
 
-            <VerticalStackLayout>
-                <Button Text="Pick File" Command="{Binding PickFileCommand}"/>
-                <Label Text="{Binding File.FileName}"/>
-            </VerticalStackLayout>
-
-            <VerticalStackLayout>
-                <Label Text="search composer/work"/>
-                <HorizontalStackLayout>
-                    <Entry Text="{Binding Query}" WidthRequest="200"/>
-                </HorizontalStackLayout>
-            </VerticalStackLayout>
-
-            <HorizontalStackLayout Spacing="40">
-                <VerticalStackLayout Spacing="5">
-                    <Label Text="Composers"/>
-                    <CollectionView
-                        ItemsSource="{Binding ComposerResults}" 
-                        SelectedItem="{Binding Selection}" 
-                        WidthRequest="300"
-                        HeightRequest="250"
-                        VerticalScrollBarVisibility="Always"
-                        EmptyView="No results found :(">
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate x:DataType="Model:Composer">
-                                <Label Text="{Binding CompleteName}"/>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
-                </VerticalStackLayout>
-
-                <VerticalStackLayout Spacing="5">
-                    <Label Text="Works"/>
-                    <CollectionView
-                        ItemsSource="{Binding WorkResults}" 
-                        SelectedItem="{Binding Selection}" 
-                        WidthRequest="400"
-                        HeightRequest="250"
-                        VerticalScrollBarVisibility="Always"
-                        Scrolled="CollectionView_Scrolled"
-                        EmptyView="No results found :(">
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate x:DataType="Model:Work">
-                                <Label Text="{Binding TitleWithComposersName}"/>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
-                </VerticalStackLayout>
-            </HorizontalStackLayout>
-
-
-            <Label Text="{Binding ErrorMessage}" IsVisible="{Binding IsErrorMessage}"/>
-
-            <Button Text="Post" Command="{Binding PostCommand}"/>
+        <VerticalStackLayout>
+            <Button Text="Pick File" Command="{Binding PickFileCommand}"/>
+            <Label Text="{Binding File.FileName}"/>
         </VerticalStackLayout>
-    </ScrollView>    
+
+        <VerticalStackLayout>
+            <Label Text="search composer/work"/>
+            <HorizontalStackLayout>
+                <Entry Text="{Binding Query}" WidthRequest="200"/>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+
+        <HorizontalStackLayout Spacing="40">
+            <VerticalStackLayout Spacing="5">
+                <Label Text="Composers"/>
+                <sf:SfListView 
+                    ItemsSource="{Binding ComposerResults}"
+                    SelectedItem="{Binding Selection}"
+                    WidthRequest="300"
+                    HeightRequest="250"
+                    EmptyView="No results found :(">
+                    <sf:SfListView.ItemTemplate>
+                        <DataTemplate x:DataType="Model:Composer">
+                            <Label Text="{Binding CompleteName}"/>
+                        </DataTemplate>
+                    </sf:SfListView.ItemTemplate>
+                </sf:SfListView>
+                
+                <!--<CollectionView
+                    ItemsSource="{Binding ComposerResults}" 
+                    SelectedItem="{Binding Selection}" 
+                    WidthRequest="300"
+                    HeightRequest="250"
+                    VerticalScrollBarVisibility="Always"
+                    EmptyView="No results found :(">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="Model:Composer">
+                            <Label Text="{Binding CompleteName}"/>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>-->
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Spacing="5">
+                <Label Text="Works"/>
+                <sf:SfListView
+                    ItemsSource="{Binding WorkResults}"
+                    SelectedItem="{Binding Selection}"
+                    EmptyView="No results found :(">
+                    <sf:SfListView.ItemTemplate>
+                        <DataTemplate x:DataType="Model:Work">
+                            <Label Text="{Binding TitleWithComposersName}"/>
+                        </DataTemplate>
+                    </sf:SfListView.ItemTemplate>
+                </sf:SfListView>
+                
+                <!--<CollectionView
+                    ItemsSource="{Binding WorkResults}" 
+                    SelectedItem="{Binding Selection}" 
+                    WidthRequest="400"
+                    HeightRequest="250"
+                    VerticalScrollBarVisibility="Always"
+                    Scrolled="CollectionView_Scrolled"
+                    EmptyView="No results found :(">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="Model:Work">
+                            <Label Text="{Binding TitleWithComposersName}"/>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>-->
+            </VerticalStackLayout>
+        </HorizontalStackLayout>
+
+
+        <Label Text="{Binding ErrorMessage}" IsVisible="{Binding IsErrorMessage}"/>
+
+        <Button Text="Post" Command="{Binding PostCommand}"/>
+    </VerticalStackLayout>
 </ContentPage>

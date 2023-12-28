@@ -51,15 +51,5 @@ namespace ProjectApp.Model
             Catalogue = "";
             Catalogue_Number = "";
         }
-
-        public override bool Equals(object obj)
-        {
-            if (obj is Work)
-            {
-                return Title == (obj as Work).Title;
-            }
-
-            return base.Equals(obj);
-        }
     }
 }

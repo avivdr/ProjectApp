@@ -37,15 +37,5 @@ namespace ProjectApp.Model
             Epoch = "";
             Portrait = "";
         }
-
-        public override bool Equals(object obj)
-        {
-            if (obj is Composer)
-            {
-                return CompleteName == (obj as Composer).CompleteName;
-            }
-
-            return base.Equals(obj);
-        }
     }
 }

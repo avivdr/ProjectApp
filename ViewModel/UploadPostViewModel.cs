@@ -34,7 +34,6 @@ namespace ProjectApp.ViewModel
         private dynamic _selection;
 
         readonly DebounceDispatcher searchDebounce;
-        readonly ThrottleDispatcher loadDebounce;
 
         public string Title
         {
@@ -92,8 +91,24 @@ namespace ProjectApp.ViewModel
                 searchDebounce.Debounce(() => Search(_query));
             }
         }
-        public ObservableCollection<Composer> ComposerResults { get; set; }
-        public ObservableCollection<Work> WorkResults { get; set; }
+        public ObservableCollection<Composer> ComposerResults
+        {
+            get => _composerResults;
+            set
+            {
+                _composerResults = value;
+                OnPropertyChanged(nameof(ComposerResults));
+            }
+        }
+        public ObservableCollection<Work> WorkResults
+        {
+            get => _workResults;
+            set
+            {
+                _workResults = value;
+                OnPropertyChanged(nameof(WorkResults));
+            }
+        }
         public ICommand PostCommand { get; protected set; }
         public ICommand PickFileCommand { get; protected set; }
         public FileResult File { get; protected set; }
@@ -103,7 +118,6 @@ namespace ProjectApp.ViewModel
             IsErrorMessage = false;
             ErrorMessage = SERVER_ERROR;
             searchDebounce = new(300);
-            loadDebounce = new(700);
 
             ComposerResults = new();
             WorkResults = new();
@@ -166,32 +180,60 @@ namespace ProjectApp.ViewModel
             });
         }
 
-        public void WorksScrolled(object sender, ItemsViewScrolledEventArgs e)
+        public async void WorksScrolled(object sender, ItemsViewScrolledEventArgs e)
         {
-            int lastIndex = e.LastVisibleItemIndex;
-
-            if (WorkResults.Count - lastIndex > 9)
+            if (WorkResults.Count - e.LastVisibleItemIndex > 6)
                 return;
 
-            loadDebounce.Throttle(async () =>
-            {
-                //load more works
-                OmniSearchDTO results = await service.NextOmniSearch();
-                if (results == null) return;
+            //load more works
+            OmniSearchDTO results = await service.NextOmniSearch();
+            if (results == null) return;
 
-                ComposerResults.AddRange(results.Composers);
-                WorkResults.AddRange(results.Works);
-
-                (sender as CollectionView).ScrollTo(lastIndex);
-            });
+            ComposerResults.AddRange(results.Composers);
+            WorkResults.AddRange(results.Works);
         }
+
+        //private async void Search(string query)
+        //{
+        //    if (query.Length < 4)
+        //    {
+        //        ComposerResults.Empty();
+        //        WorkResults.Empty();
+        //        IsErrorMessage = false;
+        //        return;
+        //    }
+
+        //    OmniSearchDTO results = await service.OmniSearch(Query);
+        //    if (results == null)
+        //    {
+        //        ErrorMessage = SERVER_ERROR;
+        //        IsErrorMessage = true;
+        //        ComposerResults.Empty();
+        //        WorkResults.Empty();
+        //        return;
+        //    }
+
+        //    IsErrorMessage = false;
+
+        //    if (results.Composers.Count == 0)
+        //    {
+        //        ComposerResults.Empty();
+        //    }
+        //    else ComposerResults.SetFromList(results.Composers);
+
+        //    if (results.Works.Count == 0)
+        //    {
+        //        WorkResults.Empty();
+        //    }
+        //    else WorkResults.SetFromList(results.Works);
+        //}
 
         private async void Search(string query)
         {
             if (query.Length < 4)
             {
-                ComposerResults.Empty();
-                WorkResults.Empty();
+                ComposerResults = new();
+                WorkResults = new();
                 IsErrorMessage = false;
                 return;
             }
@@ -201,24 +243,15 @@ namespace ProjectApp.ViewModel
             {
                 ErrorMessage = SERVER_ERROR;
                 IsErrorMessage = true;
-                ComposerResults.Empty();
-                WorkResults.Empty();
+                ComposerResults = new();
+                WorkResults = new();
                 return;
             }
 
             IsErrorMessage = false;
 
-            if (results.Composers.Count == 0)
-            {
-                ComposerResults.Empty();
-            }
-            else ComposerResults.SetFromList(results.Composers);
-
-            if (results.Works.Count == 0)
-            {
-                WorkResults.Empty();
-            }
-            else WorkResults.SetFromList(results.Works);
+            ComposerResults = (results.Composers.Count == 0) ? new() : new(results.Composers);
+            WorkResults = (results.Works.Count == 0) ? new() : new(results.Works);
         }
     }
 }
