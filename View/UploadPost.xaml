@@ -14,7 +14,7 @@
 
         <Label Text="Content"/>
         <Editor Text="{Binding Content}" />
-
+    
         <VerticalStackLayout>
             <Button Text="Pick File" Command="{Binding PickFileCommand}"/>
             <Label Text="{Binding File.FileName}"/>
@@ -33,8 +33,6 @@
                 <sf:SfListView 
                     ItemsSource="{Binding ComposerResults}"
                     SelectedItem="{Binding Selection}"
-                    WidthRequest="300"
-                    HeightRequest="250"
                     EmptyView="No results found :(">
                     <sf:SfListView.ItemTemplate>
                         <DataTemplate x:DataType="Model:Composer">
@@ -63,6 +61,8 @@
                 <sf:SfListView
                     ItemsSource="{Binding WorkResults}"
                     SelectedItem="{Binding Selection}"
+                    LoadMoreOption="AutoOnScroll"
+                    LoadMoreCommand="{Binding LoadMoreWorks}"
                     EmptyView="No results found :(">
                     <sf:SfListView.ItemTemplate>
                         <DataTemplate x:DataType="Model:Work">

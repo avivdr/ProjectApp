@@ -13,8 +13,8 @@ public partial class UploadPost : ContentPage
 		_vm = vm;
 	}
 
-    private void CollectionView_Scrolled(object sender, ItemsViewScrolledEventArgs e)
-    {
-		_vm.WorksScrolled(sender, e);
-    }
+  //  private void CollectionView_Scrolled(object sender, ItemsViewScrolledEventArgs e)
+  //  {
+		//_vm.WorksScrolled(sender, e);
+  //  }
 }

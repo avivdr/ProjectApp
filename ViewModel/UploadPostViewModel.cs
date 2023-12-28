@@ -12,6 +12,7 @@ using DebounceThrottle;
 using ProjectApp.View;
 using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
+using Syncfusion.Maui.ListView;
 
 namespace ProjectApp.ViewModel
 {
@@ -111,6 +112,7 @@ namespace ProjectApp.ViewModel
         }
         public ICommand PostCommand { get; protected set; }
         public ICommand PickFileCommand { get; protected set; }
+        public ICommand LoadMoreWorks { get; protected set; }
         public FileResult File { get; protected set; }
         public UploadPostViewModel(Service _service)
         {
@@ -119,8 +121,8 @@ namespace ProjectApp.ViewModel
             ErrorMessage = SERVER_ERROR;
             searchDebounce = new(300);
 
-            ComposerResults = new();
-            WorkResults = new();
+            ComposerResults = null;
+            WorkResults = null;
 
             //post command
             PostCommand = new Command(async () =>
@@ -178,20 +180,29 @@ namespace ProjectApp.ViewModel
                     IsErrorMessage = true;
                 }
             });
+
+            LoadMoreWorks = new Command(async () =>
+            {
+                OmniSearchDTO results = await service.NextOmniSearch();
+                if (results == null) return;
+
+                ComposerResults.AddRange(results.Composers);
+                WorkResults.AddRange(results.Works);
+            });
         }
 
-        public async void WorksScrolled(object sender, ItemsViewScrolledEventArgs e)
-        {
-            if (WorkResults.Count - e.LastVisibleItemIndex > 6)
-                return;
+        //public async void WorksScrolled(object sender, ItemsViewScrolledEventArgs e)
+        //{
+        //    if (WorkResults.Count - e.LastVisibleItemIndex > 6)
+        //        return;
 
-            //load more works
-            OmniSearchDTO results = await service.NextOmniSearch();
-            if (results == null) return;
+        //    //load more works
+        //    OmniSearchDTO results = await service.NextOmniSearch();
+        //    if (results == null) return;
 
-            ComposerResults.AddRange(results.Composers);
-            WorkResults.AddRange(results.Works);
-        }
+        //    ComposerResults.AddRange(results.Composers);
+        //    WorkResults.AddRange(results.Works);
+        //}
 
         //private async void Search(string query)
         //{
@@ -232,8 +243,8 @@ namespace ProjectApp.ViewModel
         {
             if (query.Length < 4)
             {
-                ComposerResults = new();
-                WorkResults = new();
+                ComposerResults = null;
+                WorkResults = null;
                 IsErrorMessage = false;
                 return;
             }
@@ -243,15 +254,15 @@ namespace ProjectApp.ViewModel
             {
                 ErrorMessage = SERVER_ERROR;
                 IsErrorMessage = true;
-                ComposerResults = new();
-                WorkResults = new();
+                ComposerResults = null;
+                WorkResults = null;
                 return;
             }
 
             IsErrorMessage = false;
 
-            ComposerResults = (results.Composers.Count == 0) ? new() : new(results.Composers);
-            WorkResults = (results.Works.Count == 0) ? new() : new(results.Works);
+            ComposerResults = (results.Composers.Count == 0) ? null : new(results.Composers);
+            WorkResults = (results.Works.Count == 0) ? null : new(results.Works);
         }
     }
 }

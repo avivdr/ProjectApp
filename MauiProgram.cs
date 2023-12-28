@@ -3,6 +3,7 @@ using ProjectApp.ViewModel;
 using ProjectApp.View;
 using CommunityToolkit.Maui;
 using ProjectApp.Services;
+using Syncfusion.Maui.Core.Hosting;
 
 namespace ProjectApp;
 
@@ -37,6 +38,8 @@ public static class MauiProgram
 
 		builder.Services.AddSingleton<Service>();
 		
+		builder.ConfigureSyncfusionCore();
+
         return builder.Build();
 	}
 }
