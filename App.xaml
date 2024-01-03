@@ -9,10 +9,16 @@
             <Color x:Key="BlueBtnClr">#001f5c</Color>
             <Color x:Key="BlueLblClr">#3369ff</Color>
             <Color x:Key="LightTextCLr">#d7dadc</Color>
+            <Color x:Key="DarkBackgroundClr">#030303</Color>
 
             <Style TargetType="Button" Class="BlueBtn">
                 <Setter Property="BackgroundColor" Value="{StaticResource BlueBtnClr}"/>
                 <Setter Property="TextColor" Value="{StaticResource LightTextCLr}"/>
+            </Style>
+            
+            <Style TargetType="Button" Class="LightBlueBtn">
+                <Setter Property="BackgroundColor" Value="{StaticResource BlueLblClr}"/>
+                <Setter Property="TextColor" Value="{StaticResource DarkBlueBtnClr}"/>
             </Style>
 
             <Style TargetType="Label" Class="ErrorLbl">
@@ -25,6 +31,12 @@
             </Style>
 
             <Style TargetType="Entry" Class="FormEntry">
+                <Setter Property="BackgroundColor" Value="#1a1a1a"/>
+                <Setter Property="FontSize" Value="16"/>
+                <Setter Property="TextColor" Value="{StaticResource LightTextCLr}"/>
+            </Style>
+    
+            <Style TargetType="Editor" Class="FormEditor">
                 <Setter Property="BackgroundColor" Value="#1a1a1a"/>
                 <Setter Property="FontSize" Value="16"/>
                 <Setter Property="TextColor" Value="{StaticResource LightTextCLr}"/>
