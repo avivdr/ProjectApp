@@ -127,12 +127,7 @@ namespace ProjectApp.ViewModel
         {
             service = _service;
 
-            if (service.GetCurrentUser().Result == null)
-            {
-                Shell.Current.DisplayAlert("Access Denied", "You must be logged in to enter this page", "Return to main page");
-                Shell.Current.GoToAsync("//MainPage");
-                return;
-            }
+            CheckAccess();
 
             IsErrorMessage = false;
             ErrorMessage = SERVER_ERROR;
@@ -231,6 +226,16 @@ namespace ProjectApp.ViewModel
 
             ComposerResults = (results.Composers.Count == 0) ? null : new(results.Composers);
             WorkResults = (results.Works.Count == 0) ? null : new(results.Works);
+        }
+
+        private async void CheckAccess()
+        {
+            if (await service.GetCurrentUser() == null)
+            {
+                await Shell.Current.DisplayAlert("Access Denied", "You must be logged in to enter this page", "Return to main page");
+                await Shell.Current.GoToAsync("//MainPage");
+                return;
+            }
         }
     }
 }

@@ -6,7 +6,7 @@
     xmlns:local="clr-namespace:ProjectApp"
     xmlns:view="clr-namespace:ProjectApp.View"
     Shell.FlyoutBehavior="Disabled" >
-
+    
     <ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate local:MainPage}"

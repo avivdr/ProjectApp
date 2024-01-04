@@ -43,7 +43,10 @@ namespace ProjectApp.Services
 
         public async Task<User> GetCurrentUser()
         {
-            return JsonSerializer.Deserialize<User>(await SecureStorage.GetAsync(CURRENT_USER_KEY), options);
+            string st = await SecureStorage.GetAsync(CURRENT_USER_KEY);
+            if (string.IsNullOrEmpty(st))
+                return null;
+            return JsonSerializer.Deserialize<User>(st, options);
         }
 
         public async Task<List<Composer>> SearchComposersByName(string query)
