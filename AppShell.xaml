@@ -8,6 +8,10 @@
     Shell.FlyoutBehavior="Disabled" >
     
     <ShellContent
+    Title="UploadPost"
+    ContentTemplate="{DataTemplate view:UploadPost}"
+    Route="UploadPost" />
+    <ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
@@ -19,9 +23,5 @@
         Title="Sign Up"
         ContentTemplate="{DataTemplate view:SignUp}"
         Route="SignUp"/>
-    <ShellContent
-    Title="UploadPost"
-    ContentTemplate="{DataTemplate view:UploadPost}"
-    Route="UploadPost" />
 
 </Shell>

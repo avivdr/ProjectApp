@@ -9,7 +9,7 @@
             <Color x:Key="BlueBtnClr">#001f5c</Color>
             <Color x:Key="BlueLblClr">#3369ff</Color>
             <Color x:Key="LightTextCLr">#d7dadc</Color>
-            <Color x:Key="DarkBackgroundClr">#030303</Color>
+            <Color x:Key="DarkBackgroundClr">#040404</Color>
 
             <Style TargetType="Button" Class="BlueBtn">
                 <Setter Property="BackgroundColor" Value="{StaticResource BlueBtnClr}"/>

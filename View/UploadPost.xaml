@@ -7,6 +7,7 @@
              x:DataType="ViewModel:UploadPostViewModel"
              xmlns:Model="clr-namespace:ProjectApp.Model"
              xmlns:sf="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView">
+    
     <ScrollView BackgroundColor="{StaticResource DarkBackgroundClr}">
         <VerticalStackLayout Spacing="20" Padding="15">
             <Label Text="Title" StyleClass="FormLbl"/>
