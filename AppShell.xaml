@@ -6,7 +6,11 @@
     xmlns:local="clr-namespace:ProjectApp"
     xmlns:view="clr-namespace:ProjectApp.View"
     Shell.FlyoutBehavior="Disabled" >
-
+    
+    <ShellContent
+    Title="UploadPost"
+    ContentTemplate="{DataTemplate view:UploadPost}"
+    Route="UploadPost" />
     <ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate local:MainPage}"
@@ -19,9 +23,5 @@
         Title="Sign Up"
         ContentTemplate="{DataTemplate view:SignUp}"
         Route="SignUp"/>
-    <ShellContent
-    Title="UploadPost"
-    ContentTemplate="{DataTemplate view:UploadPost}"
-    Route="UploadPost" />
 
 </Shell>

@@ -11,6 +11,8 @@ namespace ProjectApp.Model
     {
         public static void AddRange(this ObservableCollection<Composer> collection, IEnumerable<Composer> items)
         {
+            if (collection == null || items == null) return;
+
             foreach (var item in items)
             {
                 if (!collection.Any(x => x.CompleteName == item.CompleteName))
@@ -19,6 +21,8 @@ namespace ProjectApp.Model
         }
         public static void AddRange(this ObservableCollection<Work> collection, IEnumerable<Work> items)
         {
+            if (collection == null || items == null) return;
+
             foreach (var item in items)
             {
                 if (!collection.Any(x => x.Title == item.Title))

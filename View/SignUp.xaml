@@ -8,7 +8,7 @@
     <VerticalStackLayout
             Spacing="40"
             Padding="35"
-            BackgroundColor="#030303">
+            BackgroundColor="{StaticResource DarkBackgroundClr}">
         <VerticalStackLayout Spacing="20">
             <Label Text="Username" StyleClass="FormLbl"/>
             <Entry StyleClass="FormEntry" Text="{Binding Username}"/>

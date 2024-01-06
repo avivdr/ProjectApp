@@ -8,60 +8,94 @@
              xmlns:Model="clr-namespace:ProjectApp.Model"
              xmlns:sf="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView">
     
-    <VerticalStackLayout Spacing="20">
-        <Label Text="Title"/>
-        <Entry Text="{Binding Title}"/>
+    <ScrollView BackgroundColor="{StaticResource DarkBackgroundClr}">
+        <VerticalStackLayout Spacing="20" Padding="15">
+            <Label Text="Title" StyleClass="FormLbl"/>
+            <Entry Text="{Binding Title}" StyleClass="FormEntry"/>
 
-        <Label Text="Content"/>
-        <Editor Text="{Binding Content}" />
-    
-        <VerticalStackLayout>
-            <Button Text="Pick File" Command="{Binding PickFileCommand}"/>
-            <Label Text="{Binding File.FileName}"/>
-        </VerticalStackLayout>
+            <Label Text="Content" StyleClass="FormLbl"/>
+            <Editor Text="{Binding Content}" StyleClass="FormEditor"/>
 
-        <VerticalStackLayout>
-            <Label Text="search composer/work"/>
-            <HorizontalStackLayout>
-                <Entry Text="{Binding Query}" WidthRequest="200"/>
+            <VerticalStackLayout Spacing="10">
+                <Button Text="Pick File" Command="{Binding PickFileCommand}" StyleClass="LightBlueBtn"/>
+                <Label Text="{Binding FileResult.FileName}" StyleClass="FormLbl"/>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout>
+                <Label Text="search composer/work" StyleClass="FormLbl"/>
+                <HorizontalStackLayout>
+                    <Entry Text="{Binding Query}" WidthRequest="200" StyleClass="FormEntry"/>
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+
+            <HorizontalStackLayout Spacing="40">
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="Composers" StyleClass="FormLbl"/>
+                    <sf:SfListView 
+                        ItemsSource="{Binding ComposerResults}"
+                        SelectedItem="{Binding Selection}"
+                        MaximumHeightRequest="200">
+                        <sf:SfListView.ItemTemplate>
+                            <DataTemplate x:DataType="Model:Composer">
+                                <Border Padding="0, 10"
+                                    Stroke="{StaticResource LightTextCLr}"
+                                     StrokeShape="RoundRectangle 10">
+                                    <Label Text="{Binding CompleteName}" StyleClass="FormLbl" VerticalOptions="Center"/>
+                                </Border>
+                            </DataTemplate>
+                        </sf:SfListView.ItemTemplate>
+
+                        <sf:SfListView.EmptyView>
+                            <Label Text="No results found :(" StyleClass="FormLbl" Margin="0, 10"/>
+                        </sf:SfListView.EmptyView>
+                    </sf:SfListView>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="Works" StyleClass="FormLbl"/>
+                    <sf:SfListView
+                        ItemsSource="{Binding WorkResults}"
+                        SelectedItem="{Binding Selection}"
+                        LoadMoreOption="AutoOnScroll"
+                        LoadMoreCommand="{Binding LoadMoreWorks}"
+                        MaximumHeightRequest="200"
+                        ItemSpacing="5"
+                        ScrollBarVisibility="Always"
+                        >
+                        <sf:SfListView.ItemTemplate>
+                            <DataTemplate x:DataType="Model:Work">
+                                <Label Text="{Binding TitleWithComposersName}" 
+                                           StyleClass="FormLbl"
+                                           VerticalOptions="Center"
+                                           Padding="2"/>
+                            </DataTemplate>
+                        </sf:SfListView.ItemTemplate>
+
+                        <sf:SfListView.SelectedItemTemplate>
+                            <DataTemplate x:DataType="Model:Work">
+                                <Frame
+                                     Padding="10, 0"
+                                     BorderColor="{StaticResource BlueLblClr}"
+                                     CornerRadius="10"
+                                     BackgroundColor="Transparent">
+                                    <Label Text="{Binding TitleWithComposersName}" 
+                                        StyleClass="FormLbl"
+                                        VerticalOptions="Center"
+                                        Padding="2"/>
+                                </Frame>
+                            </DataTemplate>
+                        </sf:SfListView.SelectedItemTemplate>
+
+                        <sf:SfListView.EmptyView>
+                            <Label Text="No results found :(" StyleClass="FormLbl" Margin="0, 10"/>
+                        </sf:SfListView.EmptyView>
+                    </sf:SfListView>
+                </VerticalStackLayout>
             </HorizontalStackLayout>
+
+            <Label Text="{Binding ErrorMessage}" IsVisible="{Binding IsErrorMessage}" StyleClass="FormLbl"/>
+
+            <Button Text="Post" Command="{Binding UploadPostCommand}" StyleClass="BlueBtn"/>
         </VerticalStackLayout>
-
-        <HorizontalStackLayout Spacing="40">
-            <VerticalStackLayout Spacing="5">
-                <Label Text="Composers"/>
-                <sf:SfListView 
-                    ItemsSource="{Binding ComposerResults}"
-                    SelectedItem="{Binding Selection}"
-                    EmptyView="No results found :(">
-                    <sf:SfListView.ItemTemplate>
-                        <DataTemplate x:DataType="Model:Composer">
-                            <Label Text="{Binding CompleteName}"/>
-                        </DataTemplate>
-                    </sf:SfListView.ItemTemplate>
-                </sf:SfListView>
-            </VerticalStackLayout>
-
-            <VerticalStackLayout Spacing="5">
-                <Label Text="Works"/>
-                <sf:SfListView
-                    ItemsSource="{Binding WorkResults}"
-                    SelectedItem="{Binding Selection}"
-                    LoadMoreOption="AutoOnScroll"
-                    LoadMoreCommand="{Binding LoadMoreWorks}"
-                    EmptyView="No results found :(">
-                    <sf:SfListView.ItemTemplate>
-                        <DataTemplate x:DataType="Model:Work">
-                            <Label Text="{Binding TitleWithComposersName}"/>
-                        </DataTemplate>
-                    </sf:SfListView.ItemTemplate>
-                </sf:SfListView>
-            </VerticalStackLayout>
-        </HorizontalStackLayout>
-
-
-        <Label Text="{Binding ErrorMessage}" IsVisible="{Binding IsErrorMessage}"/>
-
-        <Button Text="Post" Command="{Binding PostCommand}"/>
-    </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

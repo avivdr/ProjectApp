@@ -33,6 +33,7 @@ namespace ProjectApp.ViewModel
         private ObservableCollection<Composer> _composerResults;
         private ObservableCollection<Work> _workResults;
         private dynamic _selection;
+        private FileResult _fileResult;
 
         readonly DebounceDispatcher searchDebounce;
 
@@ -110,22 +111,32 @@ namespace ProjectApp.ViewModel
                 OnPropertyChanged(nameof(WorkResults));
             }
         }
-        public ICommand PostCommand { get; protected set; }
+        public ICommand UploadPostCommand { get; protected set; }
         public ICommand PickFileCommand { get; protected set; }
         public ICommand LoadMoreWorks { get; protected set; }
-        public FileResult File { get; protected set; }
+        public FileResult FileResult
+        {
+            get => _fileResult;
+            set
+            {
+                _fileResult = value;
+                OnPropertyChanged(nameof(FileResult));
+            }
+        }
         public UploadPostViewModel(Service _service)
         {
             service = _service;
+
+            CheckAccess();
+
             IsErrorMessage = false;
             ErrorMessage = SERVER_ERROR;
             searchDebounce = new(300);
-
             ComposerResults = null;
             WorkResults = null;
 
             //post command
-            PostCommand = new Command(async () =>
+            UploadPostCommand = new Command(async () =>
             {
                 try
                 {
@@ -148,7 +159,7 @@ namespace ProjectApp.ViewModel
                         post.Work = null;
                     }
 
-                    HttpStatusCode httpStatusCode = await service.UploadPost(post, File);
+                    HttpStatusCode httpStatusCode = await service.UploadPost(post, FileResult);
                     switch (httpStatusCode)
                     {
                         case HttpStatusCode.OK:
@@ -171,11 +182,11 @@ namespace ProjectApp.ViewModel
             {
                 try
                 {
-                    File = await FilePicker.Default.PickAsync();
+                    FileResult = await FilePicker.Default.PickAsync();
                 }
                 catch (Exception)
                 {
-                    File = null;
+                    FileResult = null;
                     ErrorMessage = FILE_PICK_ERROR;
                     IsErrorMessage = true;
                 }
@@ -190,54 +201,6 @@ namespace ProjectApp.ViewModel
                 WorkResults.AddRange(results.Works);
             });
         }
-
-        //public async void WorksScrolled(object sender, ItemsViewScrolledEventArgs e)
-        //{
-        //    if (WorkResults.Count - e.LastVisibleItemIndex > 6)
-        //        return;
-
-        //    //load more works
-        //    OmniSearchDTO results = await service.NextOmniSearch();
-        //    if (results == null) return;
-
-        //    ComposerResults.AddRange(results.Composers);
-        //    WorkResults.AddRange(results.Works);
-        //}
-
-        //private async void Search(string query)
-        //{
-        //    if (query.Length < 4)
-        //    {
-        //        ComposerResults.Empty();
-        //        WorkResults.Empty();
-        //        IsErrorMessage = false;
-        //        return;
-        //    }
-
-        //    OmniSearchDTO results = await service.OmniSearch(Query);
-        //    if (results == null)
-        //    {
-        //        ErrorMessage = SERVER_ERROR;
-        //        IsErrorMessage = true;
-        //        ComposerResults.Empty();
-        //        WorkResults.Empty();
-        //        return;
-        //    }
-
-        //    IsErrorMessage = false;
-
-        //    if (results.Composers.Count == 0)
-        //    {
-        //        ComposerResults.Empty();
-        //    }
-        //    else ComposerResults.SetFromList(results.Composers);
-
-        //    if (results.Works.Count == 0)
-        //    {
-        //        WorkResults.Empty();
-        //    }
-        //    else WorkResults.SetFromList(results.Works);
-        //}
 
         private async void Search(string query)
         {
@@ -263,6 +226,16 @@ namespace ProjectApp.ViewModel
 
             ComposerResults = (results.Composers.Count == 0) ? null : new(results.Composers);
             WorkResults = (results.Works.Count == 0) ? null : new(results.Works);
+        }
+
+        private async void CheckAccess()
+        {
+            if (await service.GetCurrentUser() == null)
+            {
+                await Shell.Current.DisplayAlert("Access Denied", "You must be logged in to enter this page", "Return to main page");
+                await Shell.Current.GoToAsync("//MainPage");
+                return;
+            }
         }
     }
 }
