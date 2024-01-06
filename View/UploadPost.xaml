@@ -40,20 +40,6 @@
                         </DataTemplate>
                     </sf:SfListView.ItemTemplate>
                 </sf:SfListView>
-                
-                <!--<CollectionView
-                    ItemsSource="{Binding ComposerResults}" 
-                    SelectedItem="{Binding Selection}" 
-                    WidthRequest="300"
-                    HeightRequest="250"
-                    VerticalScrollBarVisibility="Always"
-                    EmptyView="No results found :(">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="Model:Composer">
-                            <Label Text="{Binding CompleteName}"/>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>-->
             </VerticalStackLayout>
 
             <VerticalStackLayout Spacing="5">
@@ -70,21 +56,6 @@
                         </DataTemplate>
                     </sf:SfListView.ItemTemplate>
                 </sf:SfListView>
-                
-                <!--<CollectionView
-                    ItemsSource="{Binding WorkResults}" 
-                    SelectedItem="{Binding Selection}" 
-                    WidthRequest="400"
-                    HeightRequest="250"
-                    VerticalScrollBarVisibility="Always"
-                    Scrolled="CollectionView_Scrolled"
-                    EmptyView="No results found :(">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="Model:Work">
-                            <Label Text="{Binding TitleWithComposersName}"/>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>-->
             </VerticalStackLayout>
         </HorizontalStackLayout>
 
