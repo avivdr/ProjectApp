@@ -15,6 +15,7 @@ public static class MauiProgram
 		builder
 			.UseMauiApp<App>()
 			.UseMauiCommunityToolkit()
+			.ConfigureSyncfusionCore()
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -35,8 +36,6 @@ public static class MauiProgram
 		builder.Services.AddSingleton<UploadPostViewModel>();
 
 		builder.Services.AddSingleton<Service>();
-		
-		builder.ConfigureSyncfusionCore();
 
         return builder.Build();
 	}

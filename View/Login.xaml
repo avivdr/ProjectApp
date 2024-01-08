@@ -17,12 +17,12 @@
             Padding="35"
             BackgroundColor="#030303">
             <VerticalStackLayout Spacing="20">
-                <Label Text="Username" StyleClass="FormLbl"/>
+                <Label Text="Username" StyleClass="LightLbl"/>
                 <Entry Text="{Binding Username}" StyleClass="FormEntry"/>
             </VerticalStackLayout>
 
             <VerticalStackLayout Spacing="20">
-                <Label Text="Password" StyleClass="FormLbl"/>
+                <Label Text="Password" StyleClass="LightLbl"/>
                 <Entry IsPassword="True" Text="{Binding Password}" StyleClass="FormEntry"/>
                 <Label Text="{Binding ErrorMessage}" StyleClass="ErrorLbl" IsVisible="{Binding IsLoginError}"/>
             </VerticalStackLayout>

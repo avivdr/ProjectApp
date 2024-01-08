@@ -24,18 +24,21 @@ namespace ProjectApp.ViewModel
         const string SHORT_QUERY = "Search query must be at least 4 characters";
 
         readonly Service service;
+        readonly DebounceDispatcher searchDebounce;
 
+        #region fields
         private string _title;
         private string _content;
         private string _errorMessage;
-        private bool _isErrorMessage;
+        private bool _isErrorMessage; 
+        private bool _isWorksLoading;
+        private bool _isPopupOpen;
         private string _query;
         private ObservableCollection<Composer> _composerResults;
         private ObservableCollection<Work> _workResults;
         private dynamic _selection;
         private FileResult _fileResult;
-
-        readonly DebounceDispatcher searchDebounce;
+        #endregion
 
         public string Title
         {
@@ -82,6 +85,25 @@ namespace ProjectApp.ViewModel
                 OnPropertyChanged(nameof(IsErrorMessage));
             }
         }
+        public bool IsWorksLoading
+        {
+            get => _isWorksLoading;
+            set
+            {
+                _isWorksLoading = value;
+                OnPropertyChanged(nameof(IsWorksLoading));
+            }
+        }
+        public bool IsPopupOpen
+        {
+            get => _isPopupOpen;
+            set
+            {
+                _isPopupOpen = value;
+                OnPropertyChanged(nameof(IsPopupOpen));
+            }
+        }
+
         public string Query
         {
             get => _query;
@@ -126,8 +148,6 @@ namespace ProjectApp.ViewModel
         public UploadPostViewModel(Service _service)
         {
             service = _service;
-
-            CheckAccess();
 
             IsErrorMessage = false;
             ErrorMessage = SERVER_ERROR;
@@ -194,11 +214,16 @@ namespace ProjectApp.ViewModel
 
             LoadMoreWorks = new Command(async () =>
             {
-                OmniSearchDTO results = await service.NextOmniSearch();
-                if (results == null) return;
+                IsWorksLoading = true;
 
-                ComposerResults.AddRange(results.Composers);
-                WorkResults.AddRange(results.Works);
+                OmniSearchDTO results = await service.NextOmniSearch();
+                if (results != null)
+                {
+                    ComposerResults.AddRange(results.Composers);
+                    WorkResults.AddRange(results.Works);
+                }
+
+                IsWorksLoading = false;
             });
         }
 
@@ -228,14 +253,14 @@ namespace ProjectApp.ViewModel
             WorkResults = (results.Works.Count == 0) ? null : new(results.Works);
         }
 
-        private async void CheckAccess()
-        {
-            if (await service.GetCurrentUser() == null)
-            {
-                await Shell.Current.DisplayAlert("Access Denied", "You must be logged in to enter this page", "Return to main page");
-                await Shell.Current.GoToAsync("//MainPage");
-                return;
-            }
-        }
+        //public async void CheckAccess()
+        //{
+        //    if (await service.GetCurrentUser() == null)
+        //    {
+        //        await Shell.Current.DisplayAlert("Access Denied", "You must be logged in to enter this page", "Return to main page");
+        //        await Shell.Current.GoToAsync("//MainPage");
+        //        return;
+        //    }
+        //}
     }
 }

@@ -10,23 +10,23 @@
             Padding="35"
             BackgroundColor="{StaticResource DarkBackgroundClr}">
         <VerticalStackLayout Spacing="20">
-            <Label Text="Username" StyleClass="FormLbl"/>
+            <Label Text="Username" StyleClass="LightLbl"/>
             <Entry StyleClass="FormEntry" Text="{Binding Username}"/>
         </VerticalStackLayout>
 
         <VerticalStackLayout Spacing="20">
-            <Label Text="Email" StyleClass="FormLbl"/>
+            <Label Text="Email" StyleClass="LightLbl"/>
             <Entry StyleClass="FormEntry" Text="{Binding Email}"/>
         </VerticalStackLayout>
 
         <VerticalStackLayout Spacing="20">
-            <Label Text="Password" StyleClass="FormLbl"/>
+            <Label Text="Password" StyleClass="LightLbl"/>
             <Entry IsPassword="True" StyleClass="FormEntry" Text="{Binding Password1}"/>
             <Label StyleClass="FormEntry"/>
         </VerticalStackLayout>
 
         <VerticalStackLayout Spacing="20">
-            <Label Text="Verify Password" StyleClass="FormLbl"/>
+            <Label Text="Verify Password" StyleClass="LightLbl"/>
             <Entry IsPassword="True" StyleClass="FormEntry" Text="{Binding Password2}"/>
             <Label StyleClass="ErrorLbl" Text="{Binding ErrorMessage}" IsVisible="{Binding IsErrorMessage}"/>
         </VerticalStackLayout>
