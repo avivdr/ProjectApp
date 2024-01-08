@@ -9,7 +9,6 @@ using ProjectApp.Model;
 using System.Text.Json;
 using System.Net;
 using DebounceThrottle;
-using ProjectApp.View;
 using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
 using Syncfusion.Maui.ListView;
@@ -136,6 +135,7 @@ namespace ProjectApp.ViewModel
         public ICommand UploadPostCommand { get; protected set; }
         public ICommand PickFileCommand { get; protected set; }
         public ICommand LoadMoreWorks { get; protected set; }
+        public ICommand OpenPopup { get; protected set; }
         public FileResult FileResult
         {
             get => _fileResult;
@@ -154,6 +154,8 @@ namespace ProjectApp.ViewModel
             searchDebounce = new(300);
             ComposerResults = null;
             WorkResults = null;
+
+            OpenPopup = new Command(() => IsPopupOpen = true);
 
             //post command
             UploadPostCommand = new Command(async () =>
