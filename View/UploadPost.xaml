@@ -22,24 +22,29 @@
                 <Label Text="{Binding FileResult.FileName}" StyleClass="LightLbl"/>
             </VerticalStackLayout>
 
-
             <Button Text="Tag Work or Composer" Command="{Binding OpenPopup}"/>
 
             <sfPopup:SfPopup 
                 IsOpen="{Binding IsPopupOpen}"
-                WidthRequest="550"
+                WidthRequest="650"
                 HeightRequest="450"
-                Padding="10">
+                HeaderTitle="Search Composer/Work">
+                <sfPopup:SfPopup.PopupStyle>
+                    <sfPopup:PopupStyle PopupBackground="{StaticResource DarkBackgroundClr}" />
+                </sfPopup:SfPopup.PopupStyle>
+
                 <sfPopup:SfPopup.ContentTemplate>
                     <DataTemplate>
-                        <ScrollView>
-                            <VerticalStackLayout>
+                        <ScrollView
+                            Padding="10">
+                            <VerticalStackLayout Spacing="20">
                                 <VerticalStackLayout>
-                                    <Label Text="search composer/work" StyleClass="LightLbl"/>
                                     <HorizontalStackLayout>
                                         <Entry Text="{Binding Query}" WidthRequest="200" StyleClass="FormEntry"/>
                                     </HorizontalStackLayout>
                                 </VerticalStackLayout>
+
+                                <!--Composers List-->
                                 <HorizontalStackLayout Spacing="40">
                                     <VerticalStackLayout Spacing="5">
                                         <Label Text="Composers" StyleClass="LightLbl"/>
@@ -63,6 +68,7 @@
                                         </sfList:SfListView>
                                     </VerticalStackLayout>
 
+                                    <!--Works List-->
                                     <VerticalStackLayout Spacing="5">
                                         <Label Text="Works" StyleClass="LightLbl"/>
                                         <sfList:SfListView

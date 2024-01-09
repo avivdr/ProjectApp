@@ -24,6 +24,7 @@ namespace ProjectApp.ViewModel
 
         readonly Service service;
         readonly DebounceDispatcher searchDebounce;
+        private bool MoreWorksToLoad = true;
 
         #region fields
         private string _title;
@@ -224,9 +225,11 @@ namespace ProjectApp.ViewModel
                     ComposerResults.AddRange(results.Composers);
                     WorkResults.AddRange(results.Works);
                 }
+                else MoreWorksToLoad = false;
 
                 IsWorksLoading = false;
-            });
+
+            }, () => MoreWorksToLoad);
         }
 
         private async void Search(string query)
@@ -239,6 +242,7 @@ namespace ProjectApp.ViewModel
                 return;
             }
 
+            MoreWorksToLoad = true;
             OmniSearchDTO results = await service.OmniSearch(Query);
             if (results == null)
             {
