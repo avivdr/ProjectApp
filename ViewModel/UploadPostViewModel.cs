@@ -137,6 +137,7 @@ namespace ProjectApp.ViewModel
         public ICommand PickFileCommand { get; protected set; }
         public ICommand LoadMoreWorks { get; protected set; }
         public ICommand OpenPopup { get; protected set; }
+        public ICommand ClosePopup { get; protected set; }
         public FileResult FileResult
         {
             get => _fileResult;
@@ -157,6 +158,7 @@ namespace ProjectApp.ViewModel
             WorkResults = null;
 
             OpenPopup = new Command(() => IsPopupOpen = true);
+            ClosePopup = new Command(() => IsPopupOpen = false);
 
             //post command
             UploadPostCommand = new Command(async () =>

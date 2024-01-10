@@ -1,45 +1,50 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<tk:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-          xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-          x:Class="ProjectApp.View.Login"
-          xmlns:ViewModel="clr-namespace:ProjectApp.ViewModel"
-          x:DataType="ViewModel:LoginViewModel"
-          xmlns:tk="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-          Color="Transparent"
-          CanBeDismissedByTappingOutsideOfPopup="False"
-          Size="420, 450">
-    <Border
-        StrokeShape="RoundRectangle 20"
-        StrokeThickness="0">
-        
+<tk:Popup
+    x:Class="ProjectApp.View.Login"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ViewModel="clr-namespace:ProjectApp.ViewModel"
+    xmlns:tk="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    x:DataType="ViewModel:LoginViewModel"
+    CanBeDismissedByTappingOutsideOfPopup="False"
+    Size="420, 450"
+    Color="Transparent">
+
+    <Border StrokeShape="RoundRectangle 20" StrokeThickness="0">
         <VerticalStackLayout
-            Spacing="40"
             Padding="35"
-            BackgroundColor="#030303">
+            BackgroundColor="#030303"
+            Spacing="40">
             <VerticalStackLayout Spacing="20">
-                <Label Text="Username" StyleClass="LightLbl"/>
-                <Entry Text="{Binding Username}" StyleClass="FormEntry"/>
+                <Label StyleClass="LightLbl" Text="Username" />
+                <Entry StyleClass="FormEntry" Text="{Binding Username}" />
             </VerticalStackLayout>
 
             <VerticalStackLayout Spacing="20">
-                <Label Text="Password" StyleClass="LightLbl"/>
-                <Entry IsPassword="True" Text="{Binding Password}" StyleClass="FormEntry"/>
-                <Label Text="{Binding ErrorMessage}" StyleClass="ErrorLbl" IsVisible="{Binding IsLoginError}"/>
+                <Label StyleClass="LightLbl" Text="Password" />
+                <Entry
+                    IsPassword="True"
+                    StyleClass="FormEntry"
+                    Text="{Binding Password}" />
+                <Label
+                    IsVisible="{Binding IsLoginError}"
+                    StyleClass="ErrorLbl"
+                    Text="{Binding ErrorMessage}" />
             </VerticalStackLayout>
 
             <VerticalStackLayout Spacing="15">
-                <Button 
-                    Text="Login"
-                    WidthRequest="100"
+                <Button
+                    Command="{Binding LoginCommand}"
                     StyleClass="BlueBtn"
-                    Command="{Binding LoginCommand}"/>
+                    Text="Login"
+                    WidthRequest="100" />
 
                 <Label Text="Sign up" TextColor="{StaticResource BlueLblClr}">
                     <Label.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding SignUpBtnCommand}"/>
+                        <TapGestureRecognizer Command="{Binding SignUpBtnCommand}" />
                     </Label.GestureRecognizers>
                 </Label>
-            </VerticalStackLayout>            
+            </VerticalStackLayout>
         </VerticalStackLayout>
-    </Border>    
+    </Border>
 </tk:Popup>

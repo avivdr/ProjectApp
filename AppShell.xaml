@@ -5,12 +5,12 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:ProjectApp"
     xmlns:view="clr-namespace:ProjectApp.View"
-    Shell.FlyoutBehavior="Disabled" >
-    
+    Shell.FlyoutBehavior="Disabled">
+
     <ShellContent
-    Title="UploadPost"
-    ContentTemplate="{DataTemplate view:UploadPost}"
-    Route="UploadPost" />
+        Title="UploadPost"
+        ContentTemplate="{DataTemplate view:UploadPost}"
+        Route="UploadPost" />
     <ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate local:MainPage}"
@@ -18,10 +18,10 @@
     <ShellContent
         Title="Debounce"
         ContentTemplate="{DataTemplate view:Debounce}"
-        Route="Debounce"/>
+        Route="Debounce" />
     <ShellContent
         Title="Sign Up"
         ContentTemplate="{DataTemplate view:SignUp}"
-        Route="SignUp"/>
+        Route="SignUp" />
 
 </Shell>

@@ -1,17 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ProjectApp.MainPage"
-             xmlns:viewModel="clr-namespace:ProjectApp.ViewModel"
-             x:DataType="viewModel:MainPageViewModel">
+<ContentPage
+    x:Class="ProjectApp.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewModel="clr-namespace:ProjectApp.ViewModel"
+    x:DataType="viewModel:MainPageViewModel">
 
     <VerticalStackLayout>
-        <Button Text="Login" Command="{Binding BtnCommand}"/>
-        <Button Text="Show user" Command="{Binding Btn2Command}"/>
-        <Button Text="debounce" Command="{Binding Btn3Command}"/>
+        <Button Command="{Binding BtnCommand}" Text="Login" />
+        <Button Command="{Binding Btn2Command}" Text="Show user" />
+        <Button Command="{Binding Btn3Command}" Text="debounce" />
 
-        <Label Text="{Binding Username}"/>
-        <Label Text="{Binding Password}"/>
-        <Label Text="{Binding Email}"/>
+        <Label Text="{Binding Username}" />
+        <Label Text="{Binding Password}" />
+        <Label Text="{Binding Email}" />
     </VerticalStackLayout>
 </ContentPage>

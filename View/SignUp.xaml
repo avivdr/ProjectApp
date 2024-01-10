@@ -1,40 +1,50 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ProjectApp.View.SignUp"
-             xmlns:vm="clr-namespace:ProjectApp.ViewModel"
-             Title="SignUp"
-             x:DataType="vm:SignUpViewModel">
+<ContentPage
+    x:Class="ProjectApp.View.SignUp"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:ProjectApp.ViewModel"
+    Title="SignUp"
+    x:DataType="vm:SignUpViewModel">
     <VerticalStackLayout
-            Spacing="40"
-            Padding="35"
-            BackgroundColor="{StaticResource DarkBackgroundClr}">
+        Padding="35"
+        BackgroundColor="{StaticResource DarkBackgroundClr}"
+        Spacing="40">
         <VerticalStackLayout Spacing="20">
-            <Label Text="Username" StyleClass="LightLbl"/>
-            <Entry StyleClass="FormEntry" Text="{Binding Username}"/>
+            <Label StyleClass="LightLbl" Text="Username" />
+            <Entry StyleClass="FormEntry" Text="{Binding Username}" />
         </VerticalStackLayout>
 
         <VerticalStackLayout Spacing="20">
-            <Label Text="Email" StyleClass="LightLbl"/>
-            <Entry StyleClass="FormEntry" Text="{Binding Email}"/>
+            <Label StyleClass="LightLbl" Text="Email" />
+            <Entry StyleClass="FormEntry" Text="{Binding Email}" />
         </VerticalStackLayout>
 
         <VerticalStackLayout Spacing="20">
-            <Label Text="Password" StyleClass="LightLbl"/>
-            <Entry IsPassword="True" StyleClass="FormEntry" Text="{Binding Password1}"/>
-            <Label StyleClass="FormEntry"/>
+            <Label StyleClass="LightLbl" Text="Password" />
+            <Entry
+                IsPassword="True"
+                StyleClass="FormEntry"
+                Text="{Binding Password1}" />
+            <Label StyleClass="FormEntry" />
         </VerticalStackLayout>
 
         <VerticalStackLayout Spacing="20">
-            <Label Text="Verify Password" StyleClass="LightLbl"/>
-            <Entry IsPassword="True" StyleClass="FormEntry" Text="{Binding Password2}"/>
-            <Label StyleClass="ErrorLbl" Text="{Binding ErrorMessage}" IsVisible="{Binding IsErrorMessage}"/>
+            <Label StyleClass="LightLbl" Text="Verify Password" />
+            <Entry
+                IsPassword="True"
+                StyleClass="FormEntry"
+                Text="{Binding Password2}" />
+            <Label
+                IsVisible="{Binding IsErrorMessage}"
+                StyleClass="ErrorLbl"
+                Text="{Binding ErrorMessage}" />
         </VerticalStackLayout>
 
-        <Button 
-                Text="Sign Up"
-                WidthRequest="100"
-                StyleClass="BlueBtn"
-            Command="{Binding SignUpCommand}"/>
+        <Button
+            Command="{Binding SignUpCommand}"
+            StyleClass="BlueBtn"
+            Text="Sign Up"
+            WidthRequest="100" />
     </VerticalStackLayout>
 </ContentPage>
