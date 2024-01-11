@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ProjectApp.Model
 {
-    public class Composer
+    public class Composer : TaggableItem
     {
         public int Id { get; set; }
 
@@ -26,6 +26,10 @@ namespace ProjectApp.Model
 
         public string Portrait { get; set; }
 
+        [JsonIgnore]
+        public override string String => CompleteName;
+        [JsonIgnore]
+        public override string ImageSource => Portrait;
 
         public Composer()
         {

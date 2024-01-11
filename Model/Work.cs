@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ProjectApp.Model
 {
-    public class Work
+    public class Work : TaggableItem
     {
         public int Id { get; set; }
 
@@ -37,6 +37,9 @@ namespace ProjectApp.Model
 
         [JsonIgnore]
         public string TitleWithComposersName { get => $"{Composer?.Name}: {Title}"; }
+
+        [JsonIgnore]
+        public override string String => TitleWithComposersName;
 
         public Work()
         {

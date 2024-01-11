@@ -67,13 +67,16 @@ namespace ProjectApp.ViewModel
                 OnPropertyChanged(nameof(ErrorMessage));
             }
         }
-        public dynamic Selection
+        public TaggableItem Selection
         {
             get => _selection;
             set
             {
-                _selection = value;
-                OnPropertyChanged(nameof(Selection));
+                if (value != null)
+                {
+                    _selection = value;
+                    OnPropertyChanged(nameof(Selection));
+                }
             }
         }
         public bool IsErrorMessage
@@ -173,14 +176,14 @@ namespace ProjectApp.ViewModel
                         Creator = user,
                     };
 
-                    if (Selection is Work)
+                    if (Selection is Work work)
                     {
-                        post.Work = Selection;
+                        post.Work = work;
                         post.Composer = null;
                     }
-                    if (Selection is Composer)
+                    if (Selection is Composer composer)
                     {
-                        post.Composer = Selection;
+                        post.Composer = composer;
                         post.Work = null;
                     }
 

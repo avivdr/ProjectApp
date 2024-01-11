@@ -20,7 +20,10 @@
                 <Entry StyleClass="FormEntry" Text="{Binding Title}" />
 
                 <Label StyleClass="LightLbl" Text="Content" />
-                <Editor StyleClass="FormEditor" Text="{Binding Content}" />
+                <Editor
+                    HeightRequest="200"
+                    StyleClass="FormEditor"
+                    Text="{Binding Content}" />
 
                 <VerticalStackLayout Spacing="10">
                     <Button
@@ -32,6 +35,12 @@
 
                 <Button Command="{Binding OpenPopup}" Text="Tag Work or Composer" />
 
+                <Label StyleClass="LightLbl" Text="{Binding Selection.String}" />
+
+                <Image
+                    HeightRequest="200"
+                    HorizontalOptions="Start"
+                    Source="{Binding Selection.ImageSource}" />
 
                 <Label
                     IsVisible="{Binding IsErrorMessage}"
@@ -41,7 +50,6 @@
 
             <Button
                 Grid.Row="1"
-                Margin="0,0,0,50"
                 Command="{Binding UploadPostCommand}"
                 StyleClass="BlueBtn"
                 Text="Post"
