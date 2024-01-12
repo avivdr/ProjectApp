@@ -136,11 +136,6 @@ namespace ProjectApp.ViewModel
                 OnPropertyChanged(nameof(WorkResults));
             }
         }
-        public ICommand UploadPostCommand { get; protected set; }
-        public ICommand PickFileCommand { get; protected set; }
-        public ICommand LoadMoreWorks { get; protected set; }
-        public ICommand OpenPopup { get; protected set; }
-        public ICommand ClosePopup { get; protected set; }
         public FileResult FileResult
         {
             get => _fileResult;
@@ -150,6 +145,11 @@ namespace ProjectApp.ViewModel
                 OnPropertyChanged(nameof(FileResult));
             }
         }
+        public ICommand UploadPostCommand { get; protected set; }
+        public ICommand PickFileCommand { get; protected set; }
+        public ICommand LoadMoreWorks { get; protected set; }
+        public ICommand OpenPopup { get; protected set; }
+        public ICommand ClosePopup { get; protected set; }
         public UploadPostViewModel(Service _service)
         {
             service = _service;
