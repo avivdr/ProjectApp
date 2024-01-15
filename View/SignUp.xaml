@@ -8,7 +8,7 @@
     x:DataType="vm:SignUpViewModel">
     <VerticalStackLayout
         Padding="35"
-        BackgroundColor="{StaticResource DarkBackgroundClr}"
+        BackgroundColor="{StaticResource AlmostBlack}"
         Spacing="40">
         <VerticalStackLayout Spacing="20">
             <Label StyleClass="LightLbl" Text="Username" />

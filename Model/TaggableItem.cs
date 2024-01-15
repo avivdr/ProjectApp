@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProjectApp.Model
 {
-    public class TaggableItem
+    public abstract class TaggableItem
     {
         public virtual string String { get; }
         public virtual string ImageSource { get; }

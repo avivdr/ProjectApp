@@ -17,10 +17,11 @@ namespace ProjectApp.ViewModel
 {
     public class UploadPostViewModel : ViewModel
     {
-        const string SERVER_ERROR = "A server error occurred";
-        const string FILE_PICK_ERROR = "An error occurred when picking file";
-        const string INVALID = "Invalid fields";
-        const string SHORT_QUERY = "Search query must be at least 4 characters";
+        const string ServerError = "A server error occurred";
+        const string FilePickError = "An error occurred when picking file";
+        const string Invalid = "Invalid fields";
+        const string ShortQuery = "Search query must be at least 4 characters";
+        const string TagMessage = "Tag Work or Composer";
 
         readonly Service service;
         readonly DebounceDispatcher searchDebounce;
@@ -67,7 +68,7 @@ namespace ProjectApp.ViewModel
                 OnPropertyChanged(nameof(ErrorMessage));
             }
         }
-        public TaggableItem Selection
+        public dynamic Selection
         {
             get => _selection;
             set
@@ -76,7 +77,22 @@ namespace ProjectApp.ViewModel
                 {
                     _selection = value;
                     OnPropertyChanged(nameof(Selection));
+                    OnPropertyChanged(nameof(TagText));
                 }
+            }
+        }
+        public string TagText
+        {
+            get
+            {
+                if (Selection != null)
+                {
+                    if (Selection is Composer composer)
+                        return composer.CompleteName;
+                    if (Selection is Work work)
+                        return work.TitleWithComposersName;
+                }
+                return TagMessage;
             }
         }
         public bool IsErrorMessage
@@ -155,10 +171,12 @@ namespace ProjectApp.ViewModel
             service = _service;
 
             IsErrorMessage = false;
-            ErrorMessage = SERVER_ERROR;
+            ErrorMessage = ServerError;
             searchDebounce = new(300);
             ComposerResults = null;
             WorkResults = null;
+
+            Selection = new Composer() { CompleteName = "Tag Work or Composer" };
 
             OpenPopup = new Command(() => IsPopupOpen = true);
             ClosePopup = new Command(() => IsPopupOpen = false);
@@ -200,7 +218,7 @@ namespace ProjectApp.ViewModel
                 }
                 catch (Exception)
                 {
-                    ErrorMessage = SERVER_ERROR;
+                    ErrorMessage = ServerError;
                     IsErrorMessage = true;
                 }
             });
@@ -215,7 +233,7 @@ namespace ProjectApp.ViewModel
                 catch (Exception)
                 {
                     FileResult = null;
-                    ErrorMessage = FILE_PICK_ERROR;
+                    ErrorMessage = FilePickError;
                     IsErrorMessage = true;
                 }
             });
@@ -251,7 +269,7 @@ namespace ProjectApp.ViewModel
             OmniSearchDTO results = await service.OmniSearch(Query);
             if (results == null)
             {
-                ErrorMessage = SERVER_ERROR;
+                ErrorMessage = ServerError;
                 IsErrorMessage = true;
                 ComposerResults = null;
                 WorkResults = null;

@@ -13,7 +13,8 @@ namespace ProjectApp.Services
     public class Service
     {
         readonly HttpClient httpClient;
-        const string URL = "https://dz7hpq26-7058.euw.devtunnels.ms/OpusOne";
+        const string URL = "https://vxfmp0h3-7058.uks1.devtunnels.ms/OpusOne";
+        
         readonly JsonSerializerOptions options;
         const string CURRENT_USER_KEY = "CurrentUser";
 
@@ -43,7 +44,7 @@ namespace ProjectApp.Services
 
         public async Task<User> GetCurrentUser()
         {
-            string st = await SecureStorage.GetAsync(CURRENT_USER_KEY);
+            string st = await SecureStorage.Default.GetAsync(CURRENT_USER_KEY);
             if (string.IsNullOrEmpty(st))
                 return null;
             return JsonSerializer.Deserialize<User>(st, options);
@@ -174,7 +175,7 @@ namespace ProjectApp.Services
                 string content = await response.Content.ReadAsStringAsync();
 
                 if (response.StatusCode == HttpStatusCode.OK)
-                    await SecureStorage.SetAsync(CURRENT_USER_KEY, content);
+                    await SecureStorage.Default.SetAsync(CURRENT_USER_KEY, content);
                 return response.StatusCode;
             }
             catch(Exception)

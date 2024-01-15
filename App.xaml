@@ -6,20 +6,23 @@
     xmlns:local="clr-namespace:ProjectApp">
     <Application.Resources>
         <ResourceDictionary>
-            <Color x:Key="BlueLblClr">#3369ff</Color>
-            <Color x:Key="BlueBtnClr">#001f5c</Color>
-            <Color x:Key="DarkBlueBtnClr">#061723</Color>
-            <Color x:Key="LightTextCLr">#d7dadc</Color>
-            <Color x:Key="DarkBackgroundClr">#040404</Color>
+            <Color x:Key="LightBlue">#3369ff</Color>
+            <Color x:Key="Blue">#001f5c</Color>
+            <Color x:Key="DarkBlue">#061723</Color>
+            <Color x:Key="SuperLightGrey">#e9edf0</Color>
+            <Color x:Key="LightGrey">#d7dadc</Color>
+            <Color x:Key="Grey">#5e6163</Color>
+            <Color x:Key="DarkGrey">#1a1a1a</Color>
+            <Color x:Key="AlmostBlack">#040404</Color>
 
             <Style Class="BlueBtn" TargetType="Button">
-                <Setter Property="BackgroundColor" Value="{StaticResource BlueBtnClr}" />
-                <Setter Property="TextColor" Value="{StaticResource LightTextCLr}" />
+                <Setter Property="BackgroundColor" Value="{StaticResource Blue}" />
+                <Setter Property="TextColor" Value="{StaticResource LightGrey}" />
             </Style>
 
             <Style Class="LightBlueBtn" TargetType="Button">
-                <Setter Property="BackgroundColor" Value="{StaticResource BlueLblClr}" />
-                <Setter Property="TextColor" Value="{StaticResource DarkBlueBtnClr}" />
+                <Setter Property="BackgroundColor" Value="{StaticResource LightBlue}" />
+                <Setter Property="TextColor" Value="{StaticResource DarkBlue}" />
             </Style>
 
             <Style Class="ErrorLbl" TargetType="Label">
@@ -27,20 +30,22 @@
             </Style>
 
             <Style Class="LightLbl" TargetType="Label">
-                <Setter Property="TextColor" Value="{StaticResource LightTextCLr}" />
+                <Setter Property="TextColor" Value="{StaticResource LightGrey}" />
                 <Setter Property="FontSize" Value="16" />
             </Style>
 
             <Style Class="FormEntry" TargetType="Entry">
-                <Setter Property="BackgroundColor" Value="#1a1a1a" />
+                <Setter Property="BackgroundColor" Value="{StaticResource DarkGrey}" />
                 <Setter Property="FontSize" Value="16" />
-                <Setter Property="TextColor" Value="{StaticResource LightTextCLr}" />
+                <Setter Property="TextColor" Value="{StaticResource LightGrey}" />
+                <Setter Property="PlaceholderColor" Value="{StaticResource Grey}" />
             </Style>
 
             <Style Class="FormEditor" TargetType="Editor">
                 <Setter Property="BackgroundColor" Value="#1a1a1a" />
                 <Setter Property="FontSize" Value="16" />
-                <Setter Property="TextColor" Value="{StaticResource LightTextCLr}" />
+                <Setter Property="TextColor" Value="{StaticResource LightGrey}" />
+                <Setter Property="PlaceholderColor" Value="{StaticResource Grey}" />
             </Style>
 
             <ResourceDictionary.MergedDictionaries>

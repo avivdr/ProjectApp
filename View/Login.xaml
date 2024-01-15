@@ -39,7 +39,7 @@
                     Text="Login"
                     WidthRequest="100" />
 
-                <Label Text="Sign up" TextColor="{StaticResource BlueLblClr}">
+                <Label Text="Sign up" TextColor="{StaticResource LightBlue}">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding SignUpBtnCommand}" />
                     </Label.GestureRecognizers>
