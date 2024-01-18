@@ -22,10 +22,19 @@
                     StyleClass="FormEntry"
                     Text="{Binding Title}" />
 
-                <Button
-                    Command="{Binding OpenPopup}"
-                    HorizontalOptions="Start"
-                    Text="{Binding TagText}" />
+                <HorizontalStackLayout Spacing="25">
+                    <Button
+                        Command="{Binding OpenPopup}"
+                        HorizontalOptions="Start"
+                        Text="{Binding TagText}"
+                        VerticalOptions="Center" />
+
+                    <Image
+                        HeightRequest="200"
+                        HorizontalOptions="Start"
+                        IsVisible="{Binding IsTagImageVisible}"
+                        Source="{Binding TagImageSource}" />
+                </HorizontalStackLayout>
 
                 <Editor
                     HeightRequest="200"
@@ -40,11 +49,6 @@
                         Text="Pick File" />
                     <Label StyleClass="LightLbl" Text="{Binding FileResult.FileName}" />
                 </VerticalStackLayout>
-
-                <!--<Image
-                    HeightRequest="200"
-                    HorizontalOptions="Start"
-                    Source="{Binding Selection.ImageSource}" />-->
 
                 <Label
                     IsVisible="{Binding IsErrorMessage}"

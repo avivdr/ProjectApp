@@ -31,7 +31,7 @@ namespace ProjectApp.ViewModel
         private string _title;
         private string _content;
         private string _errorMessage;
-        private bool _isErrorMessage; 
+        private bool _isErrorMessage;
         private bool _isWorksLoading;
         private bool _isPopupOpen;
         private string _query;
@@ -68,33 +68,6 @@ namespace ProjectApp.ViewModel
                 OnPropertyChanged(nameof(ErrorMessage));
             }
         }
-        public dynamic Selection
-        {
-            get => _selection;
-            set
-            {
-                if (value != null)
-                {
-                    _selection = value;
-                    OnPropertyChanged(nameof(Selection));
-                    OnPropertyChanged(nameof(TagText));
-                }
-            }
-        }
-        public string TagText
-        {
-            get
-            {
-                if (Selection != null)
-                {
-                    if (Selection is Composer composer)
-                        return composer.CompleteName;
-                    if (Selection is Work work)
-                        return work.TitleWithComposersName;
-                }
-                return TagMessage;
-            }
-        }
         public bool IsErrorMessage
         {
             get => _isErrorMessage;
@@ -120,18 +93,6 @@ namespace ProjectApp.ViewModel
             {
                 _isPopupOpen = value;
                 OnPropertyChanged(nameof(IsPopupOpen));
-            }
-        }
-
-        public string Query
-        {
-            get => _query;
-            set
-            {
-                _query = value;
-                OnPropertyChanged(nameof(Query));
-
-                searchDebounce.Debounce(() => Search(_query));
             }
         }
         public ObservableCollection<Composer> ComposerResults
@@ -160,6 +121,61 @@ namespace ProjectApp.ViewModel
                 _fileResult = value;
                 OnPropertyChanged(nameof(FileResult));
             }
+        }
+        public object Selection
+        {
+            get => _selection;
+            set
+            {
+                if (value != null)
+                {
+                    _selection = value;
+                    OnPropertyChanged(nameof(Selection));
+                    OnPropertyChanged(nameof(TagText));
+                    OnPropertyChanged(nameof(TagImageSource));
+                    OnPropertyChanged(nameof(IsTagImageVisible));
+                }
+            }
+        }
+        public string Query
+        {
+            get => _query;
+            set
+            {
+                _query = value;
+                OnPropertyChanged(nameof(Query));
+
+                searchDebounce.Debounce(() => Search(_query));
+            }
+        }
+        
+        public string TagText
+        {
+            get
+            {
+                if (Selection != null)
+                {
+                    if (Selection is Composer composer)
+                        return composer.CompleteName;
+                    if (Selection is Work work)
+                        return work.TitleWithComposersName;
+                }
+                return TagMessage;
+            }
+        }
+        public string TagImageSource
+        {
+            get
+            {
+                if (Selection != null && Selection is Composer composer)
+                    return composer.Portrait;
+
+                return "";
+            }
+        }
+        public bool IsTagImageVisible
+        {
+            get => !string.IsNullOrEmpty(TagImageSource);
         }
         public ICommand UploadPostCommand { get; protected set; }
         public ICommand PickFileCommand { get; protected set; }
