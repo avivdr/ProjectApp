@@ -26,10 +26,9 @@ namespace ProjectApp.Model
 
         public string Portrait { get; set; }
 
-        [JsonIgnore]
-        public override string String => CompleteName;
-        [JsonIgnore]
-        public override string ImageSource => Portrait;
+        [JsonIgnore] public override string String => CompleteName;
+        [JsonIgnore] public override string ImageSource => Portrait;
+        [JsonIgnore] public override bool IsImage => true;
 
         public Composer()
         {

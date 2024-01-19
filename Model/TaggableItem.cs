@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace ProjectApp.Model
 {
-    public abstract class TaggableItem
+    public class TaggableItem
     {
-        public virtual string String { get; }
-        public virtual string ImageSource { get; }
+        public virtual string String => "Tag Work or Composer";
+        public virtual string ImageSource => null;
+        public virtual bool IsImage => false;
     }
 }

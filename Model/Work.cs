@@ -35,11 +35,9 @@ namespace ProjectApp.Model
 
         public string Catalogue_Number { get; set; }
 
-        [JsonIgnore]
-        public string TitleWithComposersName { get => $"{Composer?.Name}: {Title}"; }
+        [JsonIgnore] public string TitleWithComposersName { get => $"{Composer?.Name}: {Title}"; }
 
-        [JsonIgnore]
-        public override string String => TitleWithComposersName;
+        [JsonIgnore] public override string String => TitleWithComposersName;
 
         public Work()
         {

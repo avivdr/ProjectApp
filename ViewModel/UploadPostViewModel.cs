@@ -122,7 +122,7 @@ namespace ProjectApp.ViewModel
                 OnPropertyChanged(nameof(FileResult));
             }
         }
-        public object Selection
+        public TaggableItem Selection
         {
             get => _selection;
             set
@@ -131,9 +131,6 @@ namespace ProjectApp.ViewModel
                 {
                     _selection = value;
                     OnPropertyChanged(nameof(Selection));
-                    OnPropertyChanged(nameof(TagText));
-                    OnPropertyChanged(nameof(TagImageSource));
-                    OnPropertyChanged(nameof(IsTagImageVisible));
                 }
             }
         }
@@ -146,37 +143,9 @@ namespace ProjectApp.ViewModel
                 OnPropertyChanged(nameof(Query));
 
                 searchDebounce.Debounce(() => Search(_query));
-            }
+             }
         }
-        
-        public string TagText
-        {
-            get
-            {
-                if (Selection != null)
-                {
-                    if (Selection is Composer composer)
-                        return composer.CompleteName;
-                    if (Selection is Work work)
-                        return work.TitleWithComposersName;
-                }
-                return TagMessage;
-            }
-        }
-        public string TagImageSource
-        {
-            get
-            {
-                if (Selection != null && Selection is Composer composer)
-                    return composer.Portrait;
 
-                return "";
-            }
-        }
-        public bool IsTagImageVisible
-        {
-            get => !string.IsNullOrEmpty(TagImageSource);
-        }
         public ICommand UploadPostCommand { get; protected set; }
         public ICommand PickFileCommand { get; protected set; }
         public ICommand LoadMoreWorks { get; protected set; }
@@ -192,7 +161,7 @@ namespace ProjectApp.ViewModel
             ComposerResults = null;
             WorkResults = null;
 
-            Selection = new Composer() { CompleteName = "Tag Work or Composer" };
+            Selection = new TaggableItem();
 
             OpenPopup = new Command(() => IsPopupOpen = true);
             ClosePopup = new Command(() => IsPopupOpen = false);

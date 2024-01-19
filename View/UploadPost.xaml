@@ -26,14 +26,14 @@
                     <Button
                         Command="{Binding OpenPopup}"
                         HorizontalOptions="Start"
-                        Text="{Binding TagText}"
+                        Text="{Binding Selection.String}"
                         VerticalOptions="Center" />
 
                     <Image
                         HeightRequest="200"
                         HorizontalOptions="Start"
-                        IsVisible="{Binding IsTagImageVisible}"
-                        Source="{Binding TagImageSource}" />
+                        IsVisible="{Binding Selection.IsImage}"
+                        Source="{Binding Selection.ImageSource}" />
                 </HorizontalStackLayout>
 
                 <Editor
