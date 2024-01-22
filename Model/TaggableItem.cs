@@ -8,8 +8,13 @@ namespace ProjectApp.Model
 {
     public class TaggableItem
     {
-        public virtual string String => "Tag Work or Composer";
+        public virtual string String { get; }
         public virtual string ImageSource => null;
         public virtual bool IsImage => false;
+
+        public TaggableItem(string str = null)
+        {
+            String = str;
+        }
     }
 }

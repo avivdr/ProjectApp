@@ -22,11 +22,15 @@
                     StyleClass="FormEntry"
                     Text="{Binding Title}" />
 
-                <HorizontalStackLayout Spacing="25">
+                <!--<HorizontalStackLayout Spacing="25">
                     <Button
+                        BackgroundColor="{StaticResource Blue}"
                         Command="{Binding OpenPopup}"
+                        CornerRadius="20"
+                        FontAttributes="Bold"
                         HorizontalOptions="Start"
                         Text="{Binding Selection.String}"
+                        TextColor="{StaticResource LightGrey}"
                         VerticalOptions="Center" />
 
                     <Image
@@ -34,7 +38,41 @@
                         HorizontalOptions="Start"
                         IsVisible="{Binding Selection.IsImage}"
                         Source="{Binding Selection.ImageSource}" />
-                </HorizontalStackLayout>
+                </HorizontalStackLayout>-->
+
+                <Border
+                    Padding="0"
+                    BackgroundColor="{StaticResource Blue}"
+                    HorizontalOptions="StartAndExpand"
+                    MaximumHeightRequest="85"
+                    Stroke="Transparent"
+                    StrokeShape="RoundRectangle 20">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding OpenPopup}" />
+                    </Border.GestureRecognizers>
+
+                    <HorizontalStackLayout Padding="15" Spacing="10">
+                        <Label
+                            BackgroundColor="{StaticResource Blue}"
+                            FontAttributes="Bold"
+                            Text="{Binding Selection.String}"
+                            TextColor="{StaticResource LightGrey}"
+                            VerticalOptions="Center" />
+
+                        <Frame
+                            Padding="0"
+                            BorderColor="Transparent"
+                            CornerRadius="50"
+                            HeightRequest="60"
+                            IsVisible="{Binding Selection.IsImage}"
+                            WidthRequest="60">
+                            <Image
+                                Aspect="AspectFill"
+                                IsVisible="{Binding Selection.IsImage}"
+                                Source="{Binding Selection.ImageSource}" />
+                        </Frame>
+                    </HorizontalStackLayout>
+                </Border>
 
                 <Editor
                     HeightRequest="200"
@@ -199,10 +237,17 @@
                                 </VerticalStackLayout>
                             </HorizontalStackLayout>
 
-                            <Button
-                                Command="{Binding ClosePopup}"
-                                StyleClass="BlueBtn"
-                                Text="Select" />
+                            <HorizontalStackLayout>
+                                <Button
+                                    Command="{Binding ClosePopup}"
+                                    StyleClass="BlueBtn"
+                                    Text="Select" />
+
+                                <Button
+                                    Command="{Binding ClearSelection}"
+                                    StyleClass="BlueBtn"
+                                    Text="Clear" />
+                            </HorizontalStackLayout>
                         </VerticalStackLayout>
                     </ScrollView>
                 </DataTemplate>

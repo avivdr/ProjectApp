@@ -12,6 +12,7 @@ using DebounceThrottle;
 using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
 using Syncfusion.Maui.ListView;
+using CommunityToolkit.Maui.Core.Extensions;
 
 namespace ProjectApp.ViewModel
 {
@@ -151,6 +152,7 @@ namespace ProjectApp.ViewModel
         public ICommand LoadMoreWorks { get; protected set; }
         public ICommand OpenPopup { get; protected set; }
         public ICommand ClosePopup { get; protected set; }
+        public ICommand ClearSelection { get; protected set; }
         public UploadPostViewModel(Service _service)
         {
             service = _service;
@@ -161,10 +163,16 @@ namespace ProjectApp.ViewModel
             ComposerResults = null;
             WorkResults = null;
 
-            Selection = new TaggableItem();
+            Selection = new TaggableItem(TagMessage);
 
             OpenPopup = new Command(() => IsPopupOpen = true);
             ClosePopup = new Command(() => IsPopupOpen = false);
+            ClearSelection = new Command(() =>
+            {
+                Selection = new TaggableItem(TagMessage);
+                IsPopupOpen = false;
+            });
+
 
             //post command
             UploadPostCommand = new Command(async () =>
@@ -266,6 +274,17 @@ namespace ProjectApp.ViewModel
             ComposerResults = (results.Composers.Count == 0) ? null : new(results.Composers);
             WorkResults = (results.Works.Count == 0) ? null : new(results.Works);
         }
+
+        public void FilterWorksBySelectedComposer()
+        {
+            if (WorkResults == null || Selection == null) return;
+
+            if (Selection is Composer selectedComposer)
+            {
+                WorkResults = WorkResults.Where(x => x.Composer.CompleteName == selectedComposer.CompleteName).ToObservableCollection();
+            }
+        }
+
 
         //public async void CheckAccess()
         //{
