@@ -24,6 +24,11 @@ namespace ProjectApp.ViewModel
         const string ShortQuery = "Search query must be at least 4 characters";
         const string TagMessage = "Tag Work or Composer";
 
+        readonly PickOptions[] filePickOptions = { null, 
+            new() { PickerTitle = "Image", FileTypes = FilePickerFileType.Images }, 
+            new() { PickerTitle = "Video", FileTypes = FilePickerFileType.Videos } 
+        };
+
         readonly Service service;
         readonly DebounceDispatcher searchDebounce;
         private bool MoreWorksToLoad = true;
@@ -40,6 +45,7 @@ namespace ProjectApp.ViewModel
         private ObservableCollection<Work> _workResults;
         private dynamic _selection;
         private FileResult _fileResult;
+        private int _selectedTab;
         #endregion
 
         public string Title
@@ -135,6 +141,15 @@ namespace ProjectApp.ViewModel
                 }
             }
         }
+        public int SelectedTab
+        {
+            get => _selectedTab;
+            set
+            {
+                _selectedTab = value;
+                OnPropertyChanged(nameof(SelectedTab));
+            }
+        }
         public string Query
         {
             get => _query;
@@ -219,9 +234,10 @@ namespace ProjectApp.ViewModel
             //pick file
             PickFileCommand = new Command(async () =>
             {
+                if (SelectedTab == 0) return;
                 try
                 {
-                    FileResult = await FilePicker.Default.PickAsync();
+                    FileResult = await FilePicker.Default.PickAsync(filePickOptions[SelectedTab]);
                 }
                 catch (Exception)
                 {

@@ -10,6 +10,7 @@
     <ShellContent
         Title="UploadPost"
         ContentTemplate="{DataTemplate view:UploadPost}"
+        
         Route="UploadPost" />
     <ShellContent
         Title="Home"

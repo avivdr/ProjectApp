@@ -7,6 +7,7 @@
     xmlns:ViewModel="clr-namespace:ProjectApp.ViewModel"
     xmlns:sfList="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
     xmlns:sfPopup="clr-namespace:Syncfusion.Maui.Popup;assembly=Syncfusion.Maui.Popup"
+    xmlns:sfTab="clr-namespace:Syncfusion.Maui.TabView;assembly=Syncfusion.Maui.TabView"
     Title="UploadPost"
     x:DataType="ViewModel:UploadPostViewModel">
 
@@ -22,24 +23,6 @@
                     StyleClass="FormEntry"
                     Text="{Binding Title}" />
 
-                <!--<HorizontalStackLayout Spacing="25">
-                    <Button
-                        BackgroundColor="{StaticResource Blue}"
-                        Command="{Binding OpenPopup}"
-                        CornerRadius="20"
-                        FontAttributes="Bold"
-                        HorizontalOptions="Start"
-                        Text="{Binding Selection.String}"
-                        TextColor="{StaticResource LightGrey}"
-                        VerticalOptions="Center" />
-
-                    <Image
-                        HeightRequest="200"
-                        HorizontalOptions="Start"
-                        IsVisible="{Binding Selection.IsImage}"
-                        Source="{Binding Selection.ImageSource}" />
-                </HorizontalStackLayout>-->
-
                 <Border
                     Padding="0"
                     BackgroundColor="{StaticResource Blue}"
@@ -50,6 +33,7 @@
                     <Border.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding OpenPopup}" />
                     </Border.GestureRecognizers>
+
 
                     <HorizontalStackLayout Padding="15" Spacing="10">
                         <Label
@@ -64,6 +48,7 @@
                             BorderColor="Transparent"
                             CornerRadius="50"
                             HeightRequest="60"
+                            IsClippedToBounds="True"
                             IsVisible="{Binding Selection.IsImage}"
                             WidthRequest="60">
                             <Image
@@ -74,25 +59,46 @@
                     </HorizontalStackLayout>
                 </Border>
 
-                <Editor
-                    HeightRequest="200"
-                    Placeholder="Content"
-                    StyleClass="FormEditor"
-                    Text="{Binding Content}" />
+                <sfTab:SfTabView SelectedIndex="{Binding SelectedTab}">
+                    <sfTab:SfTabView.Items>
+                        <sfTab:SfTabItem Header="Text Only" TextColor="{StaticResource LightGrey}">
+                            <sfTab:SfTabItem.Content>
+                                <VerticalStackLayout Spacing="20">
+                                    <Editor
+                                        HeightRequest="200"
+                                        Placeholder="Content"
+                                        StyleClass="FormEditor"
+                                        Text="{Binding Content}" />
+                                </VerticalStackLayout>
+                            </sfTab:SfTabItem.Content>
+                        </sfTab:SfTabItem>
 
-                <VerticalStackLayout Spacing="10">
-                    <Button
-                        Command="{Binding PickFileCommand}"
-                        StyleClass="LightBlueBtn"
-                        Text="Pick File" />
-                    <Label StyleClass="LightLbl" Text="{Binding FileResult.FileName}" />
-                </VerticalStackLayout>
+                        <sfTab:SfTabItem Header="Image" TextColor="{StaticResource LightGrey}">
+                            <sfTab:SfTabItem.Content>
+                                <VerticalStackLayout Spacing="20">
+                                    <Editor
+                                        HeightRequest="200"
+                                        Placeholder="Content"
+                                        StyleClass="FormEditor"
+                                        Text="{Binding Content}" />
+
+                                    <VerticalStackLayout Spacing="10">
+                                        <Button
+                                            Command="{Binding PickFileCommand}"
+                                            StyleClass="LightBlueBtn"
+                                            Text="Pick File" />
+                                        <Label StyleClass="LightLbl" Text="{Binding FileResult.FileName}" />
+                                    </VerticalStackLayout>
+                                </VerticalStackLayout>
+                            </sfTab:SfTabItem.Content>
+                        </sfTab:SfTabItem>
+                    </sfTab:SfTabView.Items>
+                </sfTab:SfTabView>
 
                 <Label
                     IsVisible="{Binding IsErrorMessage}"
                     StyleClass="ErrorLbl"
                     Text="{Binding ErrorMessage}" />
-
             </VerticalStackLayout>
         </ScrollView>
 
@@ -126,118 +132,124 @@
             <sfPopup:SfPopup.ContentTemplate>
                 <DataTemplate>
                     <ScrollView Padding="10">
-                        <VerticalStackLayout Spacing="20">
-                            <VerticalStackLayout>
-                                <HorizontalStackLayout>
-                                    <Entry
-                                        StyleClass="FormEntry"
-                                        Text="{Binding Query}"
-                                        WidthRequest="200" />
-                                </HorizontalStackLayout>
-                            </VerticalStackLayout>
+                        <Grid RowDefinitions="9*,*">
+                            <VerticalStackLayout Grid.Row="0" Spacing="20">
+                                <VerticalStackLayout>
+                                    <HorizontalStackLayout>
+                                        <Entry
+                                            StyleClass="FormEntry"
+                                            Text="{Binding Query}"
+                                            WidthRequest="200" />
+                                    </HorizontalStackLayout>
+                                </VerticalStackLayout>
 
-                            <!--  Composers List  -->
-                            <HorizontalStackLayout Spacing="40">
-                                <VerticalStackLayout Spacing="5">
-                                    <Label StyleClass="LightLbl" Text="Composers" />
-                                    <sfList:SfListView
-                                        ItemsSource="{Binding ComposerResults}"
-                                        MaximumHeightRequest="200"
-                                        SelectedItem="{Binding Selection}">
-                                        <sfList:SfListView.ItemTemplate>
-                                            <DataTemplate x:DataType="Model:Composer">
-                                                <Label
-                                                    Padding="0"
-                                                    StyleClass="LightLbl"
-                                                    Text="{Binding CompleteName}"
-                                                    VerticalOptions="Center" />
-                                            </DataTemplate>
-                                        </sfList:SfListView.ItemTemplate>
-
-                                        <sfList:SfListView.SelectedItemTemplate>
-                                            <DataTemplate x:DataType="Model:Composer">
-                                                <Frame
-                                                    Padding="10,0"
-                                                    BackgroundColor="Transparent"
-                                                    BorderColor="{StaticResource LightBlue}"
-                                                    CornerRadius="10">
+                                <!--  Composers List  -->
+                                <HorizontalStackLayout Spacing="40">
+                                    <VerticalStackLayout Spacing="5">
+                                        <Label StyleClass="LightLbl" Text="Composers" />
+                                        <sfList:SfListView
+                                            ItemsSource="{Binding ComposerResults}"
+                                            MaximumHeightRequest="200"
+                                            SelectedItem="{Binding Selection}">
+                                            <sfList:SfListView.ItemTemplate>
+                                                <DataTemplate x:DataType="Model:Composer">
                                                     <Label
-                                                        Padding="2"
+                                                        Padding="0"
                                                         StyleClass="LightLbl"
                                                         Text="{Binding CompleteName}"
                                                         VerticalOptions="Center" />
-                                                </Frame>
-                                            </DataTemplate>
-                                        </sfList:SfListView.SelectedItemTemplate>
+                                                </DataTemplate>
+                                            </sfList:SfListView.ItemTemplate>
 
-                                        <sfList:SfListView.EmptyView>
-                                            <Label
-                                                Margin="0,10"
-                                                StyleClass="LightLbl"
-                                                Text="No results found :(" />
-                                        </sfList:SfListView.EmptyView>
-                                    </sfList:SfListView>
-                                </VerticalStackLayout>
+                                            <sfList:SfListView.SelectedItemTemplate>
+                                                <DataTemplate x:DataType="Model:Composer">
+                                                    <Frame
+                                                        Padding="10,0"
+                                                        BackgroundColor="Transparent"
+                                                        BorderColor="{StaticResource LightBlue}"
+                                                        CornerRadius="10">
+                                                        <Label
+                                                            Padding="2"
+                                                            StyleClass="LightLbl"
+                                                            Text="{Binding CompleteName}"
+                                                            VerticalOptions="Center" />
+                                                    </Frame>
+                                                </DataTemplate>
+                                            </sfList:SfListView.SelectedItemTemplate>
 
-                                <!--  Works List  -->
-                                <VerticalStackLayout Spacing="5">
-                                    <Label StyleClass="LightLbl" Text="Works" />
-                                    <sfList:SfListView
-                                        IsLazyLoading="{Binding IsWorksLoading}"
-                                        ItemSpacing="5"
-                                        ItemsSource="{Binding WorkResults}"
-                                        LoadMoreCommand="{Binding LoadMoreWorks}"
-                                        LoadMoreOption="AutoOnScroll"
-                                        MaximumHeightRequest="200"
-                                        ScrollBarVisibility="Always"
-                                        SelectedItem="{Binding Selection}">
-                                        <sfList:SfListView.ItemTemplate>
-                                            <DataTemplate x:DataType="Model:Work">
+                                            <sfList:SfListView.EmptyView>
                                                 <Label
-                                                    Padding="2"
+                                                    Margin="0,10"
                                                     StyleClass="LightLbl"
-                                                    Text="{Binding TitleWithComposersName}"
-                                                    VerticalOptions="Center" />
-                                            </DataTemplate>
-                                        </sfList:SfListView.ItemTemplate>
+                                                    Text="No results found :(" />
+                                            </sfList:SfListView.EmptyView>
+                                        </sfList:SfListView>
+                                    </VerticalStackLayout>
 
-                                        <sfList:SfListView.SelectedItemTemplate>
-                                            <DataTemplate x:DataType="Model:Work">
-                                                <Frame
-                                                    Padding="10,0"
-                                                    BackgroundColor="Transparent"
-                                                    BorderColor="{StaticResource LightBlue}"
-                                                    CornerRadius="10">
+                                    <!--  Works List  -->
+                                    <VerticalStackLayout Spacing="5">
+                                        <Label StyleClass="LightLbl" Text="Works" />
+                                        <sfList:SfListView
+                                            IsLazyLoading="{Binding IsWorksLoading}"
+                                            ItemSpacing="5"
+                                            ItemsSource="{Binding WorkResults}"
+                                            LoadMoreCommand="{Binding LoadMoreWorks}"
+                                            LoadMoreOption="AutoOnScroll"
+                                            MaximumHeightRequest="200"
+                                            ScrollBarVisibility="Always"
+                                            SelectedItem="{Binding Selection}">
+                                            <sfList:SfListView.ItemTemplate>
+                                                <DataTemplate x:DataType="Model:Work">
                                                     <Label
                                                         Padding="2"
                                                         StyleClass="LightLbl"
                                                         Text="{Binding TitleWithComposersName}"
                                                         VerticalOptions="Center" />
-                                                </Frame>
-                                            </DataTemplate>
-                                        </sfList:SfListView.SelectedItemTemplate>
+                                                </DataTemplate>
+                                            </sfList:SfListView.ItemTemplate>
 
-                                        <sfList:SfListView.LoadMoreTemplate>
-                                            <DataTemplate>
-                                                <sfList:ListViewLoadMoreIndicator
-                                                    IsRunning="{Binding IsWorksLoading}"
-                                                    IsVisible="{Binding IsWorksLoading}"
-                                                    VerticalOptions="Center"
-                                                    Color="{StaticResource LightGrey}" />
-                                            </DataTemplate>
-                                        </sfList:SfListView.LoadMoreTemplate>
+                                            <sfList:SfListView.SelectedItemTemplate>
+                                                <DataTemplate x:DataType="Model:Work">
+                                                    <Frame
+                                                        Padding="10,0"
+                                                        BackgroundColor="Transparent"
+                                                        BorderColor="{StaticResource LightBlue}"
+                                                        CornerRadius="10">
+                                                        <Label
+                                                            Padding="2"
+                                                            StyleClass="LightLbl"
+                                                            Text="{Binding TitleWithComposersName}"
+                                                            VerticalOptions="Center" />
+                                                    </Frame>
+                                                </DataTemplate>
+                                            </sfList:SfListView.SelectedItemTemplate>
 
-                                        <sfList:SfListView.EmptyView>
-                                            <Label
-                                                Margin="0,10"
-                                                StyleClass="LightLbl"
-                                                Text="No results found :(" />
-                                        </sfList:SfListView.EmptyView>
-                                    </sfList:SfListView>
-                                </VerticalStackLayout>
-                            </HorizontalStackLayout>
+                                            <sfList:SfListView.LoadMoreTemplate>
+                                                <DataTemplate>
+                                                    <sfList:ListViewLoadMoreIndicator
+                                                        IsRunning="{Binding IsWorksLoading}"
+                                                        IsVisible="{Binding IsWorksLoading}"
+                                                        VerticalOptions="Center"
+                                                        Color="{StaticResource LightGrey}" />
+                                                </DataTemplate>
+                                            </sfList:SfListView.LoadMoreTemplate>
 
-                            <HorizontalStackLayout>
+                                            <sfList:SfListView.EmptyView>
+                                                <Label
+                                                    Margin="0,10"
+                                                    StyleClass="LightLbl"
+                                                    Text="No results found :(" />
+                                            </sfList:SfListView.EmptyView>
+                                        </sfList:SfListView>
+                                    </VerticalStackLayout>
+                                </HorizontalStackLayout>
+
+                            </VerticalStackLayout>
+
+                            <FlexLayout
+                                Grid.Row="1"
+                                Direction="Row"
+                                JustifyContent="SpaceEvenly">
                                 <Button
                                     Command="{Binding ClosePopup}"
                                     StyleClass="BlueBtn"
@@ -247,8 +259,8 @@
                                     Command="{Binding ClearSelection}"
                                     StyleClass="BlueBtn"
                                     Text="Clear" />
-                            </HorizontalStackLayout>
-                        </VerticalStackLayout>
+                            </FlexLayout>
+                        </Grid>
                     </ScrollView>
                 </DataTemplate>
             </sfPopup:SfPopup.ContentTemplate>
