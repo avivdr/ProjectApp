@@ -24,10 +24,15 @@ namespace ProjectApp.ViewModel
         const string ShortQuery = "Search query must be at least 4 characters";
         const string TagMessage = "Tag Work or Composer";
 
-        readonly PickOptions[] filePickOptions = { null, 
-            new() { PickerTitle = "Image", FileTypes = FilePickerFileType.Images }, 
-            new() { PickerTitle = "Video", FileTypes = FilePickerFileType.Videos } 
-        };
+        readonly PickOptions[] filePickOptions = { null,
+            new() { PickerTitle = "Image", FileTypes = FilePickerFileType.Images },
+            new() { PickerTitle = "Video", FileTypes = FilePickerFileType.Videos },
+            new() { PickerTitle = "Audio", FileTypes = new(
+                new Dictionary<DevicePlatform, IEnumerable<string>>()
+                {
+                    { DevicePlatform.WinUI, new[] { ".wav", ".mp3", ".m4a" } },
+                    { DevicePlatform.Android, new[] { "audio/mpeg", "audio/wav", "audio/mp4"} }
+                })}};
 
         readonly Service service;
         readonly DebounceDispatcher searchDebounce;
@@ -134,11 +139,8 @@ namespace ProjectApp.ViewModel
             get => _selection;
             set
             {
-                if (value != null)
-                {
-                    _selection = value;
-                    OnPropertyChanged(nameof(Selection));
-                }
+                _selection = value;
+                OnPropertyChanged(nameof(Selection));
             }
         }
         public int SelectedTab
@@ -159,7 +161,7 @@ namespace ProjectApp.ViewModel
                 OnPropertyChanged(nameof(Query));
 
                 searchDebounce.Debounce(() => Search(_query));
-             }
+            }
         }
 
         public ICommand UploadPostCommand { get; protected set; }
@@ -235,6 +237,7 @@ namespace ProjectApp.ViewModel
             PickFileCommand = new Command(async () =>
             {
                 if (SelectedTab == 0) return;
+
                 try
                 {
                     FileResult = await FilePicker.Default.PickAsync(filePickOptions[SelectedTab]);
@@ -302,14 +305,13 @@ namespace ProjectApp.ViewModel
         }
 
 
-        //public async void CheckAccess()
-        //{
-        //    if (await service.GetCurrentUser() == null)
-        //    {
-        //        await Shell.Current.DisplayAlert("Access Denied", "You must be logged in to enter this page", "Return to main page");
-        //        await Shell.Current.GoToAsync("//MainPage");
-        //        return;
-        //    }
-        //}
+        public async void CheckAccess()
+        {
+            if (await service.GetCurrentUser() == null)
+            {
+                await Shell.Current.GoToAsync("//MainPage");
+                await Shell.Current.DisplayAlert("Access Denied", "You must be logged in to enter this page", "Return to main page");
+            }
+        }
     }
 }
