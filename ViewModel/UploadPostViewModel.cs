@@ -155,12 +155,7 @@ namespace ProjectApp.ViewModel
         }
         public string FilePickBtnText
         {
-            get
-            {
-                if (FileResult == null)
-                    return "Pick File";
-                return FileResult.FileName;
-            }
+            get => FileResult?.FileName ?? "Pick File";
         }
         public string Query
         {
@@ -334,6 +329,8 @@ namespace ProjectApp.ViewModel
 
         public async void CheckAccess()
         {
+            return;
+
             if (await service.GetCurrentUser() == null)
             {
                 await Shell.Current.GoToAsync("//MainPage");
