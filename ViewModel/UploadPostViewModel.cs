@@ -20,9 +20,9 @@ namespace ProjectApp.ViewModel
     {
         const string ServerError = "A server error occurred";
         const string FilePickError = "An error occurred when picking file";
-        const string Invalid = "Invalid fields";
-        const string ShortQuery = "Search query must be at least 4 characters";
+        const string Empty = "Title cannot be empty";
         const string TagMessage = "Tag Work or Composer";
+        const string Unauthorized = "Please login to upload a post";
 
         readonly PickOptions[] filePickOptions = { null,
             new() { PickerTitle = "Image", FileTypes = FilePickerFileType.Images },
@@ -132,6 +132,7 @@ namespace ProjectApp.ViewModel
             {
                 _fileResult = value;
                 OnPropertyChanged(nameof(FileResult));
+                OnPropertyChanged(nameof(FilePickBtnText));
             }
         }
         public TaggableItem Selection
@@ -150,6 +151,15 @@ namespace ProjectApp.ViewModel
             {
                 _selectedTab = value;
                 OnPropertyChanged(nameof(SelectedTab));
+            }
+        }
+        public string FilePickBtnText
+        {
+            get
+            {
+                if (FileResult == null)
+                    return "Pick File";
+                return FileResult.FileName;
             }
         }
         public string Query
@@ -196,6 +206,17 @@ namespace ProjectApp.ViewModel
             {
                 try
                 {
+                    if (string.IsNullOrEmpty(Title))
+                    {
+                        ErrorMessage = Empty;
+                        IsErrorMessage = true;
+                        return;
+                    }
+                    if (FileResult == null && SelectedTab != 0 &&
+                        !await Shell.Current.DisplayAlert("Empty file", "Do you wish to upload a post without a selected file?", "Yes", "No, cancel"))
+                            return;
+
+
                     User user = await service.GetCurrentUser();
                     Post post = new()
                     {
@@ -220,6 +241,11 @@ namespace ProjectApp.ViewModel
                     {
                         case HttpStatusCode.OK:
                             await Shell.Current.DisplayAlert("Post uploaded", "post uploaded successfully", "ok");
+                            break;
+
+                        case HttpStatusCode.Unauthorized:
+                            ErrorMessage = Unauthorized;
+                            IsErrorMessage = true;
                             break;
 
                         default:
@@ -250,6 +276,7 @@ namespace ProjectApp.ViewModel
                 }
             });
 
+            //load more works
             LoadMoreWorks = new Command(async () =>
             {
                 IsWorksLoading = true;

@@ -61,6 +61,8 @@
 
                 <sfTab:SfTabView SelectedIndex="{Binding SelectedTab}">
                     <sfTab:SfTabView.Items>
+
+                        <!--  Text Only  -->
                         <sfTab:SfTabItem Header="Text Only" TextColor="{StaticResource LightGrey}">
                             <sfTab:SfTabItem.Content>
                                 <VerticalStackLayout Spacing="20">
@@ -73,7 +75,47 @@
                             </sfTab:SfTabItem.Content>
                         </sfTab:SfTabItem>
 
+                        <!--  Image  -->
                         <sfTab:SfTabItem Header="Image" TextColor="{StaticResource LightGrey}">
+                            <sfTab:SfTabItem.Content>
+                                <VerticalStackLayout Spacing="20">
+                                    <Editor
+                                        HeightRequest="200"
+                                        Placeholder="Content"
+                                        StyleClass="FormEditor"
+                                        Text="{Binding Content}" />
+
+                                    <HorizontalStackLayout Margin="0,15" Spacing="15">
+                                        <Label
+                                            StyleClass="LightLbl"
+                                            Text="Image:"
+                                            VerticalOptions="Center" />
+                                        <Button
+                                            Command="{Binding PickFileCommand}"
+                                            CornerRadius="18"
+                                            StyleClass="LightBlueBtn"
+                                            Text="{Binding FilePickBtnText}" />
+                                    </HorizontalStackLayout>
+
+                                    <Image
+                                        Aspect="AspectFit"
+                                        HeightRequest="150"
+                                        HorizontalOptions="Start"
+                                        Source="{Binding FileResult.FullPath}" />
+
+                                    <!--<VerticalStackLayout Spacing="10">
+                                        <Button
+                                            Command="{Binding PickFileCommand}"
+                                            StyleClass="LightBlueBtn"
+                                            Text="Pick File" />
+                                        <Label StyleClass="LightLbl" Text="{Binding FileResult.FileName}" />
+                                    </VerticalStackLayout>-->
+                                </VerticalStackLayout>
+                            </sfTab:SfTabItem.Content>
+                        </sfTab:SfTabItem>
+
+                        <!--  Audio  -->
+                        <sfTab:SfTabItem Header="Audio" TextColor="{StaticResource LightGrey}">
                             <sfTab:SfTabItem.Content>
                                 <VerticalStackLayout Spacing="20">
                                     <Editor
