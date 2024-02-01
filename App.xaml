@@ -6,7 +6,7 @@
     xmlns:local="clr-namespace:ProjectApp">
     <Application.Resources>
         <ResourceDictionary>
-            <Color x:Key="LightBlue">#3369ff</Color>
+            <Color x:Key="LightBlue">#2790d6</Color>
             <Color x:Key="Blue">#001f5c</Color>
             <Color x:Key="DarkBlue">#061723</Color>
             <Color x:Key="LightGrey">#d7dadc</Color>

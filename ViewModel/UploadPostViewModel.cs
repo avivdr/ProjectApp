@@ -133,6 +133,7 @@ namespace ProjectApp.ViewModel
                 _fileResult = value;
                 OnPropertyChanged(nameof(FileResult));
                 OnPropertyChanged(nameof(FilePickBtnText));
+                OnPropertyChanged(nameof(IsFileSelected));
             }
         }
         public TaggableItem Selection
@@ -156,6 +157,10 @@ namespace ProjectApp.ViewModel
         public string FilePickBtnText
         {
             get => FileResult?.FileName ?? "Pick File";
+        }
+        public bool IsFileSelected
+        {
+            get => FileResult != null;
         }
         public string Query
         {
@@ -194,7 +199,6 @@ namespace ProjectApp.ViewModel
                 Selection = new TaggableItem(TagMessage);
                 IsPopupOpen = false;
             });
-
 
             //post command
             UploadPostCommand = new Command(async () =>

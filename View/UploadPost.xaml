@@ -8,6 +8,7 @@
     xmlns:sfList="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
     xmlns:sfPopup="clr-namespace:Syncfusion.Maui.Popup;assembly=Syncfusion.Maui.Popup"
     xmlns:sfTab="clr-namespace:Syncfusion.Maui.TabView;assembly=Syncfusion.Maui.TabView"
+    xmlns:tk="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     Title="UploadPost"
     x:DataType="ViewModel:UploadPostViewModel">
 
@@ -27,7 +28,6 @@
                     Padding="0"
                     BackgroundColor="{StaticResource Blue}"
                     HorizontalOptions="StartAndExpand"
-                    MaximumHeightRequest="85"
                     Stroke="Transparent"
                     StrokeShape="RoundRectangle 20">
                     <Border.GestureRecognizers>
@@ -35,10 +35,11 @@
                     </Border.GestureRecognizers>
 
 
-                    <HorizontalStackLayout Padding="15" Spacing="10">
+                    <HorizontalStackLayout Padding="12" Spacing="10">
                         <Label
                             BackgroundColor="{StaticResource Blue}"
                             FontAttributes="Bold"
+                            FontSize="13"
                             Text="{Binding Selection.String}"
                             TextColor="{StaticResource LightGrey}"
                             VerticalOptions="Center" />
@@ -94,13 +95,47 @@
                                             Command="{Binding PickFileCommand}"
                                             CornerRadius="18"
                                             StyleClass="LightBlueBtn"
-                                            Text="{Binding FilePickBtnText}" />
+                                            Text="{Binding FilePickBtnText}"
+                                            TextColor="Black" />
                                     </HorizontalStackLayout>
 
                                     <Image
                                         Aspect="AspectFit"
                                         HeightRequest="150"
                                         HorizontalOptions="Start"
+                                        Source="{Binding FileResult.FullPath}" />
+                                </VerticalStackLayout>
+                            </sfTab:SfTabItem.Content>
+                        </sfTab:SfTabItem>
+
+                        <!--  Video Tab  -->
+                        <sfTab:SfTabItem Header="Video" TextColor="{StaticResource LightGrey}">
+                            <sfTab:SfTabItem.Content>
+                                <VerticalStackLayout Spacing="20">
+                                    <Editor
+                                        HeightRequest="200"
+                                        Placeholder="Content"
+                                        StyleClass="FormEditor"
+                                        Text="{Binding Content}" />
+
+
+                                    <HorizontalStackLayout Margin="0,15" Spacing="15">
+                                        <Label
+                                            StyleClass="LightLbl"
+                                            Text="Video:"
+                                            VerticalOptions="Center" />
+                                        <Button
+                                            Command="{Binding PickFileCommand}"
+                                            CornerRadius="18"
+                                            StyleClass="LightBlueBtn"
+                                            Text="{Binding FilePickBtnText}" />
+                                    </HorizontalStackLayout>
+
+                                    <tk:MediaElement
+                                        Aspect="AspectFit"
+                                        HeightRequest="350"
+                                        HorizontalOptions="Start"
+                                        IsVisible="{Binding IsFileSelected}"
                                         Source="{Binding FileResult.FullPath}" />
                                 </VerticalStackLayout>
                             </sfTab:SfTabItem.Content>
@@ -116,7 +151,6 @@
                                         StyleClass="FormEditor"
                                         Text="{Binding Content}" />
 
-
                                     <HorizontalStackLayout Margin="0,15" Spacing="15">
                                         <Label
                                             StyleClass="LightLbl"
@@ -128,6 +162,13 @@
                                             StyleClass="LightBlueBtn"
                                             Text="{Binding FilePickBtnText}" />
                                     </HorizontalStackLayout>
+
+                                    <tk:MediaElement
+                                        Margin="0,-20"
+                                        HorizontalOptions="Start"
+                                        IsVisible="{Binding IsFileSelected}"
+                                        Source="{Binding FileResult.FullPath}"
+                                        WidthRequest="450" />
                                 </VerticalStackLayout>
                             </sfTab:SfTabItem.Content>
                         </sfTab:SfTabItem>

@@ -14,7 +14,7 @@ public static class MauiProgram
         var builder = MauiApp.CreateBuilder();
 		builder
 			.UseMauiApp<App>()
-			.UseMauiCommunityToolkit()
+			.UseMauiCommunityToolkit().UseMauiCommunityToolkitMediaElement()
 			.ConfigureSyncfusionCore()
 			.ConfigureFonts(fonts =>
 			{
@@ -30,8 +30,6 @@ public static class MauiProgram
         builder.Services.AddSingleton<SignUp>();
         builder.Services.AddSingleton<SignUpViewModel>();
         builder.Services.AddTransientPopup<Login, LoginViewModel>();
-        builder.Services.AddSingleton<Debounce>();
-        builder.Services.AddSingleton<DebounceViewModel>();
 		builder.Services.AddSingleton<UploadPost>();
 		builder.Services.AddSingleton<UploadPostViewModel>();
 
