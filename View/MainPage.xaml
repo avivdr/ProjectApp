@@ -6,13 +6,19 @@
     xmlns:viewModel="clr-namespace:ProjectApp.ViewModel"
     x:DataType="viewModel:MainPageViewModel">
 
-    <VerticalStackLayout>
-        <Button Command="{Binding BtnCommand}" Text="Login" />
-        <Button Command="{Binding Btn2Command}" Text="Show user" />
-        <Button Command="{Binding Btn3Command}" Text="debounce" />
+    <ScrollView>
+        <VerticalStackLayout>
+            <Button Command="{Binding BtnCommand}" Text="Login" />
+            <Button Command="{Binding Btn2Command}" Text="Show user" />
+            <Button Command="{Binding Btn3Command}" Text="debounce" />
+            <Button Command="{Binding Btn4Command}" Text="Get Post"/>
 
-        <Label Text="{Binding Username}" />
-        <Label Text="{Binding Password}" />
-        <Label Text="{Binding Email}" />
-    </VerticalStackLayout>
+            <Image HeightRequest="500" Aspect="AspectFit" Source="{Binding Post.File}" />
+
+            <Label Text="{Binding Username}" />
+            <Label Text="{Binding Password}" />
+            <Label Text="{Binding Email}" />
+        </VerticalStackLayout>
+    </ScrollView>
+    
 </ContentPage>

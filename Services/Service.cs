@@ -6,6 +6,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using Bumptech.Glide.Load.Data;
 using ProjectApp.Model;
 
 namespace ProjectApp.Services
@@ -97,6 +98,32 @@ namespace ProjectApp.Services
                     string content = await response.Content.ReadAsStringAsync();
                     return JsonSerializer.Deserialize<OmniSearchDTO>(content, options);
                 }
+            }
+            catch (Exception) { }
+
+            return null;
+        }
+
+        public async Task<Post> GetPostById(int id)
+        { 
+            Post post;
+            try
+            {
+                var postResponse = await httpClient.GetAsync($@"{URL}/GetPostById/{id}");
+                if (postResponse.StatusCode == HttpStatusCode.OK)
+                {
+                    string content = await postResponse.Content.ReadAsStringAsync();
+                    post = JsonSerializer.Deserialize<Post>(content, options);
+                }
+                else return null;
+
+                var fileResponse = await httpClient.GetAsync($@"{URL}/GetPostFile/{id}");
+                if (fileResponse.StatusCode == HttpStatusCode.OK)
+                {
+                    post.File = await fileResponse.Content.ReadAsStreamAsync();
+                }
+
+                return post;
             }
             catch (Exception) { }
 

@@ -33,9 +33,7 @@ namespace ProjectApp.Model
 
         public Work Work { get; set; }
 
-
-        [JsonIgnore]
-        public FileStream File { get; set; }
+        [JsonIgnore] public Stream File { get; set; }
 
         public Post()
         {

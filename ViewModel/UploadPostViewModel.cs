@@ -10,7 +10,6 @@ using System.Text.Json;
 using System.Net;
 using DebounceThrottle;
 using System.Collections.ObjectModel;
-using System.Runtime.CompilerServices;
 using Syncfusion.Maui.ListView;
 using CommunityToolkit.Maui.Core.Extensions;
 
