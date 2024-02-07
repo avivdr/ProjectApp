@@ -6,7 +6,6 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using Bumptech.Glide.Load.Data;
 using ProjectApp.Model;
 
 namespace ProjectApp.Services
@@ -14,8 +13,9 @@ namespace ProjectApp.Services
     public class Service
     {
         readonly HttpClient httpClient;
-        const string URL = "https://vxfmp0h3-7058.uks1.devtunnels.ms/OpusOne";
-        
+        private const string ServerURL = $"{URL}/OpusOne";
+        public const string URL = "https://vxfmp0h3-7058.uks1.devtunnels.ms";
+
         readonly JsonSerializerOptions options;
         const string CURRENT_USER_KEY = "CurrentUser";
 
@@ -33,7 +33,7 @@ namespace ProjectApp.Services
         {
             try
             {
-                var response = await httpClient.GetAsync($"{URL}/Hello");
+                var response = await httpClient.GetAsync($"{ServerURL}/Hello");
                 return await response.Content.ReadAsStringAsync();
             }
             catch (Exception)
@@ -57,7 +57,7 @@ namespace ProjectApp.Services
 
             try
             {
-                var response = await httpClient.GetAsync($@"{URL}/SearchComposerByName/{query}");
+                var response = await httpClient.GetAsync($@"{ServerURL}/SearchComposerByName/{query}");
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
                     string content = await response.Content.ReadAsStringAsync();
@@ -76,7 +76,7 @@ namespace ProjectApp.Services
 
             try
             {
-                var response = await httpClient.GetAsync($@"{URL}/OmniSearch/{query}/0");
+                var response = await httpClient.GetAsync($@"{ServerURL}/OmniSearch/{query}/0");
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
                     string content = await response.Content.ReadAsStringAsync();
@@ -92,7 +92,7 @@ namespace ProjectApp.Services
         {
             try
             {
-                var response = await httpClient.GetAsync($@"{URL}/NextOmniSearch");
+                var response = await httpClient.GetAsync($@"{ServerURL}/NextOmniSearch");
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
                     string content = await response.Content.ReadAsStringAsync();
@@ -109,19 +109,13 @@ namespace ProjectApp.Services
             Post post;
             try
             {
-                var postResponse = await httpClient.GetAsync($@"{URL}/GetPostById/{id}");
+                var postResponse = await httpClient.GetAsync($@"{ServerURL}/GetPostById/{id}");
                 if (postResponse.StatusCode == HttpStatusCode.OK)
                 {
                     string content = await postResponse.Content.ReadAsStringAsync();
                     post = JsonSerializer.Deserialize<Post>(content, options);
                 }
                 else return null;
-
-                var fileResponse = await httpClient.GetAsync($@"{URL}/GetPostFile/{id}");
-                if (fileResponse.StatusCode == HttpStatusCode.OK)
-                {
-                    post.File = await fileResponse.Content.ReadAsStreamAsync();
-                }
 
                 return post;
             }
@@ -153,7 +147,7 @@ namespace ProjectApp.Services
                 var stringContent = new StringContent(JsonSerializer.Serialize(post, options), Encoding.UTF8, "application/json");
                 multipartFormContent.Add(stringContent, "post");
 
-                var response = await httpClient.PostAsync($"{URL}/UploadPost", multipartFormContent);
+                var response = await httpClient.PostAsync($"{ServerURL}/UploadPost", multipartFormContent);
                 return response.StatusCode;
             }
             catch (Exception)
@@ -168,7 +162,7 @@ namespace ProjectApp.Services
             var stringContent = new StringContent(JsonSerializer.Serialize(user, options), Encoding.UTF8, "application/json");
             try
             {
-                var response = await httpClient.PostAsync($"{URL}/Login", stringContent);
+                var response = await httpClient.PostAsync($"{ServerURL}/Login", stringContent);
 
 
                 switch (response.StatusCode)
@@ -198,7 +192,7 @@ namespace ProjectApp.Services
             var stringContent = new StringContent(userJson, Encoding.UTF8, "application/json");
             try
             {
-                var response = await httpClient.PostAsync($@"{URL}/Register", stringContent);
+                var response = await httpClient.PostAsync($@"{ServerURL}/Register", stringContent);
                 string content = await response.Content.ReadAsStringAsync();
 
                 if (response.StatusCode == HttpStatusCode.OK)

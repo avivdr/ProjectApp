@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjectApp.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.Contracts;
@@ -21,6 +22,8 @@ namespace ProjectApp.Model
 
         public DateTime UploadDateTime { get; set; }
 
+        public string FileExtention { get; set; }
+
         public int? ComposerId { get; set; }
 
         public int? WorkId { get; set; }
@@ -33,7 +36,7 @@ namespace ProjectApp.Model
 
         public Work Work { get; set; }
 
-        [JsonIgnore] public Stream File { get; set; }
+        [JsonIgnore] public string File => string.IsNullOrEmpty(FileExtention) ? null : $"{Service.URL}/{Id}{FileExtention}";
 
         public Post()
         {

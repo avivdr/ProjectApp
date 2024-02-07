@@ -214,13 +214,13 @@ namespace ProjectApp.ViewModel
                         !await Shell.Current.DisplayAlert("Empty file", "Do you wish to upload a post without a selected file?", "Yes", "No, cancel"))
                             return;
 
-
                     User user = await service.GetCurrentUser();
                     Post post = new()
                     {
                         Content = Content,
                         Title = Title,
                         Creator = user,
+                        FileExtention = Path.GetExtension(FileResult?.FullPath)
                     };
 
                     if (Selection is Work work)
