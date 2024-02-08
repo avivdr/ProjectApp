@@ -37,6 +37,7 @@ namespace ProjectApp.Model
         public Work Work { get; set; }
 
         [JsonIgnore] public string File => string.IsNullOrEmpty(FileExtention) ? null : $"{Service.URL}/{Id}{FileExtention}";
+        [JsonIgnore] public bool IsFile => !string.IsNullOrEmpty(FileExtention);
 
         public Post()
         {

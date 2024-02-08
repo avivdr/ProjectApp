@@ -3,22 +3,31 @@
     x:Class="ProjectApp.MainPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:ProjectApp.Model"
+    xmlns:sfList="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
     xmlns:viewModel="clr-namespace:ProjectApp.ViewModel"
     x:DataType="viewModel:MainPageViewModel">
 
     <ScrollView>
         <VerticalStackLayout>
             <Button Command="{Binding BtnCommand}" Text="Login" />
-            <Button Command="{Binding Btn2Command}" Text="Show user" />
-            <Button Command="{Binding Btn3Command}" Text="debounce" />
-            <Button Command="{Binding Btn4Command}" Text="Get Post"/>
 
-            <Image HeightRequest="500" Aspect="AspectFit" Source="{Binding Post.File}" />
-
-            <Label Text="{Binding Username}" />
-            <Label Text="{Binding Password}" />
-            <Label Text="{Binding Email}" />
+            <sfList:SfListView ItemSize="200" ItemsSource="{Binding Posts}">
+                <sfList:SfListView.ItemTemplate>
+                    <DataTemplate x:DataType="model:Post">
+                        <VerticalStackLayout Spacing="15">
+                            <HorizontalStackLayout Spacing="20">
+                                <Label Text="{Binding Creator.Username}" />
+                                <Label Text="{Binding UploadDateTime}" />
+                            </HorizontalStackLayout>
+                            <Label Text="{Binding Title}" />
+                            <Label Text="{Binding Content}" />
+                            <Image HeightRequest="100" Source="{Binding File}" />
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </sfList:SfListView.ItemTemplate>
+            </sfList:SfListView>
         </VerticalStackLayout>
     </ScrollView>
-    
+
 </ContentPage>

@@ -124,6 +124,22 @@ namespace ProjectApp.Services
             return null;
         }
 
+        public async Task<List<Post>> GetAllPosts()
+        {
+            try
+            {
+                var response = await httpClient.GetAsync(@$"{ServerURL}/GetAllPosts");
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    string content = await response.Content.ReadAsStringAsync();
+                    return JsonSerializer.Deserialize<List<Post>>(content, options);
+                }
+            }
+            catch (Exception) { }
+
+            return null;
+        }
+
         public async Task<HttpStatusCode> UploadPost(Post post, FileResult file = null)
         {
             try
@@ -133,7 +149,7 @@ namespace ProjectApp.Services
                 if (file != null)
                 {
                     byte[] bytes;
-                    using (MemoryStream ms = new MemoryStream())
+                    using (MemoryStream ms = new())
                     {
                         var stream = await file.OpenReadAsync();
                         stream.CopyTo(ms);
