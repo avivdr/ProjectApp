@@ -220,7 +220,7 @@ namespace ProjectApp.ViewModel
                         Content = Content,
                         Title = Title,
                         Creator = user,
-                        FileExtention = Path.GetExtension(FileResult?.FullPath)
+                        FileExtension = Path.GetExtension(FileResult?.FullPath)
                     };
 
                     if (Selection is Work work)

@@ -22,7 +22,7 @@ namespace ProjectApp.Model
 
         public DateTime UploadDateTime { get; set; }
 
-        public string FileExtention { get; set; }
+        public string FileExtension { get; set; }
 
         public int? ComposerId { get; set; }
 
@@ -36,8 +36,8 @@ namespace ProjectApp.Model
 
         public Work Work { get; set; }
 
-        [JsonIgnore] public string File => string.IsNullOrEmpty(FileExtention) ? null : $"{Service.URL}/{Id}{FileExtention}";
-        [JsonIgnore] public bool IsFile => !string.IsNullOrEmpty(FileExtention);
+        [JsonIgnore] public string File => string.IsNullOrEmpty(FileExtension) ? null : $"{Service.URL}/{Id}{FileExtension}";
+        [JsonIgnore] public bool IsFile => !string.IsNullOrEmpty(FileExtension);
 
         public Post()
         {

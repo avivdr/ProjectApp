@@ -10,9 +10,10 @@
 
     <ScrollView>
         <VerticalStackLayout>
-            <Button Command="{Binding BtnCommand}" Text="Login" />
-
-            <sfList:SfListView ItemSize="200" ItemsSource="{Binding Posts}">
+            <sfList:SfListView
+                ItemSize="200"
+                ItemsSource="{Binding Posts}"
+                MaximumHeightRequest="2000">
                 <sfList:SfListView.ItemTemplate>
                     <DataTemplate x:DataType="model:Post">
                         <VerticalStackLayout Spacing="15">
@@ -20,6 +21,7 @@
                                 <Label Text="{Binding Creator.Username}" />
                                 <Label Text="{Binding UploadDateTime}" />
                             </HorizontalStackLayout>
+
                             <Label Text="{Binding Title}" />
                             <Label Text="{Binding Content}" />
                             <Image HeightRequest="100" Source="{Binding File}" />
