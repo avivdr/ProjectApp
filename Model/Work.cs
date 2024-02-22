@@ -15,8 +15,6 @@ namespace ProjectApp.Model
 
         public string Title { get; set; }
 
-        public byte Genre { get; set; }
-
         public Composer Composer { get; set; }
 
         public List<WorksUser> Works { get; set; }
@@ -42,7 +40,6 @@ namespace ProjectApp.Model
         public Work()
         {
             Title = "";
-            Genre = 0;
             Works = new();
             Subtitle = "";
             SearchTerms = new();
