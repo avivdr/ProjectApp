@@ -8,16 +8,6 @@
     xmlns:viewModel="clr-namespace:ProjectApp.ViewModel"
     x:DataType="viewModel:MainPageViewModel">
 
-    <Shell.TitleView>
-        <StackLayout BackgroundColor="White">
-            <Button
-                Command="{Binding BtnCommand}"
-                HorizontalOptions="Start"
-                Text="Login"
-                WidthRequest="100" />
-        </StackLayout>
-    </Shell.TitleView>
-
     <ScrollView>
         <VerticalStackLayout>
             <sfList:SfListView

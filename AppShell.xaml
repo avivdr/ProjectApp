@@ -4,6 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:ProjectApp"
+    xmlns:sfTab="clr-namespace:Syncfusion.Maui.TabView;assembly=Syncfusion.Maui.TabView"
     xmlns:view="clr-namespace:ProjectApp.View"
     Shell.FlyoutBehavior="Disabled">
 
@@ -18,6 +19,4 @@
             <ShellContent ContentTemplate="{DataTemplate view:SignUp}" Route="SignUp" />
         </Tab>
     </TabBar>
-
-
 </Shell>
