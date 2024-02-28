@@ -73,9 +73,6 @@
 	  <MauiXaml Update="View\MYPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="View\StartupPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
 	  <MauiXaml Update="View\UploadPost.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

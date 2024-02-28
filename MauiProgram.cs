@@ -4,6 +4,7 @@ using ProjectApp.View;
 using CommunityToolkit.Maui;
 using ProjectApp.Services;
 using Syncfusion.Maui.Core.Hosting;
+using CommunityToolkit.Maui.Core;
 
 namespace ProjectApp;
 
@@ -32,8 +33,6 @@ public static class MauiProgram
         builder.Services.AddTransientPopup<Login, LoginViewModel>();
 		builder.Services.AddSingleton<UploadPost>();
 		builder.Services.AddSingleton<UploadPostViewModel>();
-		builder.Services.AddSingleton<StartupPage>();
-		builder.Services.AddSingleton<StartupViewModel>();
 
 		builder.Services.AddSingleton<Service>();
 

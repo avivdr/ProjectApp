@@ -10,6 +10,7 @@
 
     <ScrollView>
         <VerticalStackLayout>
+            <Button Command="{Binding BtnCommand}" Text="btn" />
             <sfList:SfListView
                 ItemSize="200"
                 ItemsSource="{Binding Posts}"

@@ -8,6 +8,9 @@ public partial class MainPage : ContentPage
 	{
 		InitializeComponent();
 		this.BindingContext = vm;
+
+
+		Appearing += vm.ShowPopupE;
 	}
 }
 

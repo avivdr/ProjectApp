@@ -18,7 +18,6 @@ namespace ProjectApp.ViewModel
         private readonly IPopupService popupService;
         readonly Service service;
 
-
         private List<Post> _posts;
 
         public List<Post> Posts
@@ -33,6 +32,8 @@ namespace ProjectApp.ViewModel
 
         public ICommand BtnCommand { get; set; }
 
+        public EventHandler ShowPopupE { get; set; }
+
         public MainPageViewModel(IPopupService _popupService, Service _service)
         {
             popupService = _popupService;
@@ -40,10 +41,13 @@ namespace ProjectApp.ViewModel
 
             BtnCommand = new Command(popupService.ShowPopup<LoginViewModel>);
 
-            Task.Run(async () => 
-            {
-                Posts = await service.GetAllPosts();
-            });
+            ShowPopupE = new EventHandler((s,e) => popupService.ShowPopup<LoginViewModel>());
+            
+            //Task.Run(async () => 
+            //{
+            //    Posts = await service.GetAllPosts();
+            //});
         }
+
     }
 }
