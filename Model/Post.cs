@@ -38,6 +38,7 @@ namespace ProjectApp.Model
 
         [JsonIgnore] public string File => string.IsNullOrEmpty(FileExtension) ? null : $"{Service.URL}/{Id}{FileExtension}";
         [JsonIgnore] public bool IsFile => !string.IsNullOrEmpty(FileExtension);
+        [JsonIgnore] public string DateTimeString => UploadDateTime.Date == DateTime.Now.Date ? UploadDateTime.ToString("HH:mm") : UploadDateTime.ToString("dd/MM/yyyy");
 
         public Post()
         {

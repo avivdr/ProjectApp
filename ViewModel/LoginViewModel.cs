@@ -65,11 +65,11 @@ namespace ProjectApp.ViewModel
 
         public LoginViewModel(Service _service)
         {
-            Username = "";
-            Password = "";
             IsLoginError = false;
             ErrorMessage = INCORRECT;
             service = _service;
+
+            InitializeUser();
 
             SignUpBtnCommand = new Command(async () =>
             {
@@ -100,7 +100,6 @@ namespace ProjectApp.ViewModel
                         IsLoginError = false;
 
                         await Shell.Current.DisplayAlert("logged in message", "Logged in!", "OK");
-                        await Shell.Current.GoToAsync("//UploadPost");
                         await Login.CloseInstanceAsync();
                     }
                 }
@@ -115,6 +114,20 @@ namespace ProjectApp.ViewModel
         private bool ValidateUser()
         {
             return !string.IsNullOrEmpty(Username) && !string.IsNullOrEmpty(Password) && Username.Length > 3 && Password.Length > 3;
+        }
+
+        private async void InitializeUser()
+        {
+            User user = await service.GetCurrentUser();
+            if (user == null)
+            {
+                Username = "";
+                Password = "";
+                return;
+            }
+
+            Username  = user.Username;
+            Password = user.Password;
         }
     }
 }

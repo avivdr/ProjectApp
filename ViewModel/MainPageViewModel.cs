@@ -41,13 +41,11 @@ namespace ProjectApp.ViewModel
 
             BtnCommand = new Command(popupService.ShowPopup<LoginViewModel>);
 
-            ShowPopupE = new EventHandler((s,e) => popupService.ShowPopup<LoginViewModel>());
-            
-            //Task.Run(async () => 
-            //{
-            //    Posts = await service.GetAllPosts();
-            //});
+            ShowPopupE = new EventHandler(async (s,e) => 
+            {
+                await popupService.ShowPopupAsync<LoginViewModel>();
+                Posts = await service.GetAllPosts();
+            });
         }
-
     }
 }
