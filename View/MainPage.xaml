@@ -8,32 +8,27 @@
     xmlns:viewModel="clr-namespace:ProjectApp.ViewModel"
     x:DataType="viewModel:MainPageViewModel">
 
-    <ScrollView>
-        <VerticalStackLayout>
-            <Button Command="{Binding BtnCommand}" Text="btn" />
-            <sfList:SfListView
-                ItemSize="200"
-                ItemsSource="{Binding Posts}"
-                MaximumHeightRequest="2000">
-                <sfList:SfListView.ItemTemplate>
-                    <DataTemplate x:DataType="model:Post">
-                        <VerticalStackLayout Spacing="15">
-                            <HorizontalStackLayout Spacing="20">
-                                <Label Text="{Binding Creator.Username}" />
-                                <Label Text="{Binding DateTimeString}" />
-                            </HorizontalStackLayout>
+    <sfList:SfListView
+        ItemSize="200"
+        ItemsSource="{Binding Posts}"
+        MaximumHeightRequest="2000">
+        <sfList:SfListView.ItemTemplate>
+            <DataTemplate x:DataType="model:Post">
+                <VerticalStackLayout Spacing="15">
+                    <HorizontalStackLayout Spacing="20">
+                        <Label Text="{Binding Creator.Username}" />
+                        <Label Text="{Binding DateTimeString}" />
+                    </HorizontalStackLayout>
 
-                            <Label Text="{Binding Title}" />
-                            <Label Text="{Binding Content}" />
-                            <Image
-                                HeightRequest="100"
-                                IsVisible="{Binding IsFile}"
-                                Source="{Binding File}" />
-                        </VerticalStackLayout>
-                    </DataTemplate>
-                </sfList:SfListView.ItemTemplate>
-            </sfList:SfListView>
-        </VerticalStackLayout>
-    </ScrollView>
+                    <Label Text="{Binding Title}" />
+                    <Label Text="{Binding Content}" />
+                    <Image
+                        HeightRequest="100"
+                        IsVisible="{Binding IsFile}"
+                        Source="{Binding File}" />
+                </VerticalStackLayout>
+            </DataTemplate>
+        </sfList:SfListView.ItemTemplate>
+    </sfList:SfListView>
 
 </ContentPage>

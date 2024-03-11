@@ -32,7 +32,7 @@ namespace ProjectApp.ViewModel
 
         public ICommand BtnCommand { get; set; }
 
-        public EventHandler ShowPopupE { get; set; }
+        public EventHandler Login { get; set; }
 
         public MainPageViewModel(IPopupService _popupService, Service _service)
         {
@@ -41,7 +41,7 @@ namespace ProjectApp.ViewModel
 
             BtnCommand = new Command(popupService.ShowPopup<LoginViewModel>);
 
-            ShowPopupE = new EventHandler(async (s,e) => 
+            Login = new EventHandler(async (s,e) => 
             {
                 await popupService.ShowPopupAsync<LoginViewModel>();
                 Posts = await service.GetAllPosts();

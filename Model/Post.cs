@@ -16,11 +16,11 @@ namespace ProjectApp.Model
 
         public int CreatorId { get; set; }
 
-        public string Title { get; set; }
+        public string Title { get; set; } = "";
 
-        public string Content { get; set; }
+        public string Content { get; set; } = "";
 
-        public DateTime UploadDateTime { get; set; }
+        public DateTime UploadDateTime { get; set; } = DateTime.Now;
 
         public string FileExtension { get; set; }
 
@@ -28,7 +28,7 @@ namespace ProjectApp.Model
 
         public int? WorkId { get; set; }
 
-        public List<Comment> Comments { get; set; }
+        public List<Comment> Comments { get; set; } = new();
 
         public User Creator { get; set; }
 
@@ -36,16 +36,22 @@ namespace ProjectApp.Model
 
         public Work Work { get; set; }
 
-        [JsonIgnore] public string File => string.IsNullOrEmpty(FileExtension) ? null : $"{Service.URL}/{Id}{FileExtension}";
+        [JsonIgnore] public string File => string.IsNullOrEmpty(FileExtension) ? "" : $"{Service.URL}/{Id}{FileExtension}";
         [JsonIgnore] public bool IsFile => !string.IsNullOrEmpty(FileExtension);
-        [JsonIgnore] public string DateTimeString => UploadDateTime.Date == DateTime.Now.Date ? UploadDateTime.ToString("HH:mm") : UploadDateTime.ToString("dd/MM/yyyy");
 
-        public Post()
+        [JsonIgnore] public string DateTimeString
         {
-            Title = "";
-            Content = "";
-            UploadDateTime = DateTime.Now;
-            Comments = new();
+            get
+            {
+                if (UploadDateTime.Date == DateTime.Now.Date)
+                    return UploadDateTime.ToString("HH:mm");
+
+                if(UploadDateTime.Year == DateTime.Now.Year)
+                    return UploadDateTime.ToString("dd/MM");
+
+                return UploadDateTime.ToString("dd/MM/yyyy");
+            }
         }
+            
     }
 }
