@@ -239,6 +239,7 @@ namespace ProjectApp.ViewModel
                     {
                         case HttpStatusCode.OK:
                             await Shell.Current.DisplayAlert("Post uploaded", "post uploaded successfully", "ok");
+                            Title = ""; Content = ""; Query = ""; FileResult = null; WorkResults = null; ComposerResults = null;
                             break;
 
                         case HttpStatusCode.Unauthorized:

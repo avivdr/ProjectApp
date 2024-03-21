@@ -9,21 +9,37 @@
     x:DataType="viewModel:MainPageViewModel">
 
     <sfList:SfListView
-        ItemSize="200"
+        AutoFitMode="DynamicHeight"
+        BackgroundColor="{StaticResource AlmostBlack}"
+        ItemSpacing="5"
         ItemsSource="{Binding Posts}"
         MaximumHeightRequest="2000">
         <sfList:SfListView.ItemTemplate>
             <DataTemplate x:DataType="model:Post">
-                <VerticalStackLayout Spacing="15">
-                    <HorizontalStackLayout Spacing="20">
-                        <Label Text="{Binding Creator.Username}" />
-                        <Label Text="{Binding DateTimeString}" />
+                <VerticalStackLayout
+                    Padding="10"
+                    BackgroundColor="{StaticResource DarkGrey}"
+                    Spacing="15">
+                    <HorizontalStackLayout>
+                        <Image
+                            Margin="3,0"
+                            HeightRequest="20"
+                            Source="profile.png" />
+                        <Label
+                            Margin="20,0"
+                            StyleClass="LightLbl"
+                            Text="{Binding Creator.Username}" />
+                        <Label
+                            Margin="20,0"
+                            StyleClass="LightLbl"
+                            Text="{Binding DateTimeString}" />
                     </HorizontalStackLayout>
 
-                    <Label Text="{Binding Title}" />
-                    <Label Text="{Binding Content}" />
+                    <Label StyleClass="LightLbl" Text="{Binding Title}" />
+                    <Label StyleClass="LightLbl" Text="{Binding Content}" />
                     <Image
-                        HeightRequest="100"
+                        HeightRequest="200"
+                        HorizontalOptions="Start"
                         IsVisible="{Binding IsFile}"
                         Source="{Binding File}" />
                 </VerticalStackLayout>
