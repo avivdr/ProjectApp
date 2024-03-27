@@ -17,6 +17,7 @@ namespace ProjectApp.ViewModel
     {
         private readonly IPopupService popupService;
         readonly Service service;
+        private bool first_time = false;
 
         private List<Post> _posts;
 
@@ -41,9 +42,14 @@ namespace ProjectApp.ViewModel
 
             BtnCommand = new Command(popupService.ShowPopup<LoginViewModel>);
 
-            Login = new EventHandler(async (s,e) => 
+            Login = new(async (s,e) => 
             {
-                await popupService.ShowPopupAsync<LoginViewModel>();
+                if (first_time)
+                {
+                    await popupService.ShowPopupAsync<LoginViewModel>();
+                    first_time = false;
+                }
+                
                 Posts = await service.GetAllPosts();
             });
         }

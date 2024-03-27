@@ -60,6 +60,12 @@
                     </HorizontalStackLayout>
                 </Border>
 
+                <Label
+                    Margin="0,30,0,-10"
+                    FontSize="15"
+                    StyleClass="LightLbl"
+                    Text="Post Type:" />
+
                 <sfTab:SfTabView SelectedIndex="{Binding SelectedTab}">
                     <sfTab:SfTabView.Items>
 
@@ -184,10 +190,12 @@
 
         <Button
             Grid.Row="1"
+            Margin="20"
             Command="{Binding UploadPostCommand}"
             StyleClass="BlueBtn"
             Text="Post"
-            VerticalOptions="End" />
+            VerticalOptions="End"
+            WidthRequest="400" />
 
         <sfPopup:SfPopup
             HeightRequest="550"

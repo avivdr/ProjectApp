@@ -10,7 +10,7 @@
             <Color x:Key="Blue">#001f5c</Color>
             <Color x:Key="DarkBlue">#061723</Color>
             <Color x:Key="LightGrey">#d7dadc</Color>
-            <Color x:Key="MidLightGrey">#74797b</Color>
+            <Color x:Key="MidLightGrey">#898e90</Color>
             <Color x:Key="Grey">#5e6163</Color>
             <Color x:Key="DarkGrey">#1a1a1a</Color>
             <Color x:Key="AlmostBlack">#040404</Color>

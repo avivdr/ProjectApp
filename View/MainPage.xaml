@@ -21,18 +21,17 @@
                     BackgroundColor="{StaticResource DarkGrey}"
                     Spacing="15">
                     <HorizontalStackLayout>
-                        <Image
-                            Margin="3,0"
-                            HeightRequest="20"
-                            Source="profile.png" />
+                        <HorizontalStackLayout Spacing="5">
+                            <Image HeightRequest="20" Source="user_icon.png" />
+                            <Label StyleClass="LightLbl" Text="{Binding Creator.Username}" />
+                        </HorizontalStackLayout>
+
                         <Label
                             Margin="20,0"
+                            FontSize="14"
                             StyleClass="LightLbl"
-                            Text="{Binding Creator.Username}" />
-                        <Label
-                            Margin="20,0"
-                            StyleClass="LightLbl"
-                            Text="{Binding DateTimeString}" />
+                            Text="{Binding DateTimeString}"
+                            TextColor="{StaticResource MidLightGrey}" />
                     </HorizontalStackLayout>
 
                     <Label StyleClass="LightLbl" Text="{Binding Title}" />
