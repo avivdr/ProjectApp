@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:model="clr-namespace:ProjectApp.Model"
     xmlns:sfList="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+    xmlns:tk="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:viewModel="clr-namespace:ProjectApp.ViewModel"
     x:DataType="viewModel:MainPageViewModel">
 
@@ -39,8 +40,21 @@
                     <Image
                         HeightRequest="200"
                         HorizontalOptions="Start"
-                        IsVisible="{Binding IsFile}"
+                        IsVisible="{Binding IsImage}"
                         Source="{Binding File}" />
+
+                    <tk:MediaElement
+                        Aspect="AspectFit"
+                        HeightRequest="350"
+                        HorizontalOptions="Start"
+                        IsVisible="{Binding IsVideo}"
+                        Source="{Binding File}" />
+
+                    <tk:MediaElement
+                        HorizontalOptions="Start"
+                        IsVisible="{Binding IsAudio}"
+                        Source="{Binding File}"
+                        WidthRequest="450" />
                 </VerticalStackLayout>
             </DataTemplate>
         </sfList:SfListView.ItemTemplate>

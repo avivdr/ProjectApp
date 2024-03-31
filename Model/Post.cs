@@ -12,6 +12,10 @@ namespace ProjectApp.Model
 {
     public class Post
     {
+        private readonly List<string> imageTypes = new() { ".jpg", ".jfif", ".png", ".gif" };
+        private readonly List<string> videoTypes = new() { ".mp4", ".mov", ".avi", ".wmv" }; 
+        private readonly List<string> audioTypes = new() { ".wav", ".mp3", ".m4a" };
+
         public int Id { get; set; }
 
         public int CreatorId { get; set; }
@@ -38,6 +42,9 @@ namespace ProjectApp.Model
 
         [JsonIgnore] public string File => string.IsNullOrEmpty(FileExtension) ? "" : $"{Service.URL}/{Id}{FileExtension}";
         [JsonIgnore] public bool IsFile => !string.IsNullOrEmpty(FileExtension);
+        [JsonIgnore] public bool IsImage => imageTypes.Contains(FileExtension);
+        [JsonIgnore] public bool IsAudio => audioTypes.Contains(FileExtension);
+        [JsonIgnore] public bool IsVideo => videoTypes.Contains(FileExtension);
 
         [JsonIgnore] public string DateTimeString
         {
