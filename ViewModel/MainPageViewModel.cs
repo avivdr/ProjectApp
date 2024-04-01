@@ -17,7 +17,7 @@ namespace ProjectApp.ViewModel
     {
         private readonly IPopupService popupService;
         readonly Service service;
-        private bool first_time = false;
+        private bool first_time = true;
 
         private List<Post> _posts;
 
