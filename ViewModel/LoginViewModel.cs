@@ -98,8 +98,6 @@ namespace ProjectApp.ViewModel
                     else
                     {
                         IsLoginError = false;
-
-                        await Shell.Current.DisplayAlert("logged in message", "Logged in!", "OK");
                         await Login.CloseInstanceAsync();
                     }
                 }

@@ -13,7 +13,7 @@
     x:DataType="ViewModel:UploadPostViewModel">
 
 
-    <Grid BackgroundColor="{StaticResource AlmostBlack}" RowDefinitions="9*,*">
+    <Grid BackgroundColor="{StaticResource AlmostBlack}" RowDefinitions="9*,*,0.2*">
         <ScrollView>
             <VerticalStackLayout
                 Grid.Row="0"
@@ -190,13 +190,13 @@
 
         <Button
             Grid.Row="1"
-            Margin="20"
             Command="{Binding UploadPostCommand}"
             StyleClass="BlueBtn"
             Text="Post"
             VerticalOptions="End"
             WidthRequest="400" />
 
+        <!--  Popup  -->
         <sfPopup:SfPopup
             HeightRequest="550"
             IsOpen="{Binding IsPopupOpen}"

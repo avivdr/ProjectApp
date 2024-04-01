@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ProjectApp.View.ViewPost"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:ProjectApp.Model"
+    xmlns:sfList="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+    xmlns:tk="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:ProjectApp.ViewModel"
+    Title="ViewPost"
+    x:DataType="vm:ViewPostViewModel">
+
+    <Grid ColumnDefinitions="*" RowDefinitions="2*, 3*">
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout
+                Padding="10"
+                BackgroundColor="{StaticResource DarkGrey}"
+                Spacing="15">
+                <HorizontalStackLayout>
+                    <HorizontalStackLayout Spacing="5">
+                        <Image HeightRequest="20" Source="user_icon.png" />
+                        <Label StyleClass="LightLbl" Text="{Binding Post.Creator.Username}" />
+                    </HorizontalStackLayout>
+
+                    <Label
+                        Margin="20,0"
+                        FontSize="14"
+                        StyleClass="LightLbl"
+                        Text="{Binding Post.DateTimeString}"
+                        TextColor="{StaticResource MidLightGrey}" />
+                </HorizontalStackLayout>
+
+                <Label StyleClass="LightLbl" Text="{Binding Post.Title}" />
+                <Label StyleClass="LightLbl" Text="{Binding Post.Content}" />
+                <Image
+                    HeightRequest="200"
+                    HorizontalOptions="Start"
+                    IsVisible="{Binding Post.IsImage}"
+                    Source="{Binding Post.File}" />
+
+                <tk:MediaElement
+                    Aspect="AspectFit"
+                    HeightRequest="250"
+                    HorizontalOptions="Start"
+                    IsVisible="{Binding Post.IsVideo}"
+                    Source="{Binding Post.File}" />
+
+                <tk:MediaElement
+                    HorizontalOptions="Start"
+                    IsVisible="{Binding Post.IsAudio}"
+                    Source="{Binding Post.File}"
+                    WidthRequest="450" />
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <ScrollView Grid.Row="1">
+            <Grid ColumnDefinitions="*" RowDefinitions="2*,*">
+                <sfList:SfListView ItemsSource="{Binding Post.Comments}">
+                    <sfList:SfListView.ItemTemplate>
+                        <DataTemplate x:DataType="model:Comment">
+                            <VerticalStackLayout>
+                                <Label Text="{Binding Creator.Username}" />
+                                <Label Text="{Binding Content}" />
+                            </VerticalStackLayout>
+                        </DataTemplate>
+                    </sfList:SfListView.ItemTemplate>
+                </sfList:SfListView>
+            </Grid>
+        </ScrollView>
+    </Grid>
+
+</ContentPage>

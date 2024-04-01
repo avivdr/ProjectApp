@@ -14,7 +14,11 @@
         BackgroundColor="{StaticResource AlmostBlack}"
         ItemSpacing="5"
         ItemsSource="{Binding Posts}"
-        MaximumHeightRequest="2000">
+        MaximumHeightRequest="2000"
+        SelectedItem="{Binding SelectedPost}"
+        SelectionChangedCommand="{Binding PostClickedCommand}"
+        SelectionGesture="DoubleTap"
+        SelectionMode="Single">
         <sfList:SfListView.ItemTemplate>
             <DataTemplate x:DataType="model:Post">
                 <VerticalStackLayout

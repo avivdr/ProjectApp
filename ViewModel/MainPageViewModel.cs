@@ -20,6 +20,7 @@ namespace ProjectApp.ViewModel
         private bool first_time = true;
 
         private List<Post> _posts;
+        private Post _selectedPost;
 
         public List<Post> Posts
         {
@@ -31,7 +32,19 @@ namespace ProjectApp.ViewModel
             }
         }
 
+        public Post SelectedPost
+        {
+            get => _selectedPost;
+            set
+            {
+                _selectedPost = value;
+                OnPropertyChanged(nameof(SelectedPost));
+            }
+        }
+
         public ICommand BtnCommand { get; set; }
+        public ICommand PostClickedCommand { get; set; }
+
 
         public EventHandler Login { get; set; }
 
@@ -51,6 +64,14 @@ namespace ProjectApp.ViewModel
                 }
                 
                 Posts = await service.GetAllPosts();
+            });
+
+            PostClickedCommand = new Command(async () =>
+            {
+                await Shell.Current.GoToAsync("ViewPost", new Dictionary<string, object>()
+                {
+                    { "Post", SelectedPost}
+                });
             });
         }
     }
