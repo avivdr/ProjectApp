@@ -16,13 +16,13 @@ namespace ProjectApp.Services
         private const string ServerURL = $"{URL}/OpusOne";
         public const string URL = "https://vxfmp0h3-7058.uks1.devtunnels.ms";
 
-        readonly JsonSerializerOptions options;
+        readonly JsonSerializerOptions jsonOptions;
         const string CURRENT_USER_KEY = "CurrentUser";
 
         public Service()
         {
             httpClient = new HttpClient();
-            options = new JsonSerializerOptions()
+            jsonOptions = new JsonSerializerOptions()
             {
                 PropertyNameCaseInsensitive = true,
                 ReferenceHandler = ReferenceHandler.Preserve,
@@ -48,7 +48,7 @@ namespace ProjectApp.Services
             string st = await SecureStorage.Default.GetAsync(CURRENT_USER_KEY);
             if (string.IsNullOrEmpty(st))
                 return null;
-            return JsonSerializer.Deserialize<User>(st, options);
+            return JsonSerializer.Deserialize<User>(st, jsonOptions);
         }
 
         public async Task<List<Composer>> SearchComposersByName(string query)
@@ -61,7 +61,7 @@ namespace ProjectApp.Services
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
                     string content = await response.Content.ReadAsStringAsync();
-                    return JsonSerializer.Deserialize<List<Composer>>(content, options);
+                    return JsonSerializer.Deserialize<List<Composer>>(content, jsonOptions);
                 }
             }
             catch (Exception) { }
@@ -80,7 +80,7 @@ namespace ProjectApp.Services
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
                     string content = await response.Content.ReadAsStringAsync();
-                    return JsonSerializer.Deserialize<OmniSearchDTO>(content, options);
+                    return JsonSerializer.Deserialize<OmniSearchDTO>(content, jsonOptions);
                 }
             }
             catch (Exception) { }
@@ -96,7 +96,7 @@ namespace ProjectApp.Services
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
                     string content = await response.Content.ReadAsStringAsync();
-                    return JsonSerializer.Deserialize<OmniSearchDTO>(content, options);
+                    return JsonSerializer.Deserialize<OmniSearchDTO>(content, jsonOptions);
                 }
             }
             catch (Exception) { }
@@ -113,7 +113,7 @@ namespace ProjectApp.Services
                 if (postResponse.StatusCode == HttpStatusCode.OK)
                 {
                     string content = await postResponse.Content.ReadAsStringAsync();
-                    post = JsonSerializer.Deserialize<Post>(content, options);
+                    post = JsonSerializer.Deserialize<Post>(content, jsonOptions);
                 }
                 else return null;
 
@@ -132,12 +132,26 @@ namespace ProjectApp.Services
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
                     string content = await response.Content.ReadAsStringAsync();
-                    return JsonSerializer.Deserialize<List<Post>>(content, options);
+                    return JsonSerializer.Deserialize<List<Post>>(content, jsonOptions);
                 }
             }
             catch (Exception) { }
 
             return null;
+        }
+
+        public async Task<HttpStatusCode> UploadComment(Comment Comment)
+        {
+            try
+            {
+                StringContent stringContent = new(JsonSerializer.Serialize(Comment, jsonOptions));
+                var response = await httpClient.PostAsync($"{URL}/UploadComment", stringContent);
+                return response.StatusCode;
+            }
+            catch (Exception)
+            {
+                return HttpStatusCode.BadRequest;
+            }
         }
 
         public async Task<HttpStatusCode> UploadPost(Post post, FileResult file = null)
@@ -160,7 +174,7 @@ namespace ProjectApp.Services
                     multipartFormContent.Add(content, "file", file.FileName);
                 }                
 
-                var stringContent = new StringContent(JsonSerializer.Serialize(post, options), Encoding.UTF8, "application/json");
+                var stringContent = new StringContent(JsonSerializer.Serialize(post, jsonOptions), Encoding.UTF8, "application/json");
                 multipartFormContent.Add(stringContent, "post");
 
                 var response = await httpClient.PostAsync($"{ServerURL}/UploadPost", multipartFormContent);
@@ -175,7 +189,7 @@ namespace ProjectApp.Services
         public async Task<User> Login(string username, string password)
         { 
             User user = new() { Password = password, Username = username };
-            var stringContent = new StringContent(JsonSerializer.Serialize(user, options), Encoding.UTF8, "application/json");
+            var stringContent = new StringContent(JsonSerializer.Serialize(user, jsonOptions), Encoding.UTF8, "application/json");
             try
             {
                 var response = await httpClient.PostAsync($"{ServerURL}/Login", stringContent);
@@ -187,7 +201,7 @@ namespace ProjectApp.Services
                         string st = await response.Content.ReadAsStringAsync();
 
                         await SecureStorage.Default.SetAsync("CurrentUser", st);
-                        return JsonSerializer.Deserialize<User>(st, options);                        
+                        return JsonSerializer.Deserialize<User>(st, jsonOptions);                        
 
                     case HttpStatusCode.Unauthorized:
                         return null;
@@ -204,7 +218,7 @@ namespace ProjectApp.Services
 
         public async Task<HttpStatusCode> Register(User user)
         {
-            string userJson = JsonSerializer.Serialize(user, options);
+            string userJson = JsonSerializer.Serialize(user, jsonOptions);
             var stringContent = new StringContent(userJson, Encoding.UTF8, "application/json");
             try
             {
