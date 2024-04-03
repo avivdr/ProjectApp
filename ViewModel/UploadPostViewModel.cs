@@ -34,6 +34,7 @@ namespace ProjectApp.ViewModel
                 })}};
 
         readonly Service service;
+        readonly UserService userService;
         readonly DebounceDispatcher searchDebounce;
         private bool MoreWorksToLoad = true;
 
@@ -179,9 +180,10 @@ namespace ProjectApp.ViewModel
         public ICommand OpenPopup { get; protected set; }
         public ICommand ClosePopup { get; protected set; }
         public ICommand ClearSelection { get; protected set; }
-        public UploadPostViewModel(Service _service)
+        public UploadPostViewModel(Service _service, UserService _userService)
         {
             service = _service;
+            userService = _userService;
 
             IsErrorMessage = false;
             ErrorMessage = ServerError;
@@ -214,12 +216,11 @@ namespace ProjectApp.ViewModel
                         !await Shell.Current.DisplayAlert("Empty file", "Do you wish to upload a post without a selected file?", "Yes", "No, cancel"))
                             return;
 
-                    User user = await service.GetCurrentUser();
                     Post post = new()
                     {
                         Content = Content,
                         Title = Title,
-                        Creator = user,
+                        Creator = await userService.GetUser(),
                         FileExtension = Path.GetExtension(FileResult?.FullPath)
                     };
 
@@ -327,18 +328,6 @@ namespace ProjectApp.ViewModel
             if (Selection is Composer selectedComposer)
             {
                 WorkResults = WorkResults.Where(x => x.Composer.CompleteName == selectedComposer.CompleteName).ToObservableCollection();
-            }
-        }
-
-
-        public async void CheckAccess()
-        {
-            return;
-
-            if (await service.GetCurrentUser() == null)
-            {
-                await Shell.Current.GoToAsync("//MainPage");
-                await Shell.Current.DisplayAlert("Access Denied", "You must be logged in to enter this page", "Return to main page");
             }
         }
     }

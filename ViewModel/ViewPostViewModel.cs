@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Net;
+using System.ComponentModel.Design;
 
 namespace ProjectApp.ViewModel
 {
@@ -51,10 +52,12 @@ namespace ProjectApp.ViewModel
                 Comment comment = new()
                 {
                     Content = Content,
-                    Creator = userService.User,
+                    Creator = await userService.GetUser(),
                     Post = Post,
                     UploadDateTime = DateTime.Now
                 };
+                comment.CreatorId = comment.Creator.Id;
+                comment.PostId = comment.Post.Id;
 
                 var response = await service.UploadComment(comment);
 

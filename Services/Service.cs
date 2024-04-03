@@ -13,15 +13,16 @@ namespace ProjectApp.Services
     public class Service
     {
         readonly HttpClient httpClient;
-        private const string ServerURL = $"{URL}/OpusOne";
-        public const string URL = "https://vxfmp0h3-7058.uks1.devtunnels.ms";
-
+        readonly UserService userService;
         readonly JsonSerializerOptions jsonOptions;
-        const string CURRENT_USER_KEY = "CurrentUser";
 
-        public Service()
+        private const string URL = $"{WwwRoot}/OpusOne";
+        public const string WwwRoot = "https://vxfmp0h3-7058.uks1.devtunnels.ms";
+
+        public Service(UserService _userService)
         {
             httpClient = new HttpClient();
+            userService = _userService;
             jsonOptions = new JsonSerializerOptions()
             {
                 PropertyNameCaseInsensitive = true,
@@ -33,22 +34,12 @@ namespace ProjectApp.Services
         {
             try
             {
-                var response = await httpClient.GetAsync($"{ServerURL}/Hello");
+                var response = await httpClient.GetAsync($"{URL}/Hello");
                 return await response.Content.ReadAsStringAsync();
             }
-            catch (Exception)
-            {
+            catch (Exception) { }
 
-            }
             return "error";
-        }
-
-        public async Task<User> GetCurrentUser()
-        {
-            string st = await SecureStorage.Default.GetAsync(CURRENT_USER_KEY);
-            if (string.IsNullOrEmpty(st))
-                return null;
-            return JsonSerializer.Deserialize<User>(st, jsonOptions);
         }
 
         public async Task<List<Composer>> SearchComposersByName(string query)
@@ -57,7 +48,7 @@ namespace ProjectApp.Services
 
             try
             {
-                var response = await httpClient.GetAsync($@"{ServerURL}/SearchComposerByName/{query}");
+                var response = await httpClient.GetAsync($@"{URL}/SearchComposerByName/{query}");
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
                     string content = await response.Content.ReadAsStringAsync();
@@ -76,7 +67,7 @@ namespace ProjectApp.Services
 
             try
             {
-                var response = await httpClient.GetAsync($@"{ServerURL}/OmniSearch/{query}/0");
+                var response = await httpClient.GetAsync($@"{URL}/OmniSearch/{query}/0");
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
                     string content = await response.Content.ReadAsStringAsync();
@@ -92,7 +83,7 @@ namespace ProjectApp.Services
         {
             try
             {
-                var response = await httpClient.GetAsync($@"{ServerURL}/NextOmniSearch");
+                var response = await httpClient.GetAsync($@"{URL}/NextOmniSearch");
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
                     string content = await response.Content.ReadAsStringAsync();
@@ -109,7 +100,7 @@ namespace ProjectApp.Services
             Post post;
             try
             {
-                var postResponse = await httpClient.GetAsync($@"{ServerURL}/GetPostById/{id}");
+                var postResponse = await httpClient.GetAsync($@"{URL}/GetPostById/{id}");
                 if (postResponse.StatusCode == HttpStatusCode.OK)
                 {
                     string content = await postResponse.Content.ReadAsStringAsync();
@@ -128,7 +119,7 @@ namespace ProjectApp.Services
         {
             try
             {
-                var response = await httpClient.GetAsync(@$"{ServerURL}/GetAllPosts");
+                var response = await httpClient.GetAsync(@$"{URL}/GetAllPosts");
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
                     string content = await response.Content.ReadAsStringAsync();
@@ -144,7 +135,8 @@ namespace ProjectApp.Services
         {
             try
             {
-                StringContent stringContent = new(JsonSerializer.Serialize(Comment, jsonOptions));
+                string json = JsonSerializer.Serialize(Comment, jsonOptions);
+                StringContent stringContent = new(json, Encoding.UTF8, "application/json");
                 var response = await httpClient.PostAsync($"{URL}/UploadComment", stringContent);
                 return response.StatusCode;
             }
@@ -177,7 +169,7 @@ namespace ProjectApp.Services
                 var stringContent = new StringContent(JsonSerializer.Serialize(post, jsonOptions), Encoding.UTF8, "application/json");
                 multipartFormContent.Add(stringContent, "post");
 
-                var response = await httpClient.PostAsync($"{ServerURL}/UploadPost", multipartFormContent);
+                var response = await httpClient.PostAsync($"{URL}/UploadPost", multipartFormContent);
                 return response.StatusCode;
             }
             catch (Exception)
@@ -192,16 +184,16 @@ namespace ProjectApp.Services
             var stringContent = new StringContent(JsonSerializer.Serialize(user, jsonOptions), Encoding.UTF8, "application/json");
             try
             {
-                var response = await httpClient.PostAsync($"{ServerURL}/Login", stringContent);
-
+                var response = await httpClient.PostAsync($"{URL}/Login", stringContent);
 
                 switch (response.StatusCode)
                 {
                     case HttpStatusCode.OK:
                         string st = await response.Content.ReadAsStringAsync();
 
-                        await SecureStorage.Default.SetAsync("CurrentUser", st);
-                        return JsonSerializer.Deserialize<User>(st, jsonOptions);                        
+                        user = JsonSerializer.Deserialize<User>(st, jsonOptions);
+                        await userService.SetUser(user);
+                        return user;                        
 
                     case HttpStatusCode.Unauthorized:
                         return null;
@@ -222,11 +214,11 @@ namespace ProjectApp.Services
             var stringContent = new StringContent(userJson, Encoding.UTF8, "application/json");
             try
             {
-                var response = await httpClient.PostAsync($@"{ServerURL}/Register", stringContent);
+                var response = await httpClient.PostAsync($@"{URL}/Register", stringContent);
                 string content = await response.Content.ReadAsStringAsync();
 
                 if (response.StatusCode == HttpStatusCode.OK)
-                    await SecureStorage.Default.SetAsync(CURRENT_USER_KEY, content);
+                    await userService.SetUser(JsonSerializer.Deserialize<User>(content, jsonOptions));
                 return response.StatusCode;
             }
             catch(Exception)

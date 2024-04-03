@@ -40,7 +40,7 @@ namespace ProjectApp.Model
 
         public Work Work { get; set; }
 
-        [JsonIgnore] public string File => string.IsNullOrEmpty(FileExtension) ? "" : $"{Service.URL}/{Id}{FileExtension}";
+        [JsonIgnore] public string File => string.IsNullOrEmpty(FileExtension) ? "" : $"{Service.WwwRoot}/{Id}{FileExtension}";
         [JsonIgnore] public bool IsFile => !string.IsNullOrEmpty(FileExtension);
         [JsonIgnore] public bool IsImage => imageTypes.Contains(FileExtension);
         [JsonIgnore] public bool IsAudio => audioTypes.Contains(FileExtension);

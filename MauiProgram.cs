@@ -37,6 +37,7 @@ public static class MauiProgram
         builder.Services.AddTransient<ViewPostViewModel>();
 
         builder.Services.AddSingleton<Service>();
+		builder.Services.AddSingleton<UserService>();
 
         return builder.Build();
 	}

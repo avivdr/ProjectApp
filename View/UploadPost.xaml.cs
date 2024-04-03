@@ -8,6 +8,5 @@ public partial class UploadPost : ContentPage
 	{
 		InitializeComponent();
 		BindingContext = vm;
-        Loaded += (object o, EventArgs e) => vm.CheckAccess();
 	}
 }
