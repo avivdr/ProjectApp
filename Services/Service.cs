@@ -136,7 +136,7 @@ namespace ProjectApp.Services
             try
             {
                 string json = JsonSerializer.Serialize(Comment, jsonOptions);
-                StringContent stringContent = new(json, Encoding.UTF8, "application/json");
+                var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
                 var response = await httpClient.PostAsync($"{URL}/UploadComment", stringContent);
                 return response.StatusCode;
             }
