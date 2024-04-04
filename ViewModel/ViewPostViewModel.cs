@@ -56,8 +56,6 @@ namespace ProjectApp.ViewModel
                     Post = Post,
                     UploadDateTime = DateTime.Now
                 };
-                comment.CreatorId = comment.Creator.Id;
-                comment.PostId = comment.Post.Id;
 
                 var response = await service.UploadComment(comment);
 
@@ -65,6 +63,7 @@ namespace ProjectApp.ViewModel
                 {
                     case HttpStatusCode.OK:
                         Post.Comments.Insert(0, comment);
+                        OnPropertyChanged(nameof(Post));
                         break;
                 }
                 
