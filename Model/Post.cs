@@ -13,7 +13,7 @@ namespace ProjectApp.Model
     public class Post
     {
         private readonly List<string> imageTypes = new() { ".jpg", ".jfif", ".png", ".gif" };
-        private readonly List<string> videoTypes = new() { ".mp4", ".mov", ".avi", ".wmv" }; 
+        private readonly List<string> videoTypes = new() { ".mp4", ".mov", ".avi", ".wmv" };
         private readonly List<string> audioTypes = new() { ".wav", ".mp3", ".m4a" };
 
         public int Id { get; set; }
@@ -45,6 +45,8 @@ namespace ProjectApp.Model
         [JsonIgnore] public bool IsImage => imageTypes.Contains(FileExtension);
         [JsonIgnore] public bool IsAudio => audioTypes.Contains(FileExtension);
         [JsonIgnore] public bool IsVideo => videoTypes.Contains(FileExtension);
+        [JsonIgnore] public string TagString => Work?.TitleWithComposersName ?? Composer?.CompleteName;
+        [JsonIgnore] public bool IsComposerImage => Composer != null;
 
         [JsonIgnore] public string DateTimeString
         {

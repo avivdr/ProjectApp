@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Net;
-using System.ComponentModel.Design;
 
 namespace ProjectApp.ViewModel
 {
@@ -63,7 +62,6 @@ namespace ProjectApp.ViewModel
                 {
                     case HttpStatusCode.OK:
                         Post.Comments.Insert(0, comment);
-                        OnPropertyChanged(nameof(Post));
                         break;
                 }
                 

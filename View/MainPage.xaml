@@ -40,6 +40,29 @@
                     </HorizontalStackLayout>
 
                     <Label StyleClass="LightLbl" Text="{Binding Title}" />
+                    <HorizontalStackLayout Padding="12" Spacing="10">
+                        <Label
+                            BackgroundColor="{StaticResource Blue}"
+                            FontAttributes="Bold"
+                            FontSize="13"
+                            Text="{Binding TagString}"
+                            TextColor="{StaticResource LightGrey}"
+                            VerticalOptions="Center" />
+
+                        <Frame
+                            Padding="0"
+                            BorderColor="Transparent"
+                            CornerRadius="50"
+                            HeightRequest="60"
+                            IsClippedToBounds="True"
+                            IsVisible="{Binding IsComposerImage}"
+                            WidthRequest="60">
+                            <Image
+                                Aspect="AspectFill"
+                                IsVisible="{Binding IsComposerImage}"
+                                Source="{Binding Composer.Portrait}" />
+                        </Frame>
+                    </HorizontalStackLayout>
                     <Label StyleClass="LightLbl" Text="{Binding Content}" />
                     <Image
                         HeightRequest="200"
