@@ -40,7 +40,7 @@
                     </HorizontalStackLayout>
 
                     <Label StyleClass="LightLbl" Text="{Binding Title}" />
-                    <HorizontalStackLayout Padding="12" Spacing="10">
+                    <HorizontalStackLayout Padding="12" Spacing="10" IsVisible="{Binding IsTag}">
                         <Label
                             BackgroundColor="{StaticResource Blue}"
                             FontAttributes="Bold"

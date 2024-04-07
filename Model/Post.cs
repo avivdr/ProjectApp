@@ -47,6 +47,7 @@ namespace ProjectApp.Model
         [JsonIgnore] public bool IsVideo => videoTypes.Contains(FileExtension);
         [JsonIgnore] public string TagString => Work?.TitleWithComposersName ?? Composer?.CompleteName;
         [JsonIgnore] public bool IsComposerImage => Composer != null;
+        [JsonIgnore] public bool IsTag => Composer != null || Work != null;
 
         [JsonIgnore] public string DateTimeString
         {
