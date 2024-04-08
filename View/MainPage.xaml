@@ -40,9 +40,14 @@
                     </HorizontalStackLayout>
 
                     <Label StyleClass="LightLbl" Text="{Binding Title}" />
-                    <HorizontalStackLayout Padding="12" Spacing="10" IsVisible="{Binding IsTag}">
+                    
+                    <HorizontalStackLayout
+                        Padding="10"
+                        BackgroundColor="{StaticResource Blue}"
+                        HorizontalOptions="Start"
+                        IsVisible="{Binding IsTag}"
+                        Spacing="5">
                         <Label
-                            BackgroundColor="{StaticResource Blue}"
                             FontAttributes="Bold"
                             FontSize="13"
                             Text="{Binding TagString}"
@@ -63,6 +68,7 @@
                                 Source="{Binding Composer.Portrait}" />
                         </Frame>
                     </HorizontalStackLayout>
+                        
                     <Label StyleClass="LightLbl" Text="{Binding Content}" />
                     <Image
                         HeightRequest="200"

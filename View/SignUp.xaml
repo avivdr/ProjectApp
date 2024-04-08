@@ -6,45 +6,48 @@
     xmlns:vm="clr-namespace:ProjectApp.ViewModel"
     Title="SignUp"
     x:DataType="vm:SignUpViewModel">
-    <VerticalStackLayout
-        Padding="35"
-        BackgroundColor="{StaticResource AlmostBlack}"
-        Spacing="40">
-        <VerticalStackLayout Spacing="20">
-            <Label StyleClass="LightLbl" Text="Username" />
-            <Entry StyleClass="FormEntry" Text="{Binding Username}" />
-        </VerticalStackLayout>
 
-        <VerticalStackLayout Spacing="20">
-            <Label StyleClass="LightLbl" Text="Email" />
-            <Entry StyleClass="FormEntry" Text="{Binding Email}" />
-        </VerticalStackLayout>
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="35"
+            BackgroundColor="{StaticResource AlmostBlack}"
+            Spacing="40">
+            <VerticalStackLayout Spacing="20">
+                <Label StyleClass="LightLbl" Text="Username" />
+                <Entry StyleClass="FormEntry" Text="{Binding Username}" />
+            </VerticalStackLayout>
 
-        <VerticalStackLayout Spacing="20">
-            <Label StyleClass="LightLbl" Text="Password" />
-            <Entry
-                IsPassword="True"
-                StyleClass="FormEntry"
-                Text="{Binding Password1}" />
-            <Label StyleClass="FormEntry" />
-        </VerticalStackLayout>
+            <VerticalStackLayout Spacing="20">
+                <Label StyleClass="LightLbl" Text="Email" />
+                <Entry StyleClass="FormEntry" Text="{Binding Email}" />
+            </VerticalStackLayout>
 
-        <VerticalStackLayout Spacing="20">
-            <Label StyleClass="LightLbl" Text="Verify Password" />
-            <Entry
-                IsPassword="True"
-                StyleClass="FormEntry"
-                Text="{Binding Password2}" />
-            <Label
-                IsVisible="{Binding IsErrorMessage}"
-                StyleClass="ErrorLbl"
-                Text="{Binding ErrorMessage}" />
-        </VerticalStackLayout>
+            <VerticalStackLayout Spacing="20">
+                <Label StyleClass="LightLbl" Text="Password" />
+                <Entry
+                    IsPassword="True"
+                    StyleClass="FormEntry"
+                    Text="{Binding Password1}" />
+                <Label StyleClass="FormEntry" />
+            </VerticalStackLayout>
 
-        <Button
-            Command="{Binding SignUpCommand}"
-            StyleClass="BlueBtn"
-            Text="Sign Up"
-            WidthRequest="100" />
-    </VerticalStackLayout>
+            <VerticalStackLayout Spacing="20">
+                <Label StyleClass="LightLbl" Text="Verify Password" />
+                <Entry
+                    IsPassword="True"
+                    StyleClass="FormEntry"
+                    Text="{Binding Password2}" />
+                <Label
+                    IsVisible="{Binding IsErrorMessage}"
+                    StyleClass="ErrorLbl"
+                    Text="{Binding ErrorMessage}" />
+            </VerticalStackLayout>
+
+            <Button
+                Command="{Binding SignUpCommand}"
+                StyleClass="BlueBtn"
+                Text="Sign Up"
+                WidthRequest="100" />
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

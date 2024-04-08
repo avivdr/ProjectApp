@@ -13,11 +13,17 @@ namespace ProjectApp.ViewModel
     [QueryProperty(nameof(Post), "Post")]
     public class ViewPostViewModel : ViewModel
     {
+        const string UnknownError = "An error occurred uploading the comment";
+        const string Empty = "Comment Content cannot be empty";
+        const string Unauthorized = "Please login to upload a comment";
+
         readonly UserService userService;
         readonly Service service;
 
         private Post _post;
         private string _content;
+        private string _errorMessage;
+        private bool _isError;
 
         public Post Post
         {
@@ -39,6 +45,25 @@ namespace ProjectApp.ViewModel
             }
         }
 
+        public string ErrorMessage
+        {
+            get => _errorMessage;
+            set
+            {
+                _errorMessage = value;
+                OnPropertyChanged(nameof(ErrorMessage));
+            }
+        }
+        public bool IsError
+        {
+            get => _isError;
+            set
+            {
+                _isError = value;
+                OnPropertyChanged(nameof(IsError));
+            }
+        }
+
         public ICommand UploadCommentCommand { get; set; }
 
         public ViewPostViewModel(UserService _userService, Service _service)
@@ -46,8 +71,19 @@ namespace ProjectApp.ViewModel
             userService = _userService;
             service = _service;
 
+            IsError = false;
+            ErrorMessage = UnknownError;
+
             UploadCommentCommand = new Command(async () =>
             {
+                if (string.IsNullOrEmpty(Content))
+                {
+                    IsError = true;
+                    ErrorMessage = Empty;
+                }
+
+                IsError = false;
+
                 Comment comment = new()
                 {
                     Content = Content,
@@ -60,8 +96,18 @@ namespace ProjectApp.ViewModel
 
                 switch (response)
                 {
-                    case HttpStatusCode.OK:
+                    case StatusEnum.OK:
+                        IsError = false;
                         Post.Comments.Insert(0, comment);
+                        OnPropertyChanged(nameof(Post));
+                        break;
+                    case StatusEnum.Unauthorized:
+                        IsError = true;
+                        ErrorMessage = Unauthorized; 
+                        break;
+                    default:
+                        IsError = true;
+                        ErrorMessage = UnknownError;
                         break;
                 }
                 

@@ -73,6 +73,8 @@
                         WidthRequest="400" />
 
                     <Button Command="{Binding UploadCommentCommand}" Text="Comment" />
+
+                    <Label StyleClass="ErrorLbl" Text="{Binding ErrorMessage}" IsVisible="{Binding IsError}" />
                 </HorizontalStackLayout>
             </Grid>
         </ScrollView>

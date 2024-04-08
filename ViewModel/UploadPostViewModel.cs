@@ -235,15 +235,15 @@ namespace ProjectApp.ViewModel
                         post.Work = null;
                     }
 
-                    HttpStatusCode httpStatusCode = await service.UploadPost(post, FileResult);
-                    switch (httpStatusCode)
+                    StatusEnum responseCode = await service.UploadPost(post, FileResult);
+                    switch (responseCode)
                     {
-                        case HttpStatusCode.OK:
+                        case StatusEnum.OK:
                             await Shell.Current.DisplayAlert("Post uploaded", "post uploaded successfully", "ok");
                             Title = ""; Content = ""; Query = ""; FileResult = null; WorkResults = null; ComposerResults = null;
                             break;
 
-                        case HttpStatusCode.Unauthorized:
+                        case StatusEnum.Unauthorized:
                             ErrorMessage = Unauthorized;
                             IsErrorMessage = true;
                             break;

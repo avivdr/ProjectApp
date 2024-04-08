@@ -109,16 +109,16 @@ namespace ProjectApp.ViewModel
                 User user = new() { Username = Username, Email = Email, Password = Password1 };
                 try
                 {
-                    HttpStatusCode statuscode = await service.Register(user);
-                    switch (statuscode)
+                    StatusEnum statusCode = await service.Register(user);
+                    switch (statusCode)
                     {
-                        case HttpStatusCode.OK:
+                        case StatusEnum.OK:
                             IsErrorMessage = false;
                             await Shell.Current.DisplayAlert("sign up success", "sign succeeded", "ok");
                             await Shell.Current.GoToAsync("//MainPage");
                             break;
 
-                        case HttpStatusCode.Conflict:
+                        case StatusEnum.Conflict:
                             ErrorMessage = CONFLICT;
                             IsErrorMessage = true;
                             break;

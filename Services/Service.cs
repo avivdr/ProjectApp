@@ -131,22 +131,30 @@ namespace ProjectApp.Services
             return null;
         }
 
-        public async Task<HttpStatusCode> UploadComment(Comment Comment)
+        public async Task<StatusEnum> UploadComment(Comment Comment)
         {
             try
             {
                 string json = JsonSerializer.Serialize(Comment, jsonOptions);
                 var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
                 var response = await httpClient.PostAsync($"{URL}/UploadComment", stringContent);
-                return response.StatusCode;
+                switch (response.StatusCode)
+                {
+                    case HttpStatusCode.OK:
+                        return StatusEnum.OK;
+                        case HttpStatusCode.Unauthorized: 
+                        return StatusEnum.Unauthorized;
+                    default:
+                        return StatusEnum.Error;
+                }
             }
             catch (Exception)
             {
-                return HttpStatusCode.BadRequest;
+                return StatusEnum.Error;
             }
         }
 
-        public async Task<HttpStatusCode> UploadPost(Post post, FileResult file = null)
+        public async Task<StatusEnum> UploadPost(Post post, FileResult file = null)
         {
             try
             {
@@ -170,11 +178,19 @@ namespace ProjectApp.Services
                 multipartFormContent.Add(stringContent, "post");
 
                 var response = await httpClient.PostAsync($"{URL}/UploadPost", multipartFormContent);
-                return response.StatusCode;
+                switch (response.StatusCode)
+                {
+                    case HttpStatusCode.OK:
+                        return StatusEnum.OK;
+                    case HttpStatusCode.Unauthorized:
+                        return StatusEnum.Unauthorized;
+                    default:
+                        return StatusEnum.Error;
+                }
             }
             catch (Exception)
             {
-                return HttpStatusCode.BadRequest;
+                return StatusEnum.Error;
             }
         }
 
@@ -208,7 +224,7 @@ namespace ProjectApp.Services
             }
         }
 
-        public async Task<HttpStatusCode> Register(User user)
+        public async Task<StatusEnum> Register(User user)
         {
             string userJson = JsonSerializer.Serialize(user, jsonOptions);
             var stringContent = new StringContent(userJson, Encoding.UTF8, "application/json");
@@ -219,7 +235,15 @@ namespace ProjectApp.Services
 
                 if (response.StatusCode == HttpStatusCode.OK)
                     await userService.SetUser(JsonSerializer.Deserialize<User>(content, jsonOptions));
-                return response.StatusCode;
+                switch (response.StatusCode)
+                {
+                    case HttpStatusCode.OK:
+                        return StatusEnum.OK;
+                    case HttpStatusCode.Conflict:
+                        return StatusEnum.Conflict;
+                    default:
+                        return StatusEnum.Error;
+                }
             }
             catch(Exception)
             {
