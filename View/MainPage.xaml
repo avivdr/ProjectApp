@@ -7,6 +7,7 @@
     xmlns:sfList="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
     xmlns:tk="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:viewModel="clr-namespace:ProjectApp.ViewModel"
+    Title="Home"
     x:DataType="viewModel:MainPageViewModel">
 
     <sfList:SfListView
@@ -40,7 +41,7 @@
                     </HorizontalStackLayout>
 
                     <Label StyleClass="LightLbl" Text="{Binding Title}" />
-                    
+
                     <HorizontalStackLayout
                         Padding="10"
                         BackgroundColor="{StaticResource Blue}"
@@ -68,7 +69,7 @@
                                 Source="{Binding Composer.Portrait}" />
                         </Frame>
                     </HorizontalStackLayout>
-                        
+
                     <Label StyleClass="LightLbl" Text="{Binding Content}" />
                     <Image
                         HeightRequest="200"

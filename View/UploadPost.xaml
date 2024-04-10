@@ -19,10 +19,22 @@
                 Grid.Row="0"
                 Padding="15"
                 Spacing="20">
+
+                <!--<Border BackgroundColor="HotPink">
+                    <Label
+                        CharacterSpacing="1"
+                        FontAttributes="Bold"
+                        FontFamily="OpenSansSemibold"
+                        FontSize="20"
+                        Text="COME TO PRODIGY BY MAYA YULZARY!!!!! BEST APP EVER!!!! FR FR"
+                        TextColor="White" />
+                </Border>-->
+
                 <Entry
                     Placeholder="Title"
                     StyleClass="FormEntry"
                     Text="{Binding Title}" />
+
 
                 <Border
                     Padding="0"

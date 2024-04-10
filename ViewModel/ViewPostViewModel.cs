@@ -99,7 +99,7 @@ namespace ProjectApp.ViewModel
                     case StatusEnum.OK:
                         IsError = false;
                         Post.Comments.Insert(0, comment);
-                        OnPropertyChanged(nameof(Post));
+                        OnPropertyChanged();
                         break;
                     case StatusEnum.Unauthorized:
                         IsError = true;
@@ -111,6 +111,7 @@ namespace ProjectApp.ViewModel
                         break;
                 }
                 
+               Content = "";
             });
         }
     }

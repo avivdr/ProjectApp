@@ -6,7 +6,11 @@
     xmlns:local="clr-namespace:ProjectApp"
     xmlns:sfTab="clr-namespace:Syncfusion.Maui.TabView;assembly=Syncfusion.Maui.TabView"
     xmlns:view="clr-namespace:ProjectApp.View"
-    Shell.FlyoutBehavior="Disabled">
+    Shell.BackgroundColor="{StaticResource MidLightBlue}"
+    Shell.FlyoutBehavior="Disabled"
+    Shell.TabBarBackgroundColor="{StaticResource LightGrey}"
+    Shell.TabBarForegroundColor="{StaticResource Blue}"
+    Shell.TitleColor="White">
 
     <TabBar>
         <Tab Title="Home" Icon="dotnet_bot.svg">
