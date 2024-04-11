@@ -5,10 +5,15 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:model="clr-namespace:ProjectApp.Model"
     xmlns:sfList="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+    xmlns:sfbtn="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
     xmlns:tk="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:vm="clr-namespace:ProjectApp.ViewModel"
     Title="ViewPost"
     x:DataType="vm:ViewPostViewModel">
+
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsEnabled="False" IsVisible="False" />
+    </Shell.BackButtonBehavior>
 
     <Grid ColumnDefinitions="*" RowDefinitions="*, *">
         <ScrollView Grid.Row="0">
@@ -31,6 +36,35 @@
                 </HorizontalStackLayout>
 
                 <Label StyleClass="LightLbl" Text="{Binding Post.Title}" />
+
+                <HorizontalStackLayout
+                    Padding="10"
+                    BackgroundColor="{StaticResource Blue}"
+                    HorizontalOptions="Start"
+                    IsVisible="{Binding Post.IsTag}"
+                    Spacing="5">
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="13"
+                        Text="{Binding Post.TagString}"
+                        TextColor="{StaticResource LightGrey}"
+                        VerticalOptions="Center" />
+
+                    <Frame
+                        Padding="0"
+                        BorderColor="Transparent"
+                        CornerRadius="50"
+                        HeightRequest="60"
+                        IsClippedToBounds="True"
+                        IsVisible="{Binding Post.IsComposerImage}"
+                        WidthRequest="60">
+                        <Image
+                            Aspect="AspectFill"
+                            IsVisible="{Binding Post.IsComposerImage}"
+                            Source="{Binding Post.Composer.Portrait}" />
+                    </Frame>
+                </HorizontalStackLayout>
+
                 <Label StyleClass="LightLbl" Text="{Binding Post.Content}" />
                 <Image
                     HeightRequest="200"
@@ -63,7 +97,7 @@
                 Grid.Row="0"
                 EmptyView="No comments..."
                 ItemSpacing="5"
-                ItemsSource="{Binding Post.Comments}">
+                ItemsSource="{Binding Comments}">
                 <sfList:SfListView.ItemTemplate>
                     <DataTemplate x:DataType="model:Comment">
                         <Border StrokeShape="RoundRectangle 5">
@@ -74,6 +108,12 @@
                                         FontSize="16"
                                         Text="{Binding Creator.Username}"
                                         TextColor="{StaticResource AlmostBlack}" />
+                                    <Label
+                                        Margin="20,0"
+                                        FontSize="14"
+                                        StyleClass="LightLbl"
+                                        Text="{Binding DateTimeString}"
+                                        TextColor="{StaticResource DarkBlue}" />
                                 </HorizontalStackLayout>
 
                                 <Label Text="{Binding Content}" />
@@ -84,24 +124,47 @@
                 </sfList:SfListView.ItemTemplate>
             </sfList:SfListView>
 
-            <HorizontalStackLayout Grid.Row="1" Spacing="10">
-                <Editor
-                    Placeholder="Add comment"
-                    StyleClass="FormEditor"
-                    Text="{Binding Content}"
-                    WidthRequest="400" />
+            <Grid
+                Grid.Row="1"
+                ColumnDefinitions="5*,*"
+                RowDefinitions="*">
+                <ScrollView Grid.Column="0">
+                    <HorizontalStackLayout Spacing="10">
+                        <Editor
+                            Placeholder="Add comment"
+                            StyleClass="FormEditor"
+                            Text="{Binding Content}"
+                            WidthRequest="400" />
 
-                <Button
-                    Command="{Binding UploadCommentCommand}"
-                    CornerRadius="15"
-                    StyleClass="BlueBtn"
-                    Text="Comment" />
+                        <Button
+                            Command="{Binding UploadCommentCommand}"
+                            CornerRadius="15"
+                            StyleClass="BlueBtn"
+                            Text="Comment" />
 
-                <Label
-                    IsVisible="{Binding IsError}"
-                    StyleClass="ErrorLbl"
-                    Text="{Binding ErrorMessage}" />
-            </HorizontalStackLayout>
+                        <Label
+                            IsVisible="{Binding IsError}"
+                            StyleClass="ErrorLbl"
+                            Text="{Binding ErrorMessage}" />
+
+
+                    </HorizontalStackLayout>
+                </ScrollView>
+
+                <sfbtn:SfButton
+                    Grid.Column="1"
+                    Margin="10"
+                    Background="{StaticResource LightBlue}"
+                    Command="{Binding BackBtnCommand}"
+                    ImageSize="20"
+                    ImageSource="back_arrow.png"
+                    MaximumHeightRequest="100"
+                    MaximumWidthRequest="150"
+                    ShowIcon="True"
+                    Text="Back To Home"
+                    TextColor="{StaticResource DarkBlue}" />
+            </Grid>
+
         </Grid>
     </Grid>
 

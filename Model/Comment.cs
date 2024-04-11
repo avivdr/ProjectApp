@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace ProjectApp.Model
@@ -21,5 +22,19 @@ namespace ProjectApp.Model
         public User Creator { get; set; }
 
         public Post Post { get; set; }
+
+        [JsonIgnore] public string DateTimeString
+        {
+            get
+            {
+                if (UploadDateTime.Date == DateTime.Now.Date)
+                    return UploadDateTime.ToString("HH:mm");
+
+                if (UploadDateTime.Year == DateTime.Now.Year)
+                    return UploadDateTime.ToString("dd/MM");
+
+                return UploadDateTime.ToString("dd/MM/yyyy");
+            }
+        }
     }
 }

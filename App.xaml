@@ -3,7 +3,8 @@
     x:Class="ProjectApp.App"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:ProjectApp">
+    xmlns:local="clr-namespace:ProjectApp"
+    xmlns:sfbtn="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons">
     <Application.Resources>
         <ResourceDictionary>
             <Color x:Key="LightBlue">#2790d6</Color>
@@ -21,7 +22,7 @@
                 <Setter Property="TextColor" Value="{StaticResource LightGrey}" />
             </Style>
 
-            <Style Class="LightBlueBtn" TargetType="Button">
+            <Style Class="LightBlueBtn" TargetType="sfbtn:SfButton">
                 <Setter Property="BackgroundColor" Value="{StaticResource LightBlue}" />
                 <Setter Property="TextColor" Value="{StaticResource DarkBlue}" />
             </Style>

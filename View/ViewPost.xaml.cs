@@ -9,5 +9,6 @@ public partial class ViewPost : ContentPage
 		InitializeComponent();
 
 		BindingContext = vm;
+		Loaded += vm.LoadComments;
 	}
 }

@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Net;
+using System.Collections.ObjectModel;
 
 namespace ProjectApp.ViewModel
 {
@@ -21,6 +22,7 @@ namespace ProjectApp.ViewModel
         readonly Service service;
 
         private Post _post;
+        private ObservableCollection<Comment> _comments;
         private string _content;
         private string _errorMessage;
         private bool _isError;
@@ -32,6 +34,16 @@ namespace ProjectApp.ViewModel
             {
                 _post = value;
                 OnPropertyChanged(nameof(Post));
+            }
+        }
+
+        public ObservableCollection<Comment> Comments
+        {
+            get => _comments;
+            set
+            {
+                _comments = value;
+                OnPropertyChanged(nameof(Comments));
             }
         }
 
@@ -65,6 +77,9 @@ namespace ProjectApp.ViewModel
         }
 
         public ICommand UploadCommentCommand { get; set; }
+        public ICommand BackBtnCommand { get; set; }
+
+        public EventHandler LoadComments { get; private set; }
 
         public ViewPostViewModel(UserService _userService, Service _service)
         {
@@ -73,6 +88,13 @@ namespace ProjectApp.ViewModel
 
             IsError = false;
             ErrorMessage = UnknownError;
+
+            LoadComments = new((s, e) => 
+            { 
+                Comments = new(Post.Comments);
+            });
+
+            BackBtnCommand = new Command(async () => await Shell.Current.GoToAsync(".."));
 
             UploadCommentCommand = new Command(async () =>
             {
@@ -98,8 +120,8 @@ namespace ProjectApp.ViewModel
                 {
                     case StatusEnum.OK:
                         IsError = false;
-                        Post.Comments.Insert(0, comment);
-                        OnPropertyChanged();
+                        Comments.Insert(0, comment);
+                        OnPropertyChanged(nameof(Comments));
                         break;
                     case StatusEnum.Unauthorized:
                         IsError = true;
