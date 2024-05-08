@@ -62,11 +62,11 @@
                             CornerRadius="50"
                             HeightRequest="60"
                             IsClippedToBounds="True"
-                            IsVisible="{Binding Selection.IsImage}"
+                            IsVisible="{Binding IsImage}"
                             WidthRequest="60">
                             <Image
                                 Aspect="AspectFill"
-                                IsVisible="{Binding Selection.IsImage}"
+                                IsVisible="{Binding IsImage}"
                                 Source="{Binding Selection.ImageSource}" />
                         </Frame>
                     </HorizontalStackLayout>

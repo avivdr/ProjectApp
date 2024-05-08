@@ -18,6 +18,8 @@ namespace ProjectApp.Model
 
         public string Email { get; set; } = "";
 
+        public bool IsAdmin { get; set; } = false;
+
         public List<Comment> Comments { get; set; } = new();
 
         public List<ForumComment> ForumComments { get; set; } = new();

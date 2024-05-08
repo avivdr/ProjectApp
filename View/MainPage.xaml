@@ -7,6 +7,7 @@
     xmlns:sfList="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
     xmlns:tk="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     xmlns:viewModel="clr-namespace:ProjectApp.ViewModel"
+    x:Name="page"
     Title="Home"
     x:DataType="viewModel:MainPageViewModel">
 
@@ -26,49 +27,88 @@
                     Padding="10"
                     BackgroundColor="{StaticResource DarkGrey}"
                     Spacing="15">
-                    <HorizontalStackLayout>
-                        <HorizontalStackLayout Spacing="5">
-                            <Image HeightRequest="20" Source="user_icon.png" />
-                            <Label StyleClass="LightLbl" Text="{Binding Creator.Username}" />
+                    <Grid ColumnDefinitions="*,6*,*" RowDefinitions="*">
+                        <HorizontalStackLayout Grid.Column="0">
+                            <HorizontalStackLayout Spacing="5">
+                                <Image
+                                    HeightRequest="20"
+                                    Source="user_icon.png"
+                                    VerticalOptions="Center" />
+                                <Label
+                                    StyleClass="LightLbl"
+                                    Text="{Binding Creator.Username}"
+                                    VerticalOptions="Center" />
+                            </HorizontalStackLayout>
+
+                            <Label
+                                Margin="20,0"
+                                FontSize="14"
+                                StyleClass="LightLbl"
+                                Text="{Binding DateTimeString}"
+                                TextColor="{StaticResource MidLightGrey}"
+                                VerticalOptions="Center" />
+
                         </HorizontalStackLayout>
 
-                        <Label
-                            Margin="20,0"
+                        <Button
+                            Grid.Column="2"
+                            Padding="10"
+                            BackgroundColor="Red"
                             FontSize="14"
-                            StyleClass="LightLbl"
-                            Text="{Binding DateTimeString}"
-                            TextColor="{StaticResource MidLightGrey}" />
-                    </HorizontalStackLayout>
+                            IsVisible="{Binding Source={Reference page}, Path=BindingContext.User.IsAdmin}"
+                            Command="{Binding Source={Reference page}, Path=BindingContext.DeletePostCommand}"
+                            CommandParameter="{Binding Id}"
+                            Text="Delete Post"
+                            VerticalOptions="Center" />
+                    </Grid>
 
-                    <Label StyleClass="LightLbl" Text="{Binding Title}" />
 
-                    <HorizontalStackLayout
-                        Padding="10"
-                        BackgroundColor="{StaticResource Blue}"
-                        HorizontalOptions="Start"
-                        IsVisible="{Binding IsTag}"
-                        Spacing="5">
+                    <HorizontalStackLayout Spacing="7">
                         <Label
-                            FontAttributes="Bold"
-                            FontSize="13"
-                            Text="{Binding TagString}"
-                            TextColor="{StaticResource LightGrey}"
+                            FontSize="20"
+                            StyleClass="LightLbl"
+                            Text="{Binding Title}"
                             VerticalOptions="Center" />
 
-                        <Frame
+                        <Border
                             Padding="0"
-                            BorderColor="Transparent"
-                            CornerRadius="50"
-                            HeightRequest="60"
-                            IsClippedToBounds="True"
-                            IsVisible="{Binding IsComposerImage}"
-                            WidthRequest="60">
-                            <Image
-                                Aspect="AspectFill"
-                                IsVisible="{Binding IsComposerImage}"
-                                Source="{Binding Composer.Portrait}" />
-                        </Frame>
+                            IsVisible="{Binding IsTag}"
+                            StrokeShape="RoundRectangle 15"
+                            StrokeThickness="0"
+                            VerticalOptions="Center">
+                            <HorizontalStackLayout
+                                Padding="7"
+                                BackgroundColor="{StaticResource Blue}"
+                                IsVisible="{Binding IsTag}"
+                                Spacing="5">
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="12"
+                                    Text="{Binding TagString}"
+                                    TextColor="{StaticResource LightGrey}"
+                                    VerticalOptions="Center" />
+
+                                <Frame
+                                    Padding="0"
+                                    BorderColor="Transparent"
+                                    CornerRadius="50"
+                                    HeightRequest="30"
+                                    IsClippedToBounds="True"
+                                    IsVisible="{Binding IsComposerImage}"
+                                    WidthRequest="30">
+                                    <Image
+                                        Aspect="AspectFill"
+                                        IsVisible="{Binding IsComposerImage}"
+                                        Source="{Binding Composer.Portrait}" />
+                                </Frame>
+                            </HorizontalStackLayout>
+                        </Border>
                     </HorizontalStackLayout>
+
+                    <BoxView
+                        Margin="0,-5,0,10"
+                        HeightRequest="1"
+                        Color="{StaticResource LightGrey}" />
 
                     <Label StyleClass="LightLbl" Text="{Binding Content}" />
                     <Image

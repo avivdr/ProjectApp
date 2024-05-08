@@ -143,6 +143,7 @@ namespace ProjectApp.ViewModel
             {
                 _selection = value;
                 OnPropertyChanged(nameof(Selection));
+                OnPropertyChanged(nameof(IsImage));
             }
         }
         public int SelectedTab
@@ -173,6 +174,7 @@ namespace ProjectApp.ViewModel
                 searchDebounce.Debounce(() => Search(_query));
             }
         }
+        public bool IsImage => Selection == null ? false: Selection.IsImage;
 
         public ICommand UploadPostCommand { get; protected set; }
         public ICommand PickFileCommand { get; protected set; }
@@ -239,8 +241,9 @@ namespace ProjectApp.ViewModel
                     switch (responseCode)
                     {
                         case StatusEnum.OK:
+                            Title = null; Content = null; Query = null; FileResult = null; WorkResults = null; ComposerResults = null;
                             await Shell.Current.DisplayAlert("Post uploaded", "post uploaded successfully", "ok");
-                            Title = ""; Content = ""; Query = ""; FileResult = null; WorkResults = null; ComposerResults = null;
+                            await Shell.Current.GoToAsync("//MainPage");
                             break;
 
                         case StatusEnum.Unauthorized:
@@ -296,7 +299,7 @@ namespace ProjectApp.ViewModel
 
         private async void Search(string query)
         {
-            if (query.Length < 4)
+            if (query == null || query.Length < 4)
             {
                 ComposerResults = null;
                 WorkResults = null;

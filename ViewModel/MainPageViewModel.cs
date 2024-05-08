@@ -17,10 +17,13 @@ namespace ProjectApp.ViewModel
     {
         private readonly IPopupService popupService;
         readonly Service service;
+        readonly UserService userService;
         private bool first_time = true;
 
         private List<Post> _posts;
         private Post _selectedPost;
+
+        public User User { get; set; }
 
         public List<Post> Posts
         {
@@ -44,16 +47,24 @@ namespace ProjectApp.ViewModel
 
         public ICommand BtnCommand { get; set; }
         public ICommand PostClickedCommand { get; set; }
+        public ICommand DeletePostCommand { get; set; }
 
 
         public EventHandler Login { get; set; }
 
-        public MainPageViewModel(IPopupService _popupService, Service _service)
+        public MainPageViewModel(IPopupService _popupService, Service _service, UserService _userService)
         {
             popupService = _popupService;
             service = _service;
+            userService = _userService;
 
             BtnCommand = new Command(popupService.ShowPopup<LoginViewModel>);
+
+            DeletePostCommand = new Command(async id =>
+            {
+                
+                
+            });
 
             Login = new(async (s,e) => 
             {
@@ -62,7 +73,7 @@ namespace ProjectApp.ViewModel
                     await popupService.ShowPopupAsync<LoginViewModel>();
                     first_time = false;
                 }
-                
+                User = await userService.GetUser();
                 Posts = await service.GetAllPosts();
             });
 
