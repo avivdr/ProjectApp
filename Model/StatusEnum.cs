@@ -11,6 +11,7 @@ namespace ProjectApp.Model
         OK,
         Unauthorized,
         Conflict,
+        NotFound,
         Error,
     }
 }

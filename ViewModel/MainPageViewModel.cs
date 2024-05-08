@@ -49,7 +49,6 @@ namespace ProjectApp.ViewModel
         public ICommand PostClickedCommand { get; set; }
         public ICommand DeletePostCommand { get; set; }
 
-
         public EventHandler Login { get; set; }
 
         public MainPageViewModel(IPopupService _popupService, Service _service, UserService _userService)
@@ -62,8 +61,18 @@ namespace ProjectApp.ViewModel
 
             DeletePostCommand = new Command(async id =>
             {
-                
-                
+                if (!await Shell.Current.DisplayAlert("Confirm", "Are you sure you want to delete this post", "Yes", "No, cancel"))
+                    return;
+
+                var response = await service.DeletePost((int)id);
+
+                if (response != StatusEnum.OK)
+                {
+                    await Shell.Current.DisplayAlert("Error", "An error has occurred", "Ok");
+                    return;
+                }
+
+                Posts = await service.GetAllPosts();
             });
 
             Login = new(async (s,e) => 
