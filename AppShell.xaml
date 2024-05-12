@@ -14,13 +14,16 @@
 
     <TabBar>
         <Tab Title="Home" Icon="dotnet_bot.svg">
-            <ShellContent ContentTemplate="{DataTemplate local:MainPage}" Route="MainPage" />
+            <ShellContent ContentTemplate="{DataTemplate local:MainPage}" Route="MainPage"/>
         </Tab>
         <Tab Title="Upload Post" Icon="dotnet_bot.svg">
             <ShellContent ContentTemplate="{DataTemplate view:UploadPost}" Route="UploadPost" />
         </Tab>
         <Tab Title="Sign Up" Icon="dotnet_bot.svg">
             <ShellContent ContentTemplate="{DataTemplate view:SignUp}" Route="SignUp" />
+        </Tab>
+        <Tab Title="Logout">
+            <ShellContent ContentTemplate="{DataTemplate view:Logout}" Route="Logout" />
         </Tab>
     </TabBar>
 </Shell>

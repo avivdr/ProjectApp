@@ -42,6 +42,29 @@ namespace ProjectApp.Services
             return "error";
         }
 
+        public async Task<StatusEnum> DeletePost(int id)
+        {
+            try
+            {
+                var response = await httpClient.DeleteAsync($@"{URL}/DeletePost/{id}");
+                switch (response.StatusCode)
+                {
+                    case HttpStatusCode.OK:
+                        return StatusEnum.OK;
+                    case HttpStatusCode.Unauthorized:
+                        return StatusEnum.Unauthorized;
+                    case HttpStatusCode.NotFound:
+                        return StatusEnum.NotFound;
+                    default:
+                        return StatusEnum.Error;
+                }
+            }
+            catch (Exception) 
+            { 
+                return StatusEnum.Error;
+            }
+        }
+
         public async Task<List<Composer>> SearchComposersByName(string query)
         {
             if (query.Length < 4) return null;

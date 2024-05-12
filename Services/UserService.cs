@@ -19,10 +19,15 @@ namespace ProjectApp.Services
         };
 
         private User user;
+
+        public bool IsLoggedIn { get; set; } = false;
         
         public async Task<User> GetUser()
         {
-            if (user != null) return user;
+            if (user != null)
+                return user;
+
+            IsLoggedIn = false;
 
             string st = await SecureStorage.Default.GetAsync(Key);
             if (!string.IsNullOrEmpty(st))
@@ -33,6 +38,7 @@ namespace ProjectApp.Services
         public async Task SetUser(User value)
         {
             user = value;
+            IsLoggedIn = (user != null);
             await SecureStorage.Default.SetAsync(Key, JsonSerializer.Serialize(user, jsonOptions));
         }
         
