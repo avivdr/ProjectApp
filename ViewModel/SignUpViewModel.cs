@@ -114,7 +114,6 @@ namespace ProjectApp.ViewModel
                     {
                         case StatusEnum.OK:
                             IsErrorMessage = false;
-                            await Shell.Current.DisplayAlert("sign up success", "sign succeeded", "ok");
                             await Shell.Current.GoToAsync("//MainPage");
                             break;
 

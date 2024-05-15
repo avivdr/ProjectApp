@@ -35,6 +35,8 @@ public static class MauiProgram
 		builder.Services.AddSingleton<UploadPostViewModel>();
         builder.Services.AddTransient<ViewPost>();
         builder.Services.AddTransient<ViewPostViewModel>();
+        builder.Services.AddSingleton<Logout>();
+        builder.Services.AddSingleton<LogoutViewModel>();
 
         builder.Services.AddSingleton<Service>();
 		builder.Services.AddSingleton<UserService>();

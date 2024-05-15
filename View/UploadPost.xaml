@@ -213,7 +213,9 @@
             HeightRequest="550"
             IsOpen="{Binding IsPopupOpen}"
             ShowCloseButton="True"
-            WidthRequest="650">
+            WidthRequest="{OnIdiom 650,
+                                   Desktop=650,
+                                   Phone=400}">
 
             <sfPopup:SfPopup.PopupStyle>
                 <sfPopup:PopupStyle PopupBackground="{StaticResource AlmostBlack}" />
@@ -244,8 +246,8 @@
                                 </VerticalStackLayout>
 
                                 <!--  Composers List  -->
-                                <HorizontalStackLayout Spacing="40">
-                                    <VerticalStackLayout Spacing="5">
+                                <Grid ColumnDefinitions="*,*" ColumnSpacing="40">
+                                    <VerticalStackLayout Grid.Column="0" Spacing="5">
                                         <Label StyleClass="LightLbl" Text="Composers" />
                                         <sfList:SfListView
                                             ItemsSource="{Binding ComposerResults}"
@@ -287,7 +289,7 @@
                                     </VerticalStackLayout>
 
                                     <!--  Works List  -->
-                                    <VerticalStackLayout Spacing="5">
+                                    <VerticalStackLayout Grid.Column="1" Spacing="5">
                                         <Label StyleClass="LightLbl" Text="Works" />
                                         <sfList:SfListView
                                             IsLazyLoading="{Binding IsWorksLoading}"
@@ -342,7 +344,7 @@
                                             </sfList:SfListView.EmptyView>
                                         </sfList:SfListView>
                                     </VerticalStackLayout>
-                                </HorizontalStackLayout>
+                                </Grid>
 
                             </VerticalStackLayout>
 

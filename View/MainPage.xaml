@@ -27,7 +27,7 @@
                     Padding="10"
                     BackgroundColor="{StaticResource DarkGrey}"
                     Spacing="15">
-                    <Grid ColumnDefinitions="*,6*,*" RowDefinitions="*">
+                    <Grid ColumnDefinitions="*,100" RowDefinitions="*">
                         <HorizontalStackLayout Grid.Column="0">
                             <HorizontalStackLayout Spacing="5">
                                 <Image
@@ -51,13 +51,13 @@
                         </HorizontalStackLayout>
 
                         <Button
-                            Grid.Column="2"
+                            Grid.Column="1"
                             Padding="10"
                             BackgroundColor="Red"
+                            Command="{Binding Source={Reference page}, Path=BindingContext.DeletePostCommand}"
+                            CommandParameter="{Binding .}"
                             FontSize="14"
                             IsVisible="{Binding Source={Reference page}, Path=BindingContext.User.IsAdmin}"
-                            Command="{Binding Source={Reference page}, Path=BindingContext.DeletePostCommand}"
-                            CommandParameter="{Binding Id}"
                             Text="Delete Post"
                             VerticalOptions="Center" />
                     </Grid>

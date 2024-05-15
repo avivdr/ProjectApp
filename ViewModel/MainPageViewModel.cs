@@ -10,6 +10,7 @@ using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui;
 using ProjectApp.Model;
 using System.Text.Json;
+using System.Collections.ObjectModel;
 
 namespace ProjectApp.ViewModel
 {
@@ -18,14 +19,22 @@ namespace ProjectApp.ViewModel
         private readonly IPopupService popupService;
         readonly Service service;
         readonly UserService userService;
-        private bool first_time = true;
 
-        private List<Post> _posts;
+        private ObservableCollection<Post> _posts;
         private Post _selectedPost;
+        private User _user;
 
-        public User User { get; set; }
+        public User User
+        {
+            get => _user;
+            set
+            {
+                _user = value;
+                OnPropertyChanged(nameof(User));
+            }
+        }
 
-        public List<Post> Posts
+        public ObservableCollection<Post> Posts
         {
             get => _posts;
             set
@@ -59,31 +68,28 @@ namespace ProjectApp.ViewModel
 
             BtnCommand = new Command(popupService.ShowPopup<LoginViewModel>);
 
-            DeletePostCommand = new Command(async id =>
+            DeletePostCommand = new Command(async p =>
             {
-                if (!await Shell.Current.DisplayAlert("Confirm", "Are you sure you want to delete this post", "Yes", "No, cancel"))
+                Post post = (Post)p;
+                bool result = await Shell.Current.DisplayAlert("Confirm", "Are you sure you want to delete this post?", "Yes", "No");
+                if (!result) 
                     return;
 
-                var response = await service.DeletePost((int)id);
-
-                if (response != StatusEnum.OK)
-                {
+                var response = await service.DeletePost(post.Id);
+                if (response == StatusEnum.OK)
+                    Posts.Remove(post);
+                else
                     await Shell.Current.DisplayAlert("Error", "An error has occurred", "Ok");
-                    return;
-                }
-
-                Posts = await service.GetAllPosts();
             });
 
             Login = new(async (s,e) => 
             {
-                if (first_time)
-                {
+                Posts = new();
+                if (!userService.IsLoggedIn)
                     await popupService.ShowPopupAsync<LoginViewModel>();
-                    first_time = false;
-                }
+
                 User = await userService.GetUser();
-                Posts = await service.GetAllPosts();
+                Posts = new(await service.GetAllPosts());
             });
 
             PostClickedCommand = new Command(async () =>

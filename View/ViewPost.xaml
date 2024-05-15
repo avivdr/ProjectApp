@@ -100,7 +100,7 @@
                 ItemsSource="{Binding Comments}">
                 <sfList:SfListView.ItemTemplate>
                     <DataTemplate x:DataType="model:Comment">
-                        <Border StrokeShape="RoundRectangle 5">
+                        <Border StrokeShape="RoundRectangle 5" VerticalOptions="Center">
                             <VerticalStackLayout Padding="7" BackgroundColor="{StaticResource MidLightGrey}">
                                 <HorizontalStackLayout Spacing="5">
                                     <Image HeightRequest="20" Source="user_icon.png" />
@@ -113,7 +113,7 @@
                                         FontSize="14"
                                         StyleClass="LightLbl"
                                         Text="{Binding DateTimeString}"
-                                        TextColor="{StaticResource DarkBlue}" />
+                                        TextColor="{StaticResource DarkGrey}" />
                                 </HorizontalStackLayout>
 
                                 <Label Text="{Binding Content}" />
@@ -126,15 +126,16 @@
 
             <Grid
                 Grid.Row="1"
-                ColumnDefinitions="5*,*"
+                ColumnDefinitions="*,120"
                 RowDefinitions="*">
-                <ScrollView Grid.Column="0">
-                    <HorizontalStackLayout Spacing="10">
+                <ScrollView Grid.Column="0" Orientation="Both">
+                    <HorizontalStackLayout Padding="5" Spacing="10">
                         <Editor
                             Placeholder="Add comment"
                             StyleClass="FormEditor"
                             Text="{Binding Content}"
-                            WidthRequest="400" />
+                            WidthRequest="{OnIdiom Desktop=400,
+                                                   Phone=200}" />
 
                         <Button
                             Command="{Binding UploadCommentCommand}"
@@ -146,8 +147,6 @@
                             IsVisible="{Binding IsError}"
                             StyleClass="ErrorLbl"
                             Text="{Binding ErrorMessage}" />
-
-
                     </HorizontalStackLayout>
                 </ScrollView>
 
