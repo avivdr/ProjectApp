@@ -65,24 +65,6 @@ namespace ProjectApp.Services
             }
         }
 
-        public async Task<List<Composer>> SearchComposersByName(string query)
-        {
-            if (query.Length < 4) return null;
-
-            try
-            {
-                var response = await httpClient.GetAsync($@"{URL}/SearchComposerByName/{query}");
-                if (response.StatusCode == HttpStatusCode.OK)
-                {
-                    string content = await response.Content.ReadAsStringAsync();
-                    return JsonSerializer.Deserialize<List<Composer>>(content, jsonOptions);
-                }
-            }
-            catch (Exception) { }
-
-            return null;
-        }
-
         public async Task<OmniSearchDTO> OmniSearch(string query)
         {
             if (string.IsNullOrEmpty(query) || query.Length < 3)
@@ -112,26 +94,6 @@ namespace ProjectApp.Services
                     string content = await response.Content.ReadAsStringAsync();
                     return JsonSerializer.Deserialize<OmniSearchDTO>(content, jsonOptions);
                 }
-            }
-            catch (Exception) { }
-
-            return null;
-        }
-
-        public async Task<Post> GetPostById(int id)
-        { 
-            Post post;
-            try
-            {
-                var postResponse = await httpClient.GetAsync($@"{URL}/GetPostById/{id}");
-                if (postResponse.StatusCode == HttpStatusCode.OK)
-                {
-                    string content = await postResponse.Content.ReadAsStringAsync();
-                    post = JsonSerializer.Deserialize<Post>(content, jsonOptions);
-                }
-                else return null;
-
-                return post;
             }
             catch (Exception) { }
 

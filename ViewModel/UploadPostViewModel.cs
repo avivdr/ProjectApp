@@ -155,10 +155,8 @@ namespace ProjectApp.ViewModel
                 OnPropertyChanged(nameof(SelectedTab));
             }
         }
-        public string FilePickBtnText
-        {
-            get => FileResult?.FileName ?? "Pick File";
-        }
+        public string FilePickBtnText => FileResult?.FileName ?? "Pick File";
+        
         public bool IsFileSelected
         {
             get => FileResult != null;
@@ -242,6 +240,7 @@ namespace ProjectApp.ViewModel
                     {
                         case StatusEnum.OK:
                             Title = null; Content = null; Query = null; FileResult = null; WorkResults = null; ComposerResults = null;
+                            Selection = new TaggableItem(TagMessage);
                             await Shell.Current.DisplayAlert("Post uploaded", "post uploaded successfully", "ok");
                             await Shell.Current.GoToAsync("//MainPage");
                             break;
