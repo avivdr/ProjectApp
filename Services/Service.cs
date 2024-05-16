@@ -169,6 +169,8 @@ namespace ProjectApp.Services
                         return StatusEnum.OK;
                     case HttpStatusCode.Unauthorized:
                         return StatusEnum.Unauthorized;
+                    case HttpStatusCode.RequestEntityTooLarge:
+                        return StatusEnum.TooLarge;
                     default:
                         return StatusEnum.Error;
                 }

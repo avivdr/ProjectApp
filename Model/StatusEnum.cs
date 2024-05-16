@@ -13,5 +13,6 @@ namespace ProjectApp.Model
         Conflict,
         NotFound,
         Error,
+        TooLarge,
     }
 }

@@ -22,6 +22,7 @@ namespace ProjectApp.ViewModel
         const string Empty = "Title cannot be empty";
         const string TagMessage = "Tag Work or Composer";
         const string Unauthorized = "Please login to upload a post";
+        const string TooLarge = "File is too large, file must be under 20 MB";
 
         readonly PickOptions[] filePickOptions = { null,
             new() { PickerTitle = "Image", FileTypes = FilePickerFileType.Images },
@@ -248,6 +249,11 @@ namespace ProjectApp.ViewModel
                         case StatusEnum.Unauthorized:
                             ErrorMessage = Unauthorized;
                             IsErrorMessage = true;
+                            break;
+                        case StatusEnum.TooLarge:
+                            ErrorMessage = TooLarge;
+                            IsErrorMessage = true;
+                            FileResult = null;
                             break;
 
                         default:
